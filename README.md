@@ -1,2 +1,2 @@
 # BookD
-An ASP.NET Core Angular project on progress. In this application, users can write reviews about books and share with others.
+Book D is an ASP.NET Core + EF Core + SQL Server + Angular project in progress. In this application, users can write book reviews and share them with others.
