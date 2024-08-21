@@ -11,5 +11,23 @@
 
         // date of birth
         public DateTime DateOfBirth { get; set; }
+
+        // followers list
+
+        public List<Guid>? Followers { get; set; }
+
+        // following list
+
+        public List<Guid>? Following { get; set; }
+
+        // upvoted reviews
+
+        public List<Guid>? UpvotedReviews { get; set; }
+
+        // downvoted reviews
+
+        public List<Guid>? downvotedReviews { get; set; }
+
+
     }
 }
