@@ -25,7 +25,7 @@ namespace APIBookD.Controllers.ListControllers
         }
 
         // get wishlist of a user
-        [HttpGet("user/{id}")]
+        [HttpGet("wishlist/user/{id}")]
         public IActionResult GetWishlistByUserId(string id)
         {
             if (Guid.TryParse(id, out Guid userId))
@@ -40,7 +40,7 @@ namespace APIBookD.Controllers.ListControllers
         }
 
         // get reading lists of a user
-        [HttpGet("user/{id}")]
+        [HttpGet("readinglist/user/{id}")]
         public IActionResult GetReadingListByUserId(string id)
         {
             if (Guid.TryParse(id, out Guid userId))
@@ -55,7 +55,7 @@ namespace APIBookD.Controllers.ListControllers
         }
 
         // create wishlist. parameter passes is the id of the user who creates the wishlist.
-        [HttpPost]
+        [HttpPost("wishlist")]
         public IActionResult CreateWishlist(Guid userId)
         {
             var list = new Models.Entities.List.List
@@ -72,7 +72,7 @@ namespace APIBookD.Controllers.ListControllers
         }
 
         // create reading list. parameter passed is the ListDTO object. UserId of the list is the id of the user who creates the list. it is not contained in the ListDTO object.
-        [HttpPost]
+        [HttpPost("readinglist")]
         public IActionResult CreateReadingList(ListDTO listDTO, Guid userId)
         {
             var list = new Models.Entities.List.List
@@ -91,7 +91,7 @@ namespace APIBookD.Controllers.ListControllers
         }
 
         // add book to an existing list. This happens via using ListBook relation. 
-        [HttpPost]
+        [HttpPost("addbook")]
         public IActionResult AddBookToList(Guid listId, Guid bookId)
         {
             var listBook = new Models.Entities.List.ListBook
@@ -107,7 +107,7 @@ namespace APIBookD.Controllers.ListControllers
         }
 
         // remove book from a list. This happens via using ListBook relation.
-        [HttpDelete]
+        [HttpDelete("removebook")]
         public IActionResult RemoveBookFromList(Guid listId, Guid bookId)
         {
             var listBook = _context.ListBooks.Find(listId, bookId);

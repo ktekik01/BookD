@@ -16,7 +16,7 @@ namespace APIBookD.Controllers.FollowControllers
         }
 
         // get all followers of a user
-        [HttpGet("user/{id}")]
+        [HttpGet("followers/{id}")]
         public IActionResult GetFollowersByUserId(string id)
         {
             if (Guid.TryParse(id, out Guid userId))
@@ -31,7 +31,7 @@ namespace APIBookD.Controllers.FollowControllers
         }
 
         // get all users followed by a user
-        [HttpGet("user/{id}")]
+        [HttpGet("followings/{id}")]
         public IActionResult GetFollowingsByUserId(string id)
         {
             if (Guid.TryParse(id, out Guid userId))
@@ -46,7 +46,7 @@ namespace APIBookD.Controllers.FollowControllers
         }
 
         //count the number of followers of a user
-        [HttpGet("user/{id}")]
+        [HttpGet("followers/count/{id}")]
         public IActionResult GetFollowersCountByUserId(string id)
         {
             if (Guid.TryParse(id, out Guid userId))
@@ -62,7 +62,7 @@ namespace APIBookD.Controllers.FollowControllers
 
         // count the number of users followed by a user
 
-        [HttpGet("user/{id}")]
+        [HttpGet("followings/count/{id}")]
         public IActionResult GetFollowingsCountByUserId(string id)
         {
             if (Guid.TryParse(id, out Guid userId))

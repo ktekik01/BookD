@@ -214,6 +214,51 @@ namespace APIBookD.Controllers.BookControllers
         }
 
 
+        // rate a book. If the rating is not between 1 and 5, return a message saying that the rating is invalid.
+        [HttpPost("rate/{id}")]
+        public IActionResult RateBook(Guid id, int rating)
+        {
+            if (rating < 1 || rating > 5)
+            {
+                return BadRequest("Invalid rating. The rating must be between 1 and 5.");
+            }
+
+            var book = _context.Books.FirstOrDefault(b => b.Id == id);
+
+            if (book == null)
+            {
+                return BadRequest("The book does not exist.");
+            }
+
+            book.AverageRating = (book.AverageRating + rating) / 2;
+            _context.SaveChanges();
+            return Ok(book);
+        }
+
+        // get all the reviews of a book. If the book does not exist, return a message saying that the book does not exist.
+        [HttpGet("reviews/{id}")]
+        public IActionResult GetReviewsByBookId(string id)
+        {
+            if (Guid.TryParse(id, out Guid bookId))
+            {
+                var book = _context.Books.FirstOrDefault(b => b.Id == bookId);
+
+                if (book == null)
+                {
+                    return BadRequest("The book does not exist.");
+                }
+
+                var reviews = _context.Reviews.Where(r => r.BookId == bookId).ToList();
+                return Ok(reviews);
+            }
+            else
+            {
+                return BadRequest("Invalid Book Id");
+            }
+        }
+
+
+
 
     }
 }

@@ -16,7 +16,6 @@
         // review text
 
         public string ReviewText { get; set; }
-        public int Upvotes { get; set; }
-        public int Downvotes { get; set; }
+
     }
 }

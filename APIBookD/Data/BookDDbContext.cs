@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using APIBookD.Models.Entities;
+using APIBookD.Models.Entities.List;
+using Microsoft.EntityFrameworkCore;
 
 namespace APIBookD.Data
 {
@@ -32,9 +34,25 @@ namespace APIBookD.Data
 
         public DbSet<APIBookD.Models.Entities.List.ListBook> ListBooks { get; set; }
 
+        public DbSet<APIBookD.Models.Entities.Review.VoteReview> VoteReviews { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            // Define composite key for Follow entity
+            modelBuilder.Entity<Follow>()
+                .HasKey(f => new { f.FollowerId, f.FollowedId });
+
+            // Define composite key for ListBook entity
+            modelBuilder.Entity<ListBook>()
+                .HasKey(lb => new { lb.ListId, lb.BookId });
+
+            // Optional: Additional configurations for relationships or constraints can be added here
+        }
 
 
 
-        
+
     }
 }
