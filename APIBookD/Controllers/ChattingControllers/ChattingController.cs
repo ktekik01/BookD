@@ -17,7 +17,7 @@ namespace APIBookD.Controllers.ChattingControllers
         }
 
         // get all chats
-        [HttpGet]
+        [HttpGet("GetChats")]
         public IActionResult GetChats()
         {
             var chats = _context.Chats.ToList();
@@ -25,7 +25,7 @@ namespace APIBookD.Controllers.ChattingControllers
         }
 
         // get all messages in the database
-        [HttpGet]
+        [HttpGet("GetMessages")]
         public IActionResult GetMessages()
         {
             var messages = _context.Messages.ToList();
@@ -33,7 +33,7 @@ namespace APIBookD.Controllers.ChattingControllers
         }
 
         // get all messages of a chat
-        [HttpGet("chat/{id}")]
+        [HttpGet("chat/{id}/messages")]
         public IActionResult GetMessagesByChatId(string id)
         {
             if (Guid.TryParse(id, out Guid chatId))
@@ -48,7 +48,7 @@ namespace APIBookD.Controllers.ChattingControllers
         }
 
         // get all messages sent by a user
-        [HttpGet("user/{id}")]
+        [HttpGet("user/sent/{id}")]
         public IActionResult GetMessagesByUserId(string id)
         {
             if (Guid.TryParse(id, out Guid userId))
@@ -63,7 +63,7 @@ namespace APIBookD.Controllers.ChattingControllers
         }
 
         // get all messages received by a user
-        [HttpGet("user/{id}")]
+        [HttpGet("user/received/{id}")]
         public IActionResult GetMessagesReceivedByUserId(string id)
         {
             if (Guid.TryParse(id, out Guid userId))
@@ -121,7 +121,64 @@ namespace APIBookD.Controllers.ChattingControllers
             return Ok(message);
         }
 
-        // delete message.
+        // delete message. First, remove the message from the Messages list of the Chat entity. Then, remove the message from the Messages table.
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteMessage(string id)
+        {
+            if (Guid.TryParse(id, out Guid messageId))
+            {
+                var message = _context.Messages.FirstOrDefault(m => m.Id == messageId);
+                if (message != null)
+                {
+                    var chat = _context.Chats.FirstOrDefault(c => c.Id == message.ChatId);
+                    chat.Messages.Remove(message.Id);
+                    _context.Messages.Remove(message);
+                    _context.SaveChanges();
+                    return Ok("Message deleted");
+                }
+                else
+                {
+                    return NotFound("Message not found");
+                }
+            }
+            else
+            {
+                return BadRequest("Invalid Message Id");
+            }
+        }
+
+        // delete chat. First, remove all messages of the chat from the Messages table. Then, remove the chat from the Chats table.
+
+        [HttpDelete("chat/{id}")]
+        public IActionResult DeleteChat(string id)
+        {
+            if (Guid.TryParse(id, out Guid chatId))
+            {
+                var chat = _context.Chats.FirstOrDefault(c => c.Id == chatId);
+                if (chat != null)
+                {
+                    foreach (var messageId in chat.Messages)
+                    {
+                        var message = _context.Messages.FirstOrDefault(m => m.Id == messageId);
+                        _context.Messages.Remove(message);
+                    }
+                    _context.Chats.Remove(chat);
+                    _context.SaveChanges();
+                    return Ok("Chat deleted");
+                }
+                else
+                {
+                    return NotFound("Chat not found");
+                }
+            }
+            else
+            {
+                return BadRequest("Invalid Chat Id");
+            }
+        }
+
+
 
     }
 }

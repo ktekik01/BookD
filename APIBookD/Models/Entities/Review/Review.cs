@@ -18,8 +18,17 @@
         // review text
 
         public string ReviewText { get; set; }
-        public int Upvotes { get; set; }
-        public int Downvotes { get; set; }
+
+
+        // upvotes list
+        public List<Guid> Upvotes { get; set; }
+
+        // downvotes list
+
+        public List<Guid> Downvotes { get; set; }
+
+        //datetime
+        public DateTime ReviewDate { get; set; }
 
 
     }

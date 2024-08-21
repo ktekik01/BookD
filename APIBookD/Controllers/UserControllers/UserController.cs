@@ -36,7 +36,7 @@ namespace APIBookD.Controllers.UserControllers
         // add reviewer, this means in the same function, first add to user table, then add to reviewer table.
         // first of all check if the email is already in the database. If it is, return a message saying that the email is already in the database.
         // If not, add the reviewer to the database.
-        [HttpPost]
+        [HttpPost("reviewer")]
         public IActionResult AddReviewer(ReviewerDTO _reviewer)
         {
 
@@ -84,7 +84,7 @@ namespace APIBookD.Controllers.UserControllers
         }
 
 
-        [HttpPost]
+        [HttpPost("admin")]
         public IActionResult AddAdmin(User _admin)
         {
             var user = new User
