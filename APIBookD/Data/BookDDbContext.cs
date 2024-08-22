@@ -1,5 +1,6 @@
 ﻿using APIBookD.Models.Entities;
 using APIBookD.Models.Entities.List;
+using APIBookD.Models.Entities.User;
 using Microsoft.EntityFrameworkCore;
 
 namespace APIBookD.Data
@@ -15,10 +16,6 @@ namespace APIBookD.Data
         public DbSet<APIBookD.Models.Entities.Follow> Follows { get; set; }
 
         public DbSet<APIBookD.Models.Entities.User.User> Users  { get; set; }
-
-        public DbSet<APIBookD.Models.Entities.User.Admin> Admins { get; set; }
-
-        public DbSet<APIBookD.Models.Entities.User.Reviewer> Reviewers { get; set; }
 
         public DbSet<APIBookD.Models.Entities.Book.Book> Books { get; set; }
 
@@ -49,6 +46,15 @@ namespace APIBookD.Data
                 .HasKey(lb => new { lb.ListId, lb.BookId });
 
             // Optional: Additional configurations for relationships or constraints can be added here
+
+
+            // Configure Inheritance
+            modelBuilder.Entity<User>()
+                .HasDiscriminator<string>("UserType")
+                .HasValue<User>("User")
+                .HasValue<Reviewer>("Reviewer")
+                .HasValue<Admin>("Admin");
+
         }
 
 

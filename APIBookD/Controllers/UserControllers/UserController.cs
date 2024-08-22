@@ -5,6 +5,10 @@ using APIBookD.Models.Entities.User.UserDTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using System.Security.Cryptography;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using APIBookD.JwtFeatures;
 
 
 namespace APIBookD.Controllers.UserControllers
@@ -15,6 +19,8 @@ namespace APIBookD.Controllers.UserControllers
     {
 
         private readonly BookDDbContext _context;
+        //private readonly IEmailService _emailService;
+        //private readonly JwtHandler _jwtHandler;
 
 
         public UserController(BookDDbContext context)
@@ -36,15 +42,19 @@ namespace APIBookD.Controllers.UserControllers
         // add reviewer, this means in the same function, first add to user table, then add to reviewer table.
         // first of all check if the email is already in the database. If it is, return a message saying that the email is already in the database.
         // If not, add the reviewer to the database.
-        [HttpPost("reviewer")]
-        public IActionResult AddReviewer(ReviewerDTO _reviewer)
-        {
 
-            // check if the email is already in the database
+        [HttpPost("reviewer")]
+        public async Task<IActionResult> AddReviewer(ReviewerDTO _reviewer)
+        {
             var check = _context.Users.FirstOrDefault(u => u.Email == _reviewer.Email);
-            if (check == null) {
+            if (check != null)
+            {
                 return BadRequest("The email is already in the database.");
             }
+
+            var token = Guid.NewGuid().ToString(); // Generate a unique token
+
+            var temp = 0;
 
             var user = new User
             {
@@ -53,7 +63,7 @@ namespace APIBookD.Controllers.UserControllers
                 Surname = _reviewer.Surname,
                 Email = _reviewer.Email,
                 Password = _reviewer.Password,
-                UserType = "Reviewer"
+                UserType = "Reviewer",
             };
 
             _context.Users.Add(user);
@@ -72,7 +82,10 @@ namespace APIBookD.Controllers.UserControllers
 
             _context.Reviewers.Add(reviewer);
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
+
+            // Send verification email
+            //await _emailService.SendVerificationEmailAsync(user.Email, token);
 
             var response = new ReviewerResponseDTO
             {
@@ -82,6 +95,40 @@ namespace APIBookD.Controllers.UserControllers
 
             return Ok(response);
         }
+
+
+        /*
+        [HttpPost("authenticate")]
+        public async Task<IActionResult> Authenticate([FromBody] UserForAuthenticationDTO userForAuthentication)
+        {
+            var user = await _
+        } */
+
+
+
+        // verify email
+
+
+        /*
+        [HttpGet("verify")]
+        public async Task<IActionResult> VerifyEmail(string token)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.VerificationToken == token);
+
+            if (user == null)
+            {
+                return BadRequest("Invalid token.");
+            }
+
+            user.IsVerified = true;
+            user.VerificationToken = null; // Token can only be used once
+
+            await _context.SaveChangesAsync();
+
+            return Ok("Email verified successfully.");
+        }
+
+        */
 
 
         [HttpPost("admin")]
@@ -94,7 +141,7 @@ namespace APIBookD.Controllers.UserControllers
                 Surname = _admin.Surname,
                 Email = _admin.Email,
                 Password = _admin.Password,
-                UserType = "Admin"
+                UserType = "Admin",
             };
 
             _context.Users.Add(user);
