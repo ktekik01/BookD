@@ -4,6 +4,7 @@ using APIBookD.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace APIBookD.Migrations
 {
     [DbContext(typeof(BookDDbContext))]
-    partial class BookDDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240823080836_New Migration")]
+    partial class NewMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -332,8 +335,8 @@ namespace APIBookD.Migrations
             modelBuilder.Entity("APIBookD.Models.Entities.User.Reviewer", b =>
                 {
                     b.HasOne("APIBookD.Models.Entities.User.User", null)
-                        .WithMany()
-                        .HasForeignKey("Id")
+                        .WithOne()
+                        .HasForeignKey("APIBookD.Models.Entities.User.Reviewer", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

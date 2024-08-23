@@ -30,12 +30,13 @@ namespace APIBookD.Controllers.FollowControllers
             }
         }
 
-        // get all users followed by a user
+        // get all users followed by a user. return the user followed by the followerId
         [HttpGet("followings/{id}")]
         public IActionResult GetFollowingsByUserId(string id)
         {
             if (Guid.TryParse(id, out Guid userId))
             {
+               
                 var followings = _context.Follows.Where(f => f.FollowerId == userId).ToList();
                 return Ok(followings);
             }

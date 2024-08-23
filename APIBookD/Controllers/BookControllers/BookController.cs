@@ -28,9 +28,15 @@ namespace APIBookD.Controllers.BookControllers
 
         // get book by id
         [HttpGet("{id}")]
-        public IActionResult GetBookById(string id)
+        public IActionResult GetBookById(Guid id)
         {
             var book = _context.Books.Find(id);
+
+            if (book == null)
+            {
+                return BadRequest("The book does not exist.");
+            }
+
             return Ok(book);
         }
 
@@ -216,7 +222,7 @@ namespace APIBookD.Controllers.BookControllers
 
         // rate a book. If the rating is not between 1 and 5, return a message saying that the rating is invalid.
         [HttpPost("rate/{id}")]
-        public IActionResult RateBook(Guid id, int rating)
+        public IActionResult RateBook(Guid id, int rating, Guid userId)
         {
             if (rating < 1 || rating > 5)
             {

@@ -17,6 +17,10 @@ namespace APIBookD.Data
 
         public DbSet<APIBookD.Models.Entities.User.User> Users  { get; set; }
 
+        public DbSet<APIBookD.Models.Entities.User.Reviewer> Reviewers { get; set; }
+
+        public DbSet<APIBookD.Models.Entities.User.Admin> Admins { get; set; }
+
         public DbSet<APIBookD.Models.Entities.Book.Book> Books { get; set; }
 
         public DbSet<APIBookD.Models.Entities.Chatting.Chat> Chats { get; set; }
@@ -37,6 +41,18 @@ namespace APIBookD.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            // Configure Table-per-Type (TPT) Inheritance
+            modelBuilder.Entity<User>().ToTable("Users");
+            modelBuilder.Entity<Reviewer>().ToTable("Reviewers");
+            modelBuilder.Entity<Admin>().ToTable("Admins");
+
+
+            modelBuilder.Entity<Reviewer>()
+                .HasOne<User>() // Define relationship if needed
+                .WithMany() // Define collection navigation if needed
+                .HasForeignKey(r => r.Id) // Adjust as per your design
+                .OnDelete(DeleteBehavior.Cascade);
+
             // Define composite key for Follow entity
             modelBuilder.Entity<Follow>()
                 .HasKey(f => new { f.FollowerId, f.FollowedId });
@@ -44,18 +60,8 @@ namespace APIBookD.Data
             // Define composite key for ListBook entity
             modelBuilder.Entity<ListBook>()
                 .HasKey(lb => new { lb.ListId, lb.BookId });
-
-            // Optional: Additional configurations for relationships or constraints can be added here
-
-
-            // Configure Inheritance
-            modelBuilder.Entity<User>()
-                .HasDiscriminator<string>("UserType")
-                .HasValue<User>("User")
-                .HasValue<Reviewer>("Reviewer")
-                .HasValue<Admin>("Admin");
-
         }
+
 
 
 
