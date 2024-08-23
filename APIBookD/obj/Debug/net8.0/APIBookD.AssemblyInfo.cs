@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("APIBookD")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+597a31a915b4ddaf520fcad2ad9b3a0c612bf889")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+05a47751a4d2106ac3469c0e9ab58cef47d4d2f9")]
 [assembly: System.Reflection.AssemblyProductAttribute("APIBookD")]
 [assembly: System.Reflection.AssemblyTitleAttribute("APIBookD")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
