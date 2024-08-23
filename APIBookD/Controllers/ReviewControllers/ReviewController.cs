@@ -27,7 +27,7 @@ namespace APIBookD.Controllers.ReviewControllers
 
         // get review by id
         [HttpGet("{id}")]
-        public IActionResult GetReviewById(string id)
+        public IActionResult GetReviewById(Guid id)
         {
             var review = _context.Reviews.Find(id);
             return Ok(review);
@@ -96,139 +96,128 @@ namespace APIBookD.Controllers.ReviewControllers
         }
 
 
-        // upvote a review. If the user has already upvoted the review, remove the upvote. If the user has downvoted the review, remove the downvote and add the upvote.
-        // If the user has not upvoted the review, add the upvote.
-        // add user id to upvotes list of a review.
-        // then, add user id and review id to VoteReview object.
-
         [HttpPost("upvote")]
-
         public IActionResult UpvoteReview(Guid reviewId, Guid userId)
         {
-               
-            // check if the user has already upvoted the review
             var review = _context.Reviews.Find(reviewId);
+            if (review == null)
+            {
+                return NotFound("Review not found");
+            }
+
+            var reviewer = _context.Reviewers.Find(userId);
+            if (reviewer == null)
+            {
+                return NotFound("Reviewer not found");
+            }
+
             if (review.Upvotes.Contains(userId))
             {
                 review.Upvotes.Remove(userId);
+                reviewer.UpvotedReviews.Remove(reviewId);
+
+                var existingVote = _context.VoteReviews.FirstOrDefault(v => v.ReviewId == reviewId && v.UserId == userId);
+                if (existingVote != null)
+                {
+                    _context.VoteReviews.Remove(existingVote);
+                }
+
                 _context.SaveChanges();
                 return Ok("Upvote removed");
             }
             else
             {
-                // check if the user has downvoted the review
                 if (review.Downvotes.Contains(userId))
                 {
                     review.Downvotes.Remove(userId);
+                    reviewer.DownvotedReviews.Remove(reviewId);
 
-                    // remove from VoteReview
-
-                    var vote = _context.VoteReviews.FirstOrDefault(v => v.ReviewId == reviewId && v.UserId == userId);
-                    _context.VoteReviews.Remove(vote);
-
-                    review.Upvotes.Add(userId);
-
-                    // add to VoteReview
-
-                    var newVote = new Models.Entities.Review.VoteReview
+                    var existingVote = _context.VoteReviews.FirstOrDefault(v => v.ReviewId == reviewId && v.UserId == userId);
+                    if (existingVote != null)
                     {
-                        Id = Guid.NewGuid(),
-                        ReviewId = reviewId,
-                        UserId = userId,
-                        Vote = true // means upvote
-                    };
-
-                    _context.SaveChanges();
-
-                    return Ok("Downvote removed and upvote added");
+                        _context.VoteReviews.Remove(existingVote);
+                    }
                 }
-                else
+
+                review.Upvotes.Add(userId);
+                reviewer.UpvotedReviews.Add(reviewId);
+
+                var newVote = new Models.Entities.Review.VoteReview
                 {
-                    review.Upvotes.Add(userId);
+                    Id = Guid.NewGuid(),
+                    ReviewId = reviewId,
+                    UserId = userId,
+                    Vote = true // means upvote
+                };
 
-                    // add to VoteReview
-
-                    var vote = new Models.Entities.Review.VoteReview
-                    {
-                        Id = Guid.NewGuid(),
-                        ReviewId = reviewId,
-                        UserId = userId,
-                        Vote = true // means upvote
-                    };
-
-                    _context.SaveChanges();
-                    return Ok("Upvote added");
-                }
+                _context.VoteReviews.Add(newVote);
+                _context.SaveChanges();
+                return Ok("Upvote added");
             }
-
-
         }
 
-        // downvote a review. If the user has already downvoted the review, remove the downvote. If the user has upvoted the review, remove the upvote and add the downvote.
-        // If the user has not downvoted the review, add the downvote.
-        // add user id to downvotes list of a review.
-        // then, add user id and review id to VoteReview object.
 
         [HttpPost("downvote")]
-
         public IActionResult DownvoteReview(Guid reviewId, Guid userId)
         {
-            // check if the user has already downvoted the review
             var review = _context.Reviews.Find(reviewId);
+            if (review == null)
+            {
+                return NotFound("Review not found");
+            }
+
+            var reviewer = _context.Reviewers.Find(userId);
+            if (reviewer == null)
+            {
+                return NotFound("Reviewer not found");
+            }
+
             if (review.Downvotes.Contains(userId))
             {
                 review.Downvotes.Remove(userId);
+                reviewer.DownvotedReviews.Remove(reviewId);
+
+                var existingVote = _context.VoteReviews.FirstOrDefault(v => v.ReviewId == reviewId && v.UserId == userId);
+                if (existingVote != null)
+                {
+                    _context.VoteReviews.Remove(existingVote);
+                }
+
                 _context.SaveChanges();
                 return Ok("Downvote removed");
             }
             else
             {
-                // check if the user has upvoted the review
                 if (review.Upvotes.Contains(userId))
                 {
                     review.Upvotes.Remove(userId);
+                    reviewer.UpvotedReviews.Remove(reviewId);
 
-                    // remove from VoteReview
-
-                    var vote = _context.VoteReviews.FirstOrDefault(v => v.ReviewId == reviewId && v.UserId == userId);
-                    _context.VoteReviews.Remove(vote);
-
-                    review.Downvotes.Add(userId);
-
-                    // add to VoteReview
-
-                    var newVote = new Models.Entities.Review.VoteReview
+                    var existingVote = _context.VoteReviews.FirstOrDefault(v => v.ReviewId == reviewId && v.UserId == userId);
+                    if (existingVote != null)
                     {
-                        Id = Guid.NewGuid(),
-                        ReviewId = reviewId,
-                        UserId = userId,
-                        Vote = false // means downvote
-                    };
-
-                    _context.SaveChanges();
-
-                    return Ok("Upvote removed and downvote added");
+                        _context.VoteReviews.Remove(existingVote);
+                    }
                 }
-                else
+
+                review.Downvotes.Add(userId);
+                reviewer.DownvotedReviews.Add(reviewId);
+
+                var newVote = new Models.Entities.Review.VoteReview
                 {
-                    review.Downvotes.Add(userId);
+                    Id = Guid.NewGuid(),
+                    ReviewId = reviewId,
+                    UserId = userId,
+                    Vote = false // means downvote
+                };
 
-                    // add to VoteReview
-
-                    var vote = new Models.Entities.Review.VoteReview
-                    {
-                        Id = Guid.NewGuid(),
-                        ReviewId = reviewId,
-                        UserId = userId,
-                        Vote = false // means downvote
-                    };
-
-                    _context.SaveChanges();
-                    return Ok("Downvote added");
-                }
+                _context.VoteReviews.Add(newVote);
+                _context.SaveChanges();
+                return Ok("Downvote added");
             }
         }
-        
+
+
 
         // delete a review. First remove all comments to the review, then remove all up and downvotes to the review, then remove the review.
 
@@ -293,5 +282,76 @@ namespace APIBookD.Controllers.ReviewControllers
             }
         }
 
+        // get all the review that a user has upvoted and downvoted
+        [HttpGet("user/{id}")]
+        public IActionResult GetReviewsByUserId(string id)
+        {
+            if (Guid.TryParse(id, out Guid userId))
+            {
+                var upvotedReviews = _context.VoteReviews.Where(v => v.UserId == userId && v.Vote == true).ToList();
+                var downvotedReviews = _context.VoteReviews.Where(v => v.UserId == userId && v.Vote == false).ToList();
+                return Ok(new { upvotedReviews, downvotedReviews });
+            }
+            else
+            {
+                return BadRequest("Invalid User Id");
+            }
+        }
+
+        // get all upvotes and downvotes of a review
+        [HttpGet("votes/{id}")]
+        public IActionResult GetVotesOfReview(string id)
+        {
+            if (Guid.TryParse(id, out Guid reviewId))
+            {
+                var review = _context.Reviews.Find(reviewId);
+                if (review != null)
+                {
+                    var upvotes = _context.VoteReviews.Where(v => v.ReviewId == reviewId && v.Vote == true).ToList();
+                    var downvotes = _context.VoteReviews.Where(v => v.ReviewId == reviewId && v.Vote == false).ToList();
+                    return Ok(new { upvotes, downvotes });
+                }
+                else
+                {
+                    return BadRequest("Review not found");
+                }
+            }
+            else
+            {
+                return BadRequest("Invalid Review Id");
+            }
+        }
+
+        // get all comments to a review
+        [HttpGet("comments/{id}")]
+        public IActionResult GetCommentsToReview(string id)
+        {
+            if (Guid.TryParse(id, out Guid reviewId))
+            {
+                var comments = _context.CommentToReviews.Where(c => c.ReviewId == reviewId).ToList();
+                return Ok(comments);
+            }
+            else
+            {
+                return BadRequest("Invalid Review Id");
+            }
+        }
+
+
+        // get all comments that a user has made
+        [HttpGet("comments/user/{id}")]
+        public IActionResult GetCommentsByUserId(string id)
+        {
+            if (Guid.TryParse(id, out Guid userId))
+            {
+                var comments = _context.CommentToReviews.Where(c => c.UserId == userId).ToList();
+                return Ok(comments);
+            }
+            else
+            {
+                return BadRequest("Invalid User Id");
+            }
+        }
     }
+
 }

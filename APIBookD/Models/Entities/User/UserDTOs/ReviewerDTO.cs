@@ -12,7 +12,7 @@
         public string Password { get; set; }
 
         //profile picture
-        public string ProfilePicture { get; set; }
+        public string? ProfilePicture { get; set; }
 
         // bio
         public string Biography { get; set; }

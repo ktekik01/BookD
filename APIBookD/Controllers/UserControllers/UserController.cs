@@ -39,24 +39,17 @@ namespace APIBookD.Controllers.UserControllers
         }
 
 
-        // add reviewer, this means in the same function, first add to user table, then add to reviewer table.
-        // first of all check if the email is already in the database. If it is, return a message saying that the email is already in the database.
-        // If not, add the reviewer to the database.
 
         [HttpPost("reviewer")]
         public async Task<IActionResult> AddReviewer(ReviewerDTO _reviewer)
         {
-            var check = _context.Users.FirstOrDefault(u => u.Email == _reviewer.Email);
-            if (check != null)
+            var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == _reviewer.Email);
+            if (existingUser != null)
             {
                 return BadRequest("The email is already in the database.");
             }
 
-            var token = Guid.NewGuid().ToString(); // Generate a unique token
-
-            var temp = 0;
-
-            var user = new User
+            var reviewer = new Reviewer
             {
                 Id = Guid.NewGuid(),
                 Name = _reviewer.Name,
@@ -64,37 +57,21 @@ namespace APIBookD.Controllers.UserControllers
                 Email = _reviewer.Email,
                 Password = _reviewer.Password,
                 UserType = "Reviewer",
-            };
-
-            _context.Users.Add(user);
-
-            var reviewer = new Reviewer
-            {
-                Id = user.Id,
-                Name = _reviewer.Name,
-                Surname = _reviewer.Surname,
-                Email = _reviewer.Email,
-                Password = _reviewer.Password,
                 ProfilePicture = _reviewer.ProfilePicture,
                 Biography = _reviewer.Biography,
-                DateOfBirth = _reviewer.DateOfBirth
+                DateOfBirth = _reviewer.DateOfBirth,
+                Followers = new List<Guid>(),
+                Following = new List<Guid>(),
+                UpvotedReviews = new List<Guid>(),
+                DownvotedReviews = new List<Guid>()
             };
 
             _context.Reviewers.Add(reviewer);
-
             await _context.SaveChangesAsync();
 
-            // Send verification email
-            //await _emailService.SendVerificationEmailAsync(user.Email, token);
-
-            var response = new ReviewerResponseDTO
-            {
-                User = user,
-                Reviewer = reviewer
-            };
-
-            return Ok(response);
+            return Ok(reviewer);
         }
+
 
 
         /*
@@ -132,40 +109,32 @@ namespace APIBookD.Controllers.UserControllers
 
 
         [HttpPost("admin")]
-        public IActionResult AddAdmin(User _admin)
+        public IActionResult AddAdmin(AdminDTO admin)
         {
-            var user = new User
+            
+
+            var existingUser = _context.Users.FirstOrDefault(u => u.Email == admin.Email);
+            if (existingUser != null)
+            {
+                return BadRequest("The email is already in the database.");
+            }
+
+            var newAdmin = new Admin
             {
                 Id = Guid.NewGuid(),
-                Name = _admin.Name,
-                Surname = _admin.Surname,
-                Email = _admin.Email,
-                Password = _admin.Password,
+                Name = admin.Name,
+                Surname = admin.Surname,
+                Email = admin.Email,
+                Password = admin.Password,
                 UserType = "Admin",
+                AdminRole = admin.AdminRole
             };
 
-            _context.Users.Add(user);
-
-            var admin = new Admin
-            {
-                Id = user.Id,
-                Name = _admin.Name,
-                Surname = _admin.Surname,
-                Email = _admin.Email,
-                Password = _admin.Password
-            };
-
-            _context.Admins.Add(admin);
-
+            _context.Admins.Add(newAdmin);
             _context.SaveChanges();
 
-            var response = new AdminResponseDTO
-            {
-                User = user,
-                Admin = admin
-            };
 
-            return Ok(response);
+            return Ok(admin);
         }
 
 
@@ -181,6 +150,8 @@ namespace APIBookD.Controllers.UserControllers
         [HttpPut("{id}")]
         public IActionResult UpdateReviewer(Guid id, ReviewerDTO _reviewer)
         {
+            
+            
             var user = _context.Users.FirstOrDefault(u => u.Id == id);
             var reviewer = _context.Reviewers.FirstOrDefault(r => r.Id == id);
 
@@ -230,30 +201,20 @@ namespace APIBookD.Controllers.UserControllers
 
             _context.SaveChanges();
 
-            var response = new ReviewerResponseDTO
-            {
-                User = user,
-                Reviewer = reviewer
-            };
-
-            return Ok(response);
+            return Ok(reviewer); 
         }
 
         // delete reviewer
         [HttpDelete("{id}")]
-        public IActionResult DeleteReviewer(Guid id)
+        public async Task<IActionResult> DeleteReviewer(Guid id)
         {
-            var user = _context.Users.FirstOrDefault(u => u.Id == id);
-            var reviewer = _context.Reviewers.FirstOrDefault(r => r.Id == id);
-
-            if (user == null || reviewer == null)
+            var user = _context.Users.Find(id); // Use Find for primary key lookup
+            if (user == null)
             {
                 return NotFound();
             }
 
-            _context.Users.Remove(user);
-            _context.Reviewers.Remove(reviewer);
-
+            _context.Users.Remove(user); // This will also remove related entities if cascading is configured
             _context.SaveChanges();
 
             return Ok();
