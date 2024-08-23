@@ -254,11 +254,6 @@ namespace APIBookD.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasMaxLength(8)
-                        .HasColumnType("nvarchar(8)");
-
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -277,13 +272,14 @@ namespace APIBookD.Migrations
 
                     b.Property<string>("UserType")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(8)
+                        .HasColumnType("nvarchar(8)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Users");
 
-                    b.HasDiscriminator().HasValue("User");
+                    b.HasDiscriminator<string>("UserType").HasValue("User");
 
                     b.UseTphMappingStrategy();
                 });
@@ -310,6 +306,9 @@ namespace APIBookD.Migrations
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("DownvotedReviews")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Followers")
                         .HasColumnType("nvarchar(max)");
 
@@ -321,9 +320,6 @@ namespace APIBookD.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpvotedReviews")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("downvotedReviews")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasDiscriminator().HasValue("Reviewer");

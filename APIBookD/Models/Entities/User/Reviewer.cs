@@ -26,7 +26,10 @@
 
         // downvoted reviews
 
-        public List<Guid>? downvotedReviews { get; set; }
+        public List<Guid>? DownvotedReviews { get; set; }
+
+
+
 
 
     }
