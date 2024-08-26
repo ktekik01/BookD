@@ -1,0 +1,10 @@
+<div *ngIf="users$ | async as users; else noUsers">
+    <ul>
+      <li *ngFor="let user of users">
+        <app-user-component [user]="user"></app-user-component>
+      </li>
+    </ul>
+  </div>
+  <ng-template #noUsers>
+    <p>No users available.</p>
+  </ng-template>

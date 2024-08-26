@@ -1,0 +1,10 @@
+<div *ngIf="lists$ | async as lists; else noLists">
+    <ul>
+      <li *ngFor="let list of lists">
+        <app-list-component [list]="list"></app-list-component>
+      </li>
+    </ul>
+  </div>
+  <ng-template #noLists>
+    <p>No lists available.</p>
+  </ng-template>

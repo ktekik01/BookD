@@ -1,0 +1,10 @@
+<div *ngIf="listDetail; else noDetail">
+    <h2>{{ listDetail.title }}</h2>
+    <p>{{ listDetail.description }}</p>
+    <p>{{ listDetail.type }}</p>
+    <!-- Add more details if needed -->
+  </div>
+  <ng-template #noDetail>
+    <p>Loading...</p>
+  </ng-template>
+  

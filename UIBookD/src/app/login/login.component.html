@@ -1,0 +1,20 @@
+<div class="login-container">
+    <h1>Login for a BookD account</h1>    
+    <form (ngSubmit)="onLogin($event)" [formGroup]="loginForm" class="px-4">
+        <h1 class="py-10 font-extrabold text-5xl">Login</h1>
+    
+        <div class="mt-2">
+            <label for="email" class="font-bold">Email</label>
+            <input type="email" id="email" class="w-full p-2 border-2 rounded-sm mt-2" formControlName="email">
+        </div>
+    
+        <div class="mt-2">
+            <label for="password" class="font-bold">Password</label>
+            <input type="password" id="password" class="w-full p-2 border-2 rounded-sm mt-2" formControlName="password">
+        </div>
+    
+        <div class="mt-2">
+            <button type="submit" class="bg-slate-800 text-white px-4 py-2 rounded-sm w-full">Login</button>
+        </div>
+    </form>
+</div>

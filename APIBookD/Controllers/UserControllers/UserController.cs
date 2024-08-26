@@ -41,7 +41,7 @@ namespace APIBookD.Controllers.UserControllers
 
 
         [HttpPost("reviewer")]
-        public async Task<IActionResult> AddReviewer(ReviewerDTO _reviewer)
+        public async Task<IActionResult> AddReviewer([FromBody] ReviewerDTO _reviewer)
         {
             var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == _reviewer.Email);
             if (existingUser != null)

@@ -1,4 +1,5 @@
 ﻿using APIBookD.Models.Entities;
+using APIBookD.Models.Entities.Book;
 using APIBookD.Models.Entities.List;
 using APIBookD.Models.Entities.User;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,8 @@ namespace APIBookD.Data
         public DbSet<APIBookD.Models.Entities.User.Admin> Admins { get; set; }
 
         public DbSet<APIBookD.Models.Entities.Book.Book> Books { get; set; }
+
+        public DbSet<APIBookD.Models.Entities.Book.BookRates> BookRates { get; set; }
 
         public DbSet<APIBookD.Models.Entities.Chatting.Chat> Chats { get; set; }
 
@@ -60,6 +63,14 @@ namespace APIBookD.Data
             // Define composite key for ListBook entity
             modelBuilder.Entity<ListBook>()
                 .HasKey(lb => new { lb.ListId, lb.BookId });
+
+            
+            modelBuilder.Entity<BookRates>()
+            .HasKey(br => new { br.BookId, br.UserId });
+
+            modelBuilder.Entity<BookRates>()
+            .Property(br => br.Rating)
+            .HasColumnType("float");  // This ensures the Rating is stored as float 
         }
 
 

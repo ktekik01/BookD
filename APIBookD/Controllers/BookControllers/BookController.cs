@@ -3,6 +3,7 @@ using APIBookD.Models.Entities.Book;
 using APIBookD.Models.Entities.Book.BookDTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace APIBookD.Controllers.BookControllers
 {
@@ -20,10 +21,34 @@ namespace APIBookD.Controllers.BookControllers
 
         // get all books
         [HttpGet]
-        public IActionResult GetBooks()
+        public async Task<IActionResult> GetBooks()
         {
-            var books = _context.Books.ToList();
-            return Ok(books);
+            //var books = _context.Books.ToList();
+            //return Ok(books);
+
+            var books = await _context.Books.ToListAsync();
+
+            var response = new List<Book>();
+
+            foreach (var book in books)
+            {
+                response.Add(new Book{
+                    Id = book.Id,
+                        Title = book.Title,
+                        Author = book.Author,
+                        Genre = book.Genre,
+                        Description = book.Description,
+                        PublicationDate = book.PublicationDate,
+                        Publisher = book.Publisher,
+                        Image = book.Image,
+                        NumberOfPages = book.NumberOfPages,
+                        ISBN = book.ISBN,
+                        Language = book.Language,
+                        AverageRating = book.AverageRating
+                });
+            }
+
+            return Ok(response);
         }
 
         // get book by id
@@ -220,26 +245,181 @@ namespace APIBookD.Controllers.BookControllers
         }
 
 
-        // rate a book. If the rating is not between 1 and 5, return a message saying that the rating is invalid.
+
+        // rate a book. If the book does not exist, return a message saying that the book does not exist.
+        // if the user has already rated the book and tries to rate it again, change the rating to the new rating.
+        // update the average rating of the book.
+
         [HttpPost("rate/{id}")]
-        public IActionResult RateBook(Guid id, int rating, Guid userId)
+        public IActionResult RateBook(Guid id, Guid userId, float rating)
         {
-            if (rating < 1 || rating > 5)
+            using (var transaction = _context.Database.BeginTransaction())
             {
-                return BadRequest("Invalid rating. The rating must be between 1 and 5.");
+                try
+                {
+                    var book = _context.Books.FirstOrDefault(b => b.Id == id);
+
+                    if (book == null)
+                    {
+                        return BadRequest("The book does not exist.");
+                    }
+
+                    var rate = _context.BookRates.FirstOrDefault(r => r.BookId == id && r.UserId == userId);
+
+                    if (rate == null)
+                    {
+                        var newRate = new BookRates
+                        {
+                            Id = Guid.NewGuid(),
+                            BookId = id,
+                            Rating = rating,
+                            UserId = userId
+                        };
+
+                        _context.BookRates.Add(newRate);
+                    }
+                    else
+                    {
+                        rate.Rating = rating;
+                    }
+
+                    // Save changes before recalculating to ensure data is up-to-date
+                    _context.SaveChanges();
+
+                    // Re-fetch the data to get the most recent state
+                    var rates = _context.BookRates.Where(b => b.BookId == id).ToList();
+                    double sum = rates.Sum(r => r.Rating);
+
+                    book.AverageRating = rates.Count == 0 ? 0 : sum / rates.Count;
+
+                    _context.SaveChanges();
+
+                    transaction.Commit();
+
+                    return Ok(book);
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    return StatusCode(500, $"Internal server error: {ex.Message}");
+                }
             }
-
-            var book = _context.Books.FirstOrDefault(b => b.Id == id);
-
-            if (book == null)
-            {
-                return BadRequest("The book does not exist.");
-            }
-
-            book.AverageRating = (book.AverageRating + rating) / 2;
-            _context.SaveChanges();
-            return Ok(book);
         }
+
+
+
+        [HttpDelete("rate/{id}")]
+        public IActionResult DeleteRate(Guid id, Guid userId)
+        {
+            using (var transaction = _context.Database.BeginTransaction())
+            {
+                try
+                {
+                    var book = _context.Books.FirstOrDefault(b => b.Id == id);
+
+                    if (book == null)
+                    {
+                        return BadRequest("The book does not exist.");
+                    }
+
+                    var rate = _context.BookRates.FirstOrDefault(r => r.BookId == id && r.UserId == userId);
+
+                    if (rate == null)
+                    {
+                        return BadRequest("The user has not rated the book.");
+                    }
+
+                    _context.BookRates.Remove(rate);
+
+                    // Save changes before recalculating to ensure data is up-to-date
+                    _context.SaveChanges();
+
+                    // Re-fetch the ratings to get the most recent state
+                    var rates = _context.BookRates.Where(b => b.BookId == id).ToList();
+                    double sum = rates.Sum(r => r.Rating);
+
+                    book.AverageRating = rates.Count == 0 ? 0 : sum / rates.Count;
+
+                    _context.SaveChanges();
+
+                    transaction.Commit();
+
+                    return Ok(book);
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    return StatusCode(500, $"Internal server error: {ex.Message}");
+                }
+            }
+        }
+
+
+
+        // get all the ratings of a book. If the book does not exist, return a message saying that the book does not exist.
+        [HttpGet("rates/{id}")]
+        public IActionResult GetRatesByBookId(string id)
+        {
+            if (Guid.TryParse(id, out Guid bookId))
+            {
+                var book = _context.Books.FirstOrDefault(b => b.Id == bookId);
+
+                if (book == null)
+                {
+                    return BadRequest("The book does not exist.");
+                }
+
+                var rates = _context.BookRates.Where(r => r.BookId == bookId).ToList();
+                return Ok(rates);
+            }
+            else
+            {
+                return BadRequest("Invalid Book Id");
+            }
+        }
+
+        // get all ratings done in the system
+        [HttpGet("rates")]
+        public IActionResult GetRates()
+        {
+            var rates = _context.BookRates.ToList();
+            return Ok(rates);
+        }
+
+        // sort books by average rating in descending order
+        [HttpGet("sort/rating")]
+        public IActionResult SortBooksByRating()
+        {
+            var books = _context.Books.OrderByDescending(b => b.AverageRating).ToList();
+            return Ok(books);
+        }
+        
+
+        // sort books by publication date in descending order
+
+        [HttpGet("sort/date")]
+        public IActionResult SortBooksByDate()
+        {
+            var books = _context.Books.OrderByDescending(b => b.PublicationDate).ToList();
+            return Ok(books);
+        }
+
+        // sort books by number of pages in descending order
+        [HttpGet("sort/pages")]
+        public IActionResult SortBooksByPages()
+        {
+            var books = _context.Books.OrderByDescending(b => b.NumberOfPages).ToList();
+            return Ok(books);
+        }
+
+        // sort books by number of reviews writed in descending order
+        [HttpGet("sort/reviews")]
+        public IActionResult SortBooksByReviews()
+        {
+            var books = _context.Books.OrderByDescending(b => _context.Reviews.Where(r => r.BookId == b.Id).Count()).ToList();
+            return Ok(books);
+        }
+
 
         // get all the reviews of a book. If the book does not exist, return a message saying that the book does not exist.
         [HttpGet("reviews/{id}")]
