@@ -74,6 +74,25 @@ namespace APIBookD.Migrations
                     b.ToTable("Books");
                 });
 
+            modelBuilder.Entity("APIBookD.Models.Entities.Book.BookRates", b =>
+                {
+                    b.Property<Guid>("BookId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double>("Rating")
+                        .HasColumnType("float");
+
+                    b.HasKey("BookId", "UserId");
+
+                    b.ToTable("BookRates");
+                });
+
             modelBuilder.Entity("APIBookD.Models.Entities.Chatting.Chat", b =>
                 {
                     b.Property<Guid>("Id")

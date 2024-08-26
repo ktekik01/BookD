@@ -1,0 +1,10 @@
+<div *ngIf="reviews$ | async as reviews; else noReviews">
+    <ul>
+      <li *ngFor="let review of reviews">
+        <app-review-component [review]="review"></app-review-component>
+      </li>
+    </ul>
+  </div>
+  <ng-template #noReviews>
+    <p>No reviews available.</p>
+  </ng-template>

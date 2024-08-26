@@ -1,7 +1,9 @@
 ﻿using APIBookD.Data;
+using APIBookD.Models.Entities.Review;
 using APIBookD.Models.Entities.Review.ReviewDTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace APIBookD.Controllers.ReviewControllers
 {
@@ -19,10 +21,28 @@ namespace APIBookD.Controllers.ReviewControllers
 
         // get all reviews
         [HttpGet]
-        public IActionResult GetReviews()
+        public async Task<IActionResult> GetReviews()
         {
-            var reviews = _context.Reviews.ToList();
-            return Ok(reviews);
+            var reviews = await _context.Reviews.ToListAsync();
+
+            var response = new List<Review>();
+
+            foreach (var review in reviews)
+            {
+                response.Add(new Review
+                {
+                    Id = review.Id,
+                    Title = review.Title,
+                    UserId = review.UserId,
+                    BookId = review.BookId,
+                    ReviewText = review.ReviewText,
+                    Upvotes = review.Upvotes,
+                    Downvotes = review.Downvotes,
+                    ReviewDate = review.ReviewDate
+                });
+            }
+
+            return Ok(response);
         }
 
         // get review by id
@@ -52,7 +72,21 @@ namespace APIBookD.Controllers.ReviewControllers
         [HttpPost]
 
         public IActionResult AddReview(ReviewDTO reviewDTO)
-        {
+        {   
+            // check if the user exists
+            var user = _context.Reviewers.Find(reviewDTO.UserId);
+            if (user == null)
+            {
+                return NotFound("User not found");
+            }
+
+            // check if the book exists
+            var book = _context.Books.Find(reviewDTO.BookId);
+            if (book == null)
+            {
+                return NotFound("Book not found");
+            }
+
             // add the review to the database
 
             var review = new Models.Entities.Review.Review
@@ -352,6 +386,62 @@ namespace APIBookD.Controllers.ReviewControllers
                 return BadRequest("Invalid User Id");
             }
         }
+
+        // delete a comment
+        [HttpDelete("comment/{id}")]
+        public IActionResult DeleteComments(string id) {
+            if (Guid.TryParse(id, out Guid commentId))
+            {
+                var comment = _context.CommentToReviews.Find(commentId);
+                if (comment != null)
+                {
+                    _context.CommentToReviews.Remove(comment);
+                    _context.SaveChanges();
+                    return Ok("Comment deleted");
+                }
+                else
+                {
+                    return BadRequest("Comment not found");
+                }
+            }
+            else
+            {
+                return BadRequest("Invalid Comment Id");
+            }
+        }
+
+        // sort reviews by date
+        [HttpGet("sort/date")]
+        public IActionResult SortReviewsByDate()
+        {
+            var reviews = _context.Reviews.OrderByDescending(r => r.ReviewDate).ToList();
+            return Ok(reviews);
+        }
+
+        // sort reviews by upvotes number in descending order
+        [HttpGet("sort/upvotes")]
+        public IActionResult SortReviewsByUpvotes()
+        {
+            var reviews = _context.Reviews.OrderByDescending(r => r.Upvotes.Count).ToList();
+            return Ok(reviews);
+        }
+
+        // sort reviews by downvotes number in descending order
+        [HttpGet("sort/downvotes")]
+        public IActionResult SortReviewsByDownvotes()
+        {
+            var reviews = _context.Reviews.OrderByDescending(r => r.Downvotes.Count).ToList();
+            return Ok(reviews);
+        }
+
+        // sort reviews by the number of comments in descending order
+        [HttpGet("sort/comments")]
+        public IActionResult SortReviewsByComments()
+        {
+            var reviews = _context.Reviews.OrderByDescending(r => _context.CommentToReviews.Where(c => c.ReviewId == r.Id).Count()).ToList();
+            return Ok(reviews);
+        }
+
     }
 
 }

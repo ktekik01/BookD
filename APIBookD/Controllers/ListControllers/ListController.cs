@@ -1,4 +1,5 @@
 ﻿using APIBookD.Data;
+using APIBookD.Models.Entities.Book;
 using APIBookD.Models.Entities.List.ListDTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -22,6 +23,35 @@ namespace APIBookD.Controllers.ListControllers
         {
             var lists = _context.Lists.ToList();
             return Ok(lists);
+        }
+
+        // get the contents of a list. This is done by getting all books in the list using ListBook relation.
+        [HttpGet("contents/{id}")]
+        public IActionResult GetListContents(Guid id)
+        {
+            var listBooks = _context.ListBooks.Where(lb => lb.ListId == id).ToList();
+            var response = new List<Book>();
+
+            foreach (var listBook in listBooks)
+            {
+                response.Add(new Book
+                {
+                    Id = listBook.BookId,
+                    Title = _context.Books.FirstOrDefault(b => b.Id == listBook.BookId).Title,
+                    Author = _context.Books.FirstOrDefault(b => b.Id == listBook.BookId).Author,
+                    Genre = _context.Books.FirstOrDefault(b => b.Id == listBook.BookId).Genre,
+                    Description = _context.Books.FirstOrDefault(b => b.Id == listBook.BookId).Description,
+                    PublicationDate = _context.Books.FirstOrDefault(b => b.Id == listBook.BookId).PublicationDate,
+                    Publisher = _context.Books.FirstOrDefault(b => b.Id == listBook.BookId).Publisher,
+                    Image = _context.Books.FirstOrDefault(b => b.Id == listBook.BookId).Image,
+                    NumberOfPages = _context.Books.FirstOrDefault(b => b.Id == listBook.BookId).NumberOfPages,
+                    ISBN = _context.Books.FirstOrDefault(b => b.Id == listBook.BookId).ISBN,
+                    Language = _context.Books.FirstOrDefault(b => b.Id == listBook.BookId).Language,
+                    AverageRating = _context.Books.FirstOrDefault(b => b.Id == listBook.BookId).AverageRating
+                });
+            }
+
+            return Ok(response);
         }
 
         // get wishlist of a user

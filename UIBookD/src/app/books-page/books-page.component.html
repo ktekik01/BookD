@@ -1,0 +1,10 @@
+<div *ngIf="books$ | async as books; else noBooks">
+    <ul>
+      <li *ngFor="let book of books">
+        <app-book-component [book]="book"></app-book-component>
+      </li>
+    </ul>
+  </div>
+  <ng-template #noBooks>
+    <p>No books available.</p>
+  </ng-template>

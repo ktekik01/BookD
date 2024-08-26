@@ -1,0 +1,35 @@
+<div class="dashboard-container">
+    <header class="header">
+      <h1>Dashboard</h1>
+      <button class="menu-button" (click)="toggleMenu()">
+        ☰ Menu
+      </button>
+      <div class="menu" [ngClass]="{'show': isMenuOpen}">
+        <ul>
+          <li (click)="navigateTo('myprofile')">My Profile</li>
+          <li (click)="navigateTo('mylists')">My Lists</li>
+          <li (click)="navigateTo('myreviews')">My Reviews</li>
+          <li (click)="logout()">Log Out</li>
+        </ul>
+      </div>
+    </header>
+  
+    <div class="body">
+      <div class="box" (click)="navigateTo('reviews-page')">
+        <h2>Reviews</h2>
+      </div>
+      <div class="box" (click)="navigateTo('books-page')">
+        <h2>Books</h2>
+      </div>
+      <div class="box" (click)="navigateTo('chatting-page')">
+        <h2>Chatting</h2>
+      </div>
+      <div class="box" (click)="navigateTo('lists-page')">
+        <h2>Book Lists</h2>
+      </div>
+      <div class="box" (click)="navigateTo('users-page')">
+        <h2>Users</h2>
+      </div>
+    </div>
+  </div>
+  
