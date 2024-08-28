@@ -27,6 +27,21 @@ namespace APIBookD.Controllers.ListControllers
         }
 
 
+        // get all lists of a user
+        [HttpGet("user/{id}")]
+        public IActionResult GetListsByUserId(string id)
+        {
+            if (Guid.TryParse(id, out Guid userId))
+            {
+                var lists = _context.Lists.Where(l => l.UserId == userId).ToList();
+                return Ok(lists);
+            }
+            else
+            {
+                return BadRequest("Invalid User Id");
+            }
+        }
+
 
         [HttpGet("contents/{id}")]
         public IActionResult GetListContents(Guid id)

@@ -1,0 +1,22 @@
+<div class="reviews-container">
+    <h2>My Reviews</h2>
+    
+    <div *ngIf="reviews.length > 0; else noReviews">
+      <ul>
+        <li *ngFor="let review of reviews">
+          <h3>{{ review.title }}</h3>
+          <p>{{review.bookTitle}}</p>
+          <p>{{review.bookAuthor}}</p>
+          <p>{{ review.reviewText }}</p>
+            <small>Date: {{ review.reviewDate }}</small>
+            <small>Upvotes: {{review.upvotes}}</small>
+            <small>Downvotes: {{review.downvotes}}</small>
+        </li>
+      </ul>
+    </div>
+    
+    <ng-template #noReviews>
+      <p>No reviews available.</p>
+    </ng-template>
+  </div>
+  
