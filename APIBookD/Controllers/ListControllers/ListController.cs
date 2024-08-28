@@ -1,5 +1,6 @@
 ﻿using APIBookD.Data;
 using APIBookD.Models.Entities.Book;
+using APIBookD.Models.Entities.List;
 using APIBookD.Models.Entities.List.ListDTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +26,70 @@ namespace APIBookD.Controllers.ListControllers
             return Ok(lists);
         }
 
-        // get the contents of a list. This is done by getting all books in the list using ListBook relation.
+
+        // get all lists of a user
+        [HttpGet("user/{id}")]
+        public IActionResult GetListsByUserId(string id)
+        {
+            if (Guid.TryParse(id, out Guid userId))
+            {
+                var lists = _context.Lists.Where(l => l.UserId == userId).ToList();
+                return Ok(lists);
+            }
+            else
+            {
+                return BadRequest("Invalid User Id");
+            }
+        }
+
+
+        [HttpGet("contents/{id}")]
+        public IActionResult GetListContents(Guid id)
+        {
+            // Fetch the list details
+            var list = _context.Lists.FirstOrDefault(l => l.Id == id);
+
+            if (list == null)
+            {
+                return NotFound("List not found");
+            }
+
+            // Fetch the user details based on the OwnerId or equivalent foreign key in the List entity
+            var user = _context.Users.FirstOrDefault(u => u.Id == list.UserId);
+
+            if (user == null)
+            {
+                return NotFound("User not found");
+            }
+
+            // Fetch all ListBook relations associated with the list
+            var listBooks = _context.ListBooks
+                .Where(lb => lb.ListId == id)
+                .Select(lb => lb.BookId)
+                .ToList();
+
+            // Fetch the names of the books associated with the list
+            var bookNames = _context.Books
+                .Where(b => listBooks.Contains(b.Id))
+                .Select(b => b.Title)
+                .ToList();
+
+            // Create a response object that includes the list details, book names, and user details
+            var response = new
+            {
+                Name = list.Name,
+                Description = list.Description,
+                Type = list.Type,
+                BookNames = bookNames,
+                OwnerName = $"{user.Name} {user.Surname}"
+            };
+
+            return Ok(response);
+        }
+
+
+
+        /*
         [HttpGet("contents/{id}")]
         public IActionResult GetListContents(Guid id)
         {
@@ -52,7 +116,7 @@ namespace APIBookD.Controllers.ListControllers
             }
 
             return Ok(response);
-        }
+        } */
 
         // get wishlist of a user
         [HttpGet("wishlist/user/{id}")]

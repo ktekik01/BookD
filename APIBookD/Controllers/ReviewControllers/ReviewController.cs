@@ -45,6 +45,78 @@ namespace APIBookD.Controllers.ReviewControllers
             return Ok(response);
         }
 
+        // get all reviews of a user. From the bookIds of the review, get the book titles and authors.
+
+        [HttpGet("user/{id}")]
+        public async Task<IActionResult> GetReviewsByUserId(string id)
+        {
+            if (Guid.TryParse(id, out Guid userId))
+            {
+                // Retrieve reviews for the user. While retrieving, the bookId is received.
+                // Also retrieve the book details.
+
+                var reviews = await _context.Reviews.Where(r => r.UserId == userId).ToListAsync();
+                var response = new List<ReviewWithBookInfoDTO>();
+
+                foreach (var review in reviews)
+                    {
+                    var book = await _context.Books.FirstOrDefaultAsync(b => b.Id == review.BookId);
+                    response.Add(new ReviewWithBookInfoDTO
+                    {
+                        Id = review.Id,
+                        Title = review.Title,
+                        UserId = review.UserId,
+                        BookId = review.BookId,
+                        ReviewText = review.ReviewText,
+                        Upvotes = review.Upvotes,
+                        Downvotes = review.Downvotes,
+                        ReviewDate = review.ReviewDate,
+                        BookTitle = book.Title,
+                        BookAuthor = book.Author
+                    });
+                }
+
+                return Ok(response);
+            }
+            else
+            {
+                return BadRequest("Invalid User Id");
+            }
+        }
+
+
+        /*
+        [HttpGet("user/{id}")]
+        public async Task<IActionResult> GetReviewsByUserId(string id)
+        {
+            if (Guid.TryParse(id, out Guid userId))
+            {
+                var reviews = await _context.Reviews.Where(r => r.UserId == userId).ToListAsync();
+
+                var response = new List<Review>();
+
+                foreach (var review in reviews)
+                {
+                    response.Add(new Review
+                    {
+                        Id = review.Id,
+                        Title = review.Title,
+                        UserId = review.UserId,
+                        BookId = review.BookId,
+                        ReviewText = review.ReviewText,
+                        Upvotes = review.Upvotes,
+                        Downvotes = review.Downvotes,
+                        ReviewDate = review.ReviewDate
+                    });
+                }
+
+                return Ok(response);
+            }
+            else
+            {
+                return BadRequest("Invalid User Id");
+            }
+        }*/
         // get review by id
         [HttpGet("{id}")]
         public IActionResult GetReviewById(Guid id)
@@ -317,8 +389,8 @@ namespace APIBookD.Controllers.ReviewControllers
         }
 
         // get all the review that a user has upvoted and downvoted
-        [HttpGet("user/{id}")]
-        public IActionResult GetReviewsByUserId(string id)
+        [HttpGet("user/review/voted/{id}")]
+        public IActionResult GetVotedReviewsByUserId(string id)
         {
             if (Guid.TryParse(id, out Guid userId))
             {

@@ -9,6 +9,11 @@ using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using APIBookD.JwtFeatures;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+
 
 
 namespace APIBookD.Controllers.UserControllers
@@ -22,10 +27,13 @@ namespace APIBookD.Controllers.UserControllers
         //private readonly IEmailService _emailService;
         //private readonly JwtHandler _jwtHandler;
 
+        private readonly IConfiguration _config;
 
-        public UserController(BookDDbContext context)
+
+        public UserController(BookDDbContext context, IConfiguration config)
         {
             _context = context;
+            _config = config;
         }
 
 
@@ -72,6 +80,66 @@ namespace APIBookD.Controllers.UserControllers
             return Ok(reviewer);
         }
 
+
+
+        // login user
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] UserForAuthenticationDTO userForAuthenticationDTO)
+        {
+            // Output for debugging
+            Console.WriteLine("Login method is called.");
+
+            // Check if user exists in the reviewer table
+            var reviewer = await _context.Reviewers
+            .FirstOrDefaultAsync(r => r.Email == userForAuthenticationDTO.Email);
+
+            Console.WriteLine("Reviewer ID: " + reviewer?.Id); // Check if the ID is present
+
+
+            // If reviewer is null, give error message
+            if (reviewer == null)
+            {
+                return BadRequest("Reviewer not found.");
+            }
+
+            // Check if the password matches
+            if (reviewer.Password != userForAuthenticationDTO.Password)
+            {
+                return BadRequest("Invalid password.");
+            }
+
+            // Generate JWT token
+            var token = GenerateJwtToken(reviewer);
+
+            // Return both token and userId
+            return Ok(new
+            {
+                Token = token,
+                UserId = reviewer.Id // Ensure Id is included in Reviewer entity
+            });
+        }
+
+
+        private string GenerateJwtToken(Reviewer reviewer)
+        {
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+
+            var claims = new[]
+            {
+            new Claim(JwtRegisteredClaimNames.Sub, reviewer.Email),
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+        };
+
+            var token = new JwtSecurityToken(
+                issuer: _config["Jwt:Issuer"],
+                audience: _config["Jwt:Audience"],
+                claims: claims,
+                expires: DateTime.Now.AddMinutes(120),
+                signingCredentials: credentials);
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
 
 
         /*

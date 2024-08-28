@@ -29,10 +29,18 @@ export class DashboardComponent {
         this.isMenuOpen = false;  // Close the menu on navigation
     }
 
-  logout() {
-    // Add logout logic here
-    console.log('Logged out');
-    this.router.navigate(['/login']);
-    this.isMenuOpen = false;  // Close the menu on logout
-  }
+    logout() {
+        // Clear localStorage or any other storage where authentication data is kept
+        localStorage.removeItem('UserId');  // Example of removing a specific item
+        localStorage.clear();  // Clear all items if necessary
+        
+        // Optionally, clear any session storage or cookies if used
+        // sessionStorage.clear();
+        // document.cookie = 'your_cookie_name=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+      
+        // Log out the user and redirect to the login page
+        console.log('Logged out');
+        this.router.navigate(['/login']);
+        this.isMenuOpen = false;  // Close the menu on logout
+      }
 }

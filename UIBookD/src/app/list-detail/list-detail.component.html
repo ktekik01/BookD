@@ -1,8 +1,20 @@
-<div *ngIf="listDetail; else noDetail">
-    <h2>{{ listDetail.title }}</h2>
+<div *ngIf="listDetail$ | async as listDetail; else noDetail">
+    <h2>{{ listDetail.name }}</h2>
     <p>{{ listDetail.description }}</p>
-    <p>{{ listDetail.type }}</p>
-    <!-- Add more details if needed -->
+    <p><strong>Type:</strong> {{ listDetail.type }}</p>
+    <p><strong>Owner:</strong> {{ listDetail.ownerName }}</p>
+    
+    <div *ngIf="listDetail.bookNames && listDetail.bookNames.length > 0">
+      <h3>bookNames:</h3>
+      <ul>
+        <li *ngFor="let book of listDetail.bookNames">
+          {{ book }}
+        </li>
+      </ul>
+    </div>
+    <div *ngIf="listDetail.bookNames && listDetail.bookNames.length === 0">
+      <p>No bookNames available in this list.</p>
+    </div>
   </div>
   <ng-template #noDetail>
     <p>Loading...</p>
