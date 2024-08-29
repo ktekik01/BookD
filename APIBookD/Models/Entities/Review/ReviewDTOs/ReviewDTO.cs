@@ -11,7 +11,7 @@
         public Guid UserId { get; set; }
 
         // book id
-        public Guid BookId { get; set; }
+        public string BookTitle { get; set; }
 
         // review text
 

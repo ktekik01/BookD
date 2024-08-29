@@ -140,7 +140,65 @@ namespace APIBookD.Controllers.ReviewControllers
             }
         }
 
-        // add review
+        // users adds a review with a title, review text, book title. while adding the review,
+        // find the book id from the book title and add it to the Review object.
+
+        [HttpPost]
+
+        public IActionResult AddReview(ReviewDTO reviewDTO)
+        {
+            // check if the user exists
+            var user = _context.Reviewers.Find(reviewDTO.UserId);
+            if (user == null)
+            {
+                return NotFound("User not found");
+            }
+
+            // find the book id from the book title. If the book does not exist, return an error message.
+
+            var book = _context.Books.FirstOrDefault(b => b.Title == reviewDTO.BookTitle);
+
+
+            // add the review to the database
+
+            var review = new Models.Entities.Review.Review
+            {
+                Id = Guid.NewGuid(),
+                Title = reviewDTO.Title,
+                UserId = reviewDTO.UserId,
+                BookId = book.Id,
+                ReviewText = reviewDTO.ReviewText,
+                Upvotes = new List<Guid>(),
+                Downvotes = new List<Guid>(),
+                ReviewDate = DateTime.Now
+            };
+
+            // output error message if title is not found
+            if (book == null)
+            {
+                return NotFound("Title not found");
+            }
+
+            // output error message if userid is not found
+            if (user == null)
+            {
+                return NotFound("User not found");
+            }
+
+            // output error message if reviewText is not found
+            if (reviewDTO.ReviewText == null)
+            {
+                return NotFound("Review text not found");
+            }
+
+            _context.Reviews.Add(review);
+            _context.SaveChanges();
+
+            return Ok(review);
+        }
+
+        
+        /*
         [HttpPost]
 
         public IActionResult AddReview(ReviewDTO reviewDTO)
@@ -177,7 +235,7 @@ namespace APIBookD.Controllers.ReviewControllers
             _context.SaveChanges();
 
             return Ok(review);
-        }
+        } */
 
         // add a comment to a review
         [HttpPost("comment")]

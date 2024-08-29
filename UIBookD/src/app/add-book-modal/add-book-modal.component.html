@@ -1,0 +1,65 @@
+<h2>Add a New Book</h2>
+<form [formGroup]="reviewForm" (ngSubmit)="onSubmit()">
+
+
+  <mat-form-field appearance="fill">
+    <mat-label>Title</mat-label>
+    <input matInput formControlName="title" required />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Author</mat-label>
+    <input matInput formControlName="author" required />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Genre</mat-label>
+    <textarea matInput formControlName="genre" required></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Description</mat-label>
+    <textarea matInput formControlName="description" required></textarea>
+  </mat-form-field>
+
+
+  <mat-form-field appearance="fill">
+    <mat-label>Publication Date</mat-label>
+    <input matInput [matDatepicker]="picker" formControlName="publicationDate" required />
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Publisher</mat-label>
+    <textarea matInput formControlName="publisher" required></textarea>
+  </mat-form-field>
+
+
+  <mat-form-field appearance="fill">
+    <mat-label>Number of Pages</mat-label>
+    <textarea matInput formControlName="numberOfPages" required></textarea>
+  </mat-form-field>
+
+
+  <mat-form-field appearance="fill">
+    <mat-label>ISBN</mat-label>
+    <textarea matInput formControlName="isbn" required></textarea>
+  </mat-form-field>
+
+
+  <mat-form-field appearance="fill">
+    <mat-label>Language</mat-label>
+    <textarea matInput formControlName="language" required></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Image URL</mat-label>
+    <input matInput formControlName="image" />
+  </mat-form-field>
+
+  <div class="modal-buttons">
+    <button mat-button type="submit" [disabled]="reviewForm.invalid">Add Book</button>
+    <button mat-button type="button" (click)="onCancel()">Cancel</button>
+  </div>
+</form>
