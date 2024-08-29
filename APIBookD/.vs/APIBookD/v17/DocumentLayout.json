@@ -7,6 +7,22 @@
       "RelativeMoniker": "D:0:0:{9F370690-875C-44BE-A549-1A5AE05BA7C4}|APIBookD.csproj|solutionrelative:controllers\\listcontrollers\\listcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{9F370690-875C-44BE-A549-1A5AE05BA7C4}|APIBookD.csproj|c:\\users\\kerem\\source\\repos\\github\\bookd\\apibookd\\controllers\\reviewcontrollers\\reviewcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9F370690-875C-44BE-A549-1A5AE05BA7C4}|APIBookD.csproj|solutionrelative:controllers\\reviewcontrollers\\reviewcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9F370690-875C-44BE-A549-1A5AE05BA7C4}|APIBookD.csproj|c:\\users\\kerem\\source\\repos\\github\\bookd\\apibookd\\models\\entities\\book\\bookdtos\\bookdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9F370690-875C-44BE-A549-1A5AE05BA7C4}|APIBookD.csproj|solutionrelative:models\\entities\\book\\bookdtos\\bookdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9F370690-875C-44BE-A549-1A5AE05BA7C4}|APIBookD.csproj|c:\\users\\kerem\\source\\repos\\github\\bookd\\apibookd\\models\\entities\\review\\reviewdtos\\reviewdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9F370690-875C-44BE-A549-1A5AE05BA7C4}|APIBookD.csproj|solutionrelative:models\\entities\\review\\reviewdtos\\reviewdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9F370690-875C-44BE-A549-1A5AE05BA7C4}|APIBookD.csproj|c:\\users\\kerem\\source\\repos\\github\\bookd\\apibookd\\models\\entities\\book\\book.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9F370690-875C-44BE-A549-1A5AE05BA7C4}|APIBookD.csproj|solutionrelative:models\\entities\\book\\book.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{9F370690-875C-44BE-A549-1A5AE05BA7C4}|APIBookD.csproj|c:\\users\\kerem\\source\\repos\\github\\bookd\\apibookd\\models\\entities\\review\\reviewdtos\\reviewwithbookinfodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9F370690-875C-44BE-A549-1A5AE05BA7C4}|APIBookD.csproj|solutionrelative:models\\entities\\review\\reviewdtos\\reviewwithbookinfodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -45,10 +61,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{9F370690-875C-44BE-A549-1A5AE05BA7C4}|APIBookD.csproj|c:\\users\\kerem\\source\\repos\\github\\bookd\\apibookd\\controllers\\bookcontrollers\\bookcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9F370690-875C-44BE-A549-1A5AE05BA7C4}|APIBookD.csproj|solutionrelative:controllers\\bookcontrollers\\bookcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9F370690-875C-44BE-A549-1A5AE05BA7C4}|APIBookD.csproj|c:\\users\\kerem\\source\\repos\\github\\bookd\\apibookd\\models\\entities\\book\\book.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9F370690-875C-44BE-A549-1A5AE05BA7C4}|APIBookD.csproj|solutionrelative:models\\entities\\book\\book.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -62,7 +74,7 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 10,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\appsettings.json",
               "RelativeDocumentMoniker": "appsettings.json",
@@ -70,12 +82,11 @@
               "RelativeToolTip": "appsettings.json",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-08-28T07:00:24.624Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-28T07:00:24.624Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 7,
               "Title": "UserController.cs",
               "DocumentMoniker": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Controllers\\UserControllers\\UserController.cs",
               "RelativeDocumentMoniker": "Controllers\\UserControllers\\UserController.cs",
@@ -83,12 +94,11 @@
               "RelativeToolTip": "Controllers\\UserControllers\\UserController.cs",
               "ViewState": "AQIAAFUAAAAAAAAAAAAAAHAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-28T06:11:54.908Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-28T06:11:54.908Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 13,
               "Title": "ListBook.cs",
               "DocumentMoniker": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Models\\Entities\\List\\ListBook.cs",
               "RelativeDocumentMoniker": "Models\\Entities\\List\\ListBook.cs",
@@ -100,7 +110,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 12,
               "Title": "List.cs",
               "DocumentMoniker": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Models\\Entities\\List\\List.cs",
               "RelativeDocumentMoniker": "Models\\Entities\\List\\List.cs",
@@ -112,7 +122,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 9,
               "Title": "Reviewer.cs",
               "DocumentMoniker": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Models\\Entities\\User\\Reviewer.cs",
               "RelativeDocumentMoniker": "Models\\Entities\\User\\Reviewer.cs",
@@ -120,12 +130,11 @@
               "RelativeToolTip": "Models\\Entities\\User\\Reviewer.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-28T09:55:12.613Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-28T09:55:12.613Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 14,
               "Title": "BookController.cs",
               "DocumentMoniker": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Controllers\\BookControllers\\BookController.cs",
               "RelativeDocumentMoniker": "Controllers\\BookControllers\\BookController.cs",
@@ -137,19 +146,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 4,
               "Title": "Book.cs",
               "DocumentMoniker": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Models\\Entities\\Book\\Book.cs",
               "RelativeDocumentMoniker": "Models\\Entities\\Book\\Book.cs",
               "ToolTip": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Models\\Entities\\Book\\Book.cs",
               "RelativeToolTip": "Models\\Entities\\Book\\Book.cs",
-              "ViewState": "AQIAABQAAAAAAAAAAAAAwCYAAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACYAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-23T09:14:23.528Z"
+              "WhenOpened": "2024-08-23T09:14:23.528Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 8,
               "Title": "User.cs",
               "DocumentMoniker": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Models\\Entities\\User\\User.cs",
               "RelativeDocumentMoniker": "Models\\Entities\\User\\User.cs",
@@ -157,8 +167,7 @@
               "RelativeToolTip": "Models\\Entities\\User\\User.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-28T09:55:17.209Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-28T09:55:17.209Z"
             },
             {
               "$type": "Document",
@@ -168,14 +177,53 @@
               "RelativeDocumentMoniker": "Controllers\\ListControllers\\ListController.cs",
               "ToolTip": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Controllers\\ListControllers\\ListController.cs",
               "RelativeToolTip": "Controllers\\ListControllers\\ListController.cs",
-              "ViewState": "AQIAABsAAAAAAAAAAAAYwCoAAAAJAAAA",
+              "ViewState": "AQIAAI8AAAAAAAAAAAAswBIAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-21T12:38:22.997Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 1,
+              "Title": "ReviewController.cs",
+              "DocumentMoniker": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Controllers\\ReviewControllers\\ReviewController.cs",
+              "RelativeDocumentMoniker": "Controllers\\ReviewControllers\\ReviewController.cs",
+              "ToolTip": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Controllers\\ReviewControllers\\ReviewController.cs",
+              "RelativeToolTip": "Controllers\\ReviewControllers\\ReviewController.cs",
+              "ViewState": "AQIAAJgAAAAAAAAAAAAswJQAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-29T09:32:43.323Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ReviewDTO.cs",
+              "DocumentMoniker": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Models\\Entities\\Review\\ReviewDTOs\\ReviewDTO.cs",
+              "RelativeDocumentMoniker": "Models\\Entities\\Review\\ReviewDTOs\\ReviewDTO.cs",
+              "ToolTip": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Models\\Entities\\Review\\ReviewDTOs\\ReviewDTO.cs",
+              "RelativeToolTip": "Models\\Entities\\Review\\ReviewDTOs\\ReviewDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAtAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-29T09:49:58.42Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "BookDTO.cs",
+              "DocumentMoniker": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Models\\Entities\\Book\\BookDTOs\\BookDTO.cs",
+              "RelativeDocumentMoniker": "Models\\Entities\\Book\\BookDTOs\\BookDTO.cs",
+              "ToolTip": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Models\\Entities\\Book\\BookDTOs\\BookDTO.cs",
+              "RelativeToolTip": "Models\\Entities\\Book\\BookDTOs\\BookDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-29T11:33:40.243Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
@@ -183,12 +231,11 @@
               "RelativeToolTip": "Program.cs",
               "ViewState": "AQIAABUAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-28T08:28:00.824Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-28T08:28:00.824Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 5,
               "Title": "ReviewWithBookInfoDTO.cs",
               "DocumentMoniker": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Models\\Entities\\Review\\ReviewDTOs\\ReviewWithBookInfoDTO.cs",
               "RelativeDocumentMoniker": "Models\\Entities\\Review\\ReviewDTOs\\ReviewWithBookInfoDTO.cs",
@@ -196,12 +243,11 @@
               "RelativeToolTip": "Models\\Entities\\Review\\ReviewDTOs\\ReviewWithBookInfoDTO.cs",
               "ViewState": "AQIAAAQAAAAAAAAAAAAzwA0AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-28T11:36:44.241Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-28T11:36:44.241Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 6,
               "Title": "Review.cs",
               "DocumentMoniker": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Models\\Entities\\Review\\Review.cs",
               "RelativeDocumentMoniker": "Models\\Entities\\Review\\Review.cs",
@@ -209,8 +255,7 @@
               "RelativeToolTip": "Models\\Entities\\Review\\Review.cs",
               "ViewState": "AQIAABAAAAAAAAAAAAAkwBYAAAAXAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-28T11:36:52.107Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-28T11:36:52.107Z"
             }
           ]
         }
