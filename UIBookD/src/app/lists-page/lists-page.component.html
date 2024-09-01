@@ -1,4 +1,8 @@
-<div *ngIf="lists$ | async as lists; else noLists">
+<div class="list-header">
+    <button mat-button (click)="openAddListModal()">Add New List</button>
+  </div>
+  
+  <div *ngIf="lists$ | async as lists; else noLists">
     <ul>
       <li *ngFor="let list of lists">
         <app-list-component [list]="list"></app-list-component>
@@ -8,3 +12,4 @@
   <ng-template #noLists>
     <p>No lists available.</p>
   </ng-template>
+  

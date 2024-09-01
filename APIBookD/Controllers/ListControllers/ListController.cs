@@ -81,7 +81,8 @@ namespace APIBookD.Controllers.ListControllers
                 Description = list.Description,
                 Type = list.Type,
                 BookNames = bookNames,
-                OwnerName = $"{user.Name} {user.Surname}"
+                OwnerName = $"{user.Name} {user.Surname}",
+                ownerId = user.Id
             };
 
             return Ok(response);
@@ -184,38 +185,98 @@ namespace APIBookD.Controllers.ListControllers
             return Ok(list);
         }
 
-        // add book to an existing list. This happens via using ListBook relation. 
-        [HttpPost("addbook")]
-        public IActionResult AddBookToList(Guid listId, Guid bookId)
+        public class AddBookRequest
         {
-            var listBook = new Models.Entities.List.ListBook
+            public Guid ListId { get; set; }
+            public string BookName { get; set; }
+        }
+
+        [HttpPost("addbook")]
+        public IActionResult AddBookToList([FromBody] AddBookRequest request)
+        {
+            if (string.IsNullOrWhiteSpace(request.BookName))
             {
-                ListId = listId,
-                BookId = bookId
+                return BadRequest("Book name cannot be empty");
+            }
+
+            var book = _context.Books.FirstOrDefault(b => b.Title == request.BookName);
+
+            if (book == null)
+            {
+                return BadRequest("Book not found");
+            }
+
+            var listBook = _context.ListBooks.FirstOrDefault(lb => lb.ListId == request.ListId && lb.BookId == book.Id);
+
+            if (listBook != null)
+            {
+                return BadRequest("Book already added to the list");
+            }
+
+            listBook = new ListBook
+            {
+                ListId = request.ListId,
+                BookId = book.Id
             };
 
             _context.ListBooks.Add(listBook);
             _context.SaveChanges();
 
-            return Ok(listBook);
+            return Ok(new { Message = "Book added to the list successfully", Book = book });
         }
 
-        // remove book from a list. This happens via using ListBook relation.
-        [HttpDelete("removebook")]
-        public IActionResult RemoveBookFromList(Guid listId, Guid bookId)
+
+        public class DeleteBookRequest
         {
-            var listBook = _context.ListBooks.Find(listId, bookId);
+            public Guid ListId { get; set; }
+            public string BookName { get; set; }
+        }
+
+
+        [HttpDelete("deletebook")]
+        public IActionResult DeleteBookFromList([FromBody] DeleteBookRequest request)
+        {
+            if (string.IsNullOrWhiteSpace(request.BookName))
+            {
+                return BadRequest("Book name cannot be empty");
+            }
+
+            var book = _context.Books.FirstOrDefault(b => b.Title == request.BookName);
+
+            if (book == null)
+            {
+                return BadRequest("Book not found");
+            }
+
+            var listBook = _context.ListBooks.FirstOrDefault(lb => lb.ListId == request.ListId && lb.BookId == book.Id);
 
             if (listBook == null)
             {
-                return NotFound("ListBook not found");
+                return BadRequest("Book is not in the list");
             }
 
             _context.ListBooks.Remove(listBook);
             _context.SaveChanges();
 
-            return Ok(listBook);
+            return Ok(new { Message = "Book removed from the list successfully" });
         }
+
+
+
+        // get the book id from the book name
+        [HttpGet("book/{bookName}")]
+        public IActionResult GetBookId(string bookName)
+        {
+            var book = _context.Books.FirstOrDefault(b => b.Title == bookName);
+
+            if (book == null)
+            {
+                return NotFound("Book not found");
+            }
+
+            return Ok(book.Id);
+        }
+
 
         // delete list. First remove all books from the list by deleting all ListBook relations of the list. Then delete the list.
         [HttpDelete("{id}")]
