@@ -3,19 +3,27 @@
     <p>{{ listDetail.description }}</p>
     <p><strong>Type:</strong> {{ listDetail.type }}</p>
     <p><strong>Owner:</strong> {{ listDetail.ownerName }}</p>
-    
+  
     <div *ngIf="listDetail.bookNames && listDetail.bookNames.length > 0">
-      <h3>bookNames:</h3>
+      <h3>Books:</h3>
       <ul>
         <li *ngFor="let book of listDetail.bookNames">
           {{ book }}
+          <button *ngIf="isListOwner(listDetail)" mat-button color="warn" (click)="deleteBookFromList(book)">Delete</button>
         </li>
       </ul>
     </div>
     <div *ngIf="listDetail.bookNames && listDetail.bookNames.length === 0">
-      <p>No bookNames available in this list.</p>
+      <p>No books available in this list.</p>
+    </div>
+  
+    <div *ngIf="isListOwner(listDetail)">
+      <h3>Add a Book to the List</h3>
+      <input matInput placeholder="Enter Book Name" [(ngModel)]="newBookName" />
+      <button mat-button color="primary" (click)="addBookToList()">Add Book</button>
     </div>
   </div>
+  
   <ng-template #noDetail>
     <p>Loading...</p>
   </ng-template>
