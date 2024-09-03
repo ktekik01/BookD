@@ -1,5 +1,8 @@
-<div class="list-header">
-    <button mat-button (click)="openAddListModal()">Add New List</button>
+<div>
+    <input type="text" [(ngModel)]="searchQuery" placeholder="Search by Name and Surname" />
+    <input type="checkbox" [(ngModel)]="isWishlist" /> Wishlist
+    <input type="checkbox" [(ngModel)]="isReadingList" /> Reading List
+    <button (click)="getLists()">Search</button>
   </div>
   
   <div *ngIf="lists$ | async as lists; else noLists">
@@ -12,4 +15,6 @@
   <ng-template #noLists>
     <p>No lists available.</p>
   </ng-template>
+  
+  <button (click)="openAddListModal()">Add New List</button>
   

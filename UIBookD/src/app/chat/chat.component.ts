@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { ChatService } from '../services/chat.services';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
