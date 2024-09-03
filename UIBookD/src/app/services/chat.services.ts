@@ -20,8 +20,7 @@ export class ChatService {
       .withUrl('https://localhost:7267/chathub') // URL to your SignalR hub
       .build();
 
-
-      this.startConnection();
+    this.startConnection();
 
       /*
       this.hubConnection.start()

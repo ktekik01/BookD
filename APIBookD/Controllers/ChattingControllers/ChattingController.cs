@@ -55,13 +55,18 @@ namespace APIBookD.Controllers.ChattingControllers
             return Ok(messages);
         }
 
-        // get all messages of a chat
+        // get all messages of a chat. Get the oldest message first. newest message last.
+
         [HttpGet("chat/{id}/messages")]
-        public IActionResult GetMessagesByChatId(string id)
+        public IActionResult GetMessagesByChatId(string Id)
         {
-            if (Guid.TryParse(id, out Guid chatId))
+            if (Guid.TryParse(Id, out Guid chatId))
             {
-                var messages = _context.Messages.Where(m => m.ChatId == chatId).ToList();
+                // get the oldest message first, newest message last. use Time column for sorting.
+
+                var messages = _context.Messages.Where(m => m.ChatId == chatId).OrderBy(m => m.Time).ToList();
+
+                //var messages = _context.Messages.Where(m => m.ChatId == chatId).ToList();
                 return Ok(messages);
             }
             else
@@ -69,6 +74,7 @@ namespace APIBookD.Controllers.ChattingControllers
                 return BadRequest("Invalid Chat Id");
             }
         }
+
 
         // get all messages sent by a user
         [HttpGet("user/sent/{id}")]
