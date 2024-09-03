@@ -13,6 +13,8 @@ import { AskToAIComponent } from './ask-to-ai/ask-to-ai.component';
 import { MyListsComponent } from './my-lists/my-lists.component';
 import { MyReviewsComponent } from './my-reviews/my-reviews.component';
 import { MyProfileComponent } from './my-profile/my-profile.component';
+import { ChattingPageComponent } from './chatting-page/chatting-page.component';
+import { ChatComponent } from './chat/chat.component';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -28,5 +30,7 @@ export const routes: Routes = [
   { path: 'my-lists', component: MyListsComponent },
   { path: 'my-reviews', component: MyReviewsComponent },
   { path: 'my-profile', component: MyProfileComponent },
+  { path: 'chatting-page', component: ChattingPageComponent},
+  { path: 'chatting-page/:id', component: ChatComponent},
   { path: '', redirectTo: '/home', pathMatch: 'full' },
 ];

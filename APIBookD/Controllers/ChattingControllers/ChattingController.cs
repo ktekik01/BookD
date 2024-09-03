@@ -1,7 +1,13 @@
 ﻿using APIBookD.Data;
-using APIBookD.Models.Entities.Chatting.ChattingDTOs;
-using Microsoft.AspNetCore.Http;
+using APIBookD.Models.Entities.Chatting;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using APIBookD.Models.Entities.Chatting.ChattingDTOs;
+
 
 namespace APIBookD.Controllers.ChattingControllers
 {
@@ -10,10 +16,12 @@ namespace APIBookD.Controllers.ChattingControllers
     public class ChattingController : ControllerBase
     {
         private readonly BookDDbContext _context;
+        private readonly IHubContext<ChatHub> _chatHubContext;
 
-        public ChattingController(BookDDbContext context)
+        public ChattingController(BookDDbContext context, IHubContext<ChatHub> chatHubContext)
         {
             _context = context;
+            _chatHubContext = chatHubContext;
         }
 
         // get all chats
@@ -22,6 +30,21 @@ namespace APIBookD.Controllers.ChattingControllers
         {
             var chats = _context.Chats.ToList();
             return Ok(chats);
+        }
+
+        // get chat by user id
+        [HttpGet("GetChats/{id}")]
+        public IActionResult GetChatsByUserId(string id)
+        {
+            if (Guid.TryParse(id, out Guid userId))
+            {
+                var chats = _context.Chats.Where(c => c.UsersList.Contains(userId)).ToList();
+                return Ok(chats);
+            }
+            else
+            {
+                return BadRequest("Invalid User Id");
+            }
         }
 
         // get all messages in the database
@@ -78,48 +101,50 @@ namespace APIBookD.Controllers.ChattingControllers
         }
 
 
-        [HttpPost]
-
-        public IActionResult AddMessage(MessageDTO messageDTO, Guid senderId, Guid receiverId)
+        [HttpPost("AddMessage")]
+        public async Task<IActionResult> AddMessage([FromBody] MessageRequest request)
         {
-            // check if the chat exists. iterate over all chats and check its UsersList. If the senderId is in the UsersList and the receiverId is in the UsersList, the chat exists.
-            var chat = _context.Chats.FirstOrDefault(c => c.UsersList.Contains(senderId) && c.UsersList.Contains(receiverId));
-            
+            var chat = _context.Chats.FirstOrDefault(c => c.UsersList.Contains(request.SenderId) && c.UsersList.Contains(request.ReceiverId));
+
             if (chat == null)
             {
-                // create a new chat. add the senderId and the receiverId to the UsersList of the chat.
-                chat = new Models.Entities.Chatting.Chat
+                chat = new Chat
                 {
                     Id = Guid.NewGuid(),
-                    UsersList = new List<Guid> { senderId, receiverId },
-                    //create a message list
+                    UsersList = new List<Guid> { request.SenderId, request.ReceiverId },
                     Messages = new List<Guid>()
                 };
 
                 _context.Chats.Add(chat);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
 
-            // add the message to the chat. 
-            var message = new Models.Entities.Chatting.Message
+            var message = new Message
             {
                 Id = Guid.NewGuid(),
                 ChatId = chat.Id,
-                SenderId = senderId,
-                ReceiverId = receiverId,
-                Content = messageDTO.Content,
+                SenderId = request.SenderId,
+                ReceiverId = request.ReceiverId,
+                Content = request.MessageDTO.Content,
                 Time = DateTime.Now
             };
 
-            // the message var must be addedto the Messages list of the Chat entity.
             chat.Messages.Add(message.Id);
-            _context.SaveChanges();
-
             _context.Messages.Add(message);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
+            // Return the message object to be used by the SignalR hub
             return Ok(message);
         }
+
+        // DTO for request body
+        public class MessageRequest
+        {
+            public Guid SenderId { get; set; }
+            public Guid ReceiverId { get; set; }
+            public MessageDTO MessageDTO { get; set; }
+        }
+
 
         // delete message. First, remove the message from the Messages list of the Chat entity. Then, remove the message from the Messages table.
 
