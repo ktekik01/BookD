@@ -1,9 +1,11 @@
+using APIBookD.Models.Entities.Chatting;
 using APIBookD.Data;
 using APIBookD.JwtFeatures;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using APIBookD.Controllers.ChattingControllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +14,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 
+builder.Services.AddHttpClient();
 
+
+builder.Services.AddSignalR();
+
+builder.Services.AddScoped<ChattingController>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -42,7 +49,31 @@ builder.Services.AddSingleton<JwtHandler>();
 
 builder.Services.AddScoped<IEmailService, EmailService>();   */
 
+
+// Configure CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+        policy => policy.WithOrigins("http://localhost:4200")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials()); // Allow cookies and authorization headers
+});
 var app = builder.Build();
+
+
+app.UseCors("AllowSpecificOrigin");
+
+app.UseRouting();
+
+
+app.UseAuthorization();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+    endpoints.MapHub<ChatHub>("/chathub");
+});
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -51,11 +82,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
+
 app.UseHttpsRedirection();
 
-app.UseCors(policy => policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
-app.UseAuthorization();
+
 
 app.MapControllers();
 

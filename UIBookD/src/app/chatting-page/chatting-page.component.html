@@ -1,0 +1,14 @@
+<div class="chatting-page">
+    <div class="chat-list">
+      <ul>
+        <li *ngFor="let chat of chats" (click)="selectChat(chat)">
+          {{ chat.id }}
+        </li>
+      </ul>
+    </div>
+    <div class="chat-window">
+      <!-- Ensure app-chat is used correctly and receives the selectedChat -->
+      <app-chat *ngIf="selectedChat" [chat]="selectedChat"></app-chat>
+    </div>
+  </div>
+  
