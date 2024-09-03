@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { ChatService } from '../services/chat.services';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -14,7 +14,7 @@ import { ActivatedRoute } from '@angular/router';
   standalone: true,
   imports: [ CommonModule, FormsModule]
 })
-export class ChatComponent implements OnInit {
+export class ChatComponent implements OnChanges {
     @Input() chat: any; // Define the type if you have a specific model
   messages: any = [];
   userId = ''; // this user ID
@@ -24,6 +24,8 @@ export class ChatComponent implements OnInit {
 
   constructor(private chatService: ChatService, private cd: ChangeDetectorRef, private route: ActivatedRoute) { }
 
+  
+  /*
   ngOnInit() {
 
     if (this.chat) {
@@ -56,7 +58,41 @@ export class ChatComponent implements OnInit {
             this.cd.detectChanges(); // Trigger UI update
         });
 
-  }
+  } */
+
+
+
+        ngOnChanges(changes: SimpleChanges) {
+            if (changes['chat'] && this.chat) {
+              const chatId = this.chat.id;
+              console.log("Chat ID:", chatId);
+        
+              // Load messages using the chatId from the input chat object
+              this.chatService.loadMessages(chatId);
+        
+              // Set up the receiverId and senderId
+              this.userId = localStorage.getItem('UserId') ?? '';
+        
+              if (this.chat.usersList[0] === this.userId) {
+                this.otherUserId = this.chat.usersList[1];
+              } else {
+                this.otherUserId = this.chat.usersList[0];
+              }
+        
+              // Clear previous messages and subscribe to new messages
+              this.messages = [];
+              this.chatService.messages$.subscribe(messages => {
+                this.messages = messages;
+                this.cd.detectChanges(); // Trigger change detection to update the UI
+              });
+        
+              // Handle real-time message updates
+              this.chatService.onMessageReceived((senderId: string, message: string) => {
+                this.messages.push({ senderId, content: message });
+                this.cd.detectChanges(); // Trigger UI update
+              });
+            }
+          }
 
   sendMessage() {
     console.log("Sending message:", this.otherUserId, this.userId, this.message);
