@@ -18,13 +18,30 @@ namespace APIBookD.Controllers.ListControllers
             _context = context;
         }
 
-        // get all lists
         [HttpGet]
-        public IActionResult GetLists()
+        public IActionResult GetLists([FromQuery] string searchQuery = null, [FromQuery] string listType = null)
         {
-            var lists = _context.Lists.ToList();
+            var query = _context.Lists.AsQueryable();
+
+            // Filter by list type if provided
+            if (!string.IsNullOrEmpty(listType))
+            {
+                query = query.Where(l => l.Type == listType);
+            }
+
+            // Search by name and surname if provided
+            if (!string.IsNullOrEmpty(searchQuery))
+            {
+                query = query
+                    .Where(l => l.Name.Contains(searchQuery) || l.Description.Contains(searchQuery)); // Adjust based on fields
+            }
+
+            var lists = query.ToList();
+
             return Ok(lists);
         }
+
+
 
 
         // get all lists of a user

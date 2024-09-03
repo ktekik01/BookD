@@ -1,64 +1,90 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
 import { AddReviewModalComponent } from '../add-review-modal/add-review-modal.component';
-import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { NgModule } from '@angular/core';
 import { ReviewComponent } from '../review-component/review-component.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-reviews-page',
-  standalone: true,
-  imports: [
-    CommonModule,
-    ReviewComponent,
-    MatDialogModule
-  ],
   templateUrl: './reviews-page.component.html',
-  styleUrls: ['./reviews-page.component.css']
+  styleUrls: ['./reviews-page.component.css'],
+  standalone: true,
+  imports: [FormsModule, ReviewComponent, CommonModule],
 })
-
 export class ReviewsPageComponent implements OnInit {
 
-  reviews$: Observable<any[]> = of([]); // Provide an initial value
+    reviews$: Observable<any[]> = of([]);
+    totalReviews: number = 0;
+    page: number = 1;
+    pageSize: number = 10;
+    title: string = '';
+    user: string = '';
+    book: string = '';
+    sortBy: string = 'reviewDate';
+    sortDescending: boolean = false;
 
-  private apiUrl = 'https://localhost:7267/api/Review'; // Replace with your API URL
+    private apiUrl = 'https://localhost:7267/api/Review'; // Replace with your API URL
 
-  constructor(private http: HttpClient, private dialog: MatDialog) { }
+    constructor(private http: HttpClient, private dialog: MatDialog) { }
 
-  ngOnInit(): void {
-    this.getReviews();
-  }
+    ngOnInit(): void {
+        this.getReviews();
+    }
 
-  getReviews(): void {
-    this.reviews$ = this.http.get<any[]>(this.apiUrl);
-  }
+    getReviews(): void {
+        let params = new HttpParams()
+            .set('title', this.title)
+            .set('user', this.user)
+            .set('book', this.book)
+            .set('page', this.page.toString())
+            .set('pageSize', this.pageSize.toString())
+            .set('sortBy', this.sortBy)
+            .set('SortDescending', this.sortDescending.toString());
 
-  openAddReviewModal(): void {
-    const dialogRef = this.dialog.open(AddReviewModalComponent);
-  
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        const userId = localStorage.getItem('UserId');
-  
-        const reviewData = {
-          ...result,
-          userId: userId
-        };
-  
-        console.log('Review Data:', reviewData); // Log the payload
-  
-        this.http.post(this.apiUrl, reviewData).subscribe(
-          () => {
-            this.getReviews();
-          },
-          (error) => {
-            console.error('Error occurred:', error.error); // Log the error details
-          }
-        );
-      }
-    });
-  }
-  
+        this.http.get<any>(this.apiUrl, { params }).subscribe(response => {
+            this.reviews$ = of(response.reviews);
+            this.totalReviews = response.totalReviews;
+        });
+    }
 
+    openAddReviewModal(): void {
+        const dialogRef = this.dialog.open(AddReviewModalComponent);
+    
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                const userId = localStorage.getItem('UserId');
+    
+                const reviewData = {
+                    ...result,
+                    userId: userId
+                };
+    
+                console.log('Review Data:', reviewData); // Log the payload
+    
+                this.http.post(this.apiUrl, reviewData).subscribe(
+                    () => {
+                        this.getReviews();
+                    },
+                    (error) => {
+                        console.error('Error occurred:', error.error); // Log the error details
+                    }
+                );
+            }
+        });
+    }
+
+    onPageChange(newPage: number): void {
+        this.page = newPage;
+        this.getReviews();
+    }
+
+    onSortChange(sortBy: string): void {
+        this.sortBy = sortBy;
+        this.sortDescending = sortBy.endsWith('Desc'); // Determine sorting direction
+        this.getReviews();
+    }
 }

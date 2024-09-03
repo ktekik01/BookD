@@ -1,12 +1,38 @@
+<div>
+    <input type="text" [(ngModel)]="searchParams.title" placeholder="Search by Title" />
+    <input type="text" [(ngModel)]="searchParams.author" placeholder="Search by Author" />
+    <input type="text" [(ngModel)]="searchParams.publisher" placeholder="Search by Publisher" />
+    <input type="text" [(ngModel)]="searchParams.genre" placeholder="Search by Genre" />
+    <button (click)="onSearch()">Search</button>
+</div>
+
+<div>
+    <label>Sort By:</label>
+    <button (click)="onSort('publicationDateAsc')">Publication Date Ascending</button>
+    <button (click)="onSort('publicationDateDesc')">Publication Date Descending</button>
+    <button (click)="onSort('averageRatingAsc')">Average Rating Ascending</button>
+    <button (click)="onSort('averageRatingDesc')">Average Rating Descending</button>
+    <button (click)="onSort('numberOfPagesAsc')">Number of Pages Ascending</button>
+    <button (click)="onSort('numberOfPagesDesc')">Number of Pages Descending</button>
+    <button (click)="onSort('numberOfReviewsAsc')">Number of Reviews Ascending</button>
+    <button (click)="onSort('numberOfReviewsDesc')">Number of Reviews Descending</button>
+</div>
+
 <div *ngIf="books$ | async as books; else noBooks">
     <ul>
-      <li *ngFor="let book of books">
-        <app-book-component [book]="book"></app-book-component>
-      </li>
+        <li *ngFor="let book of books">
+            <app-book-component [book]="book"></app-book-component>
+        </li>
     </ul>
-  </div>
-  <ng-template #noBooks>
+</div>
+<ng-template #noBooks>
     <p>No books available.</p>
-  </ng-template>
+</ng-template>
 
   <button mat-raised-button (click)="openAddBookModal()">Add Book</button>
+
+
+  <div>
+    <button [disabled]="currentPage <= 1" (click)="onPageChange(currentPage - 1)">Previous</button>
+    <button [disabled]="currentPage * pageSize >= totalBooks" (click)="onPageChange(currentPage + 1)">Next</button>
+</div>

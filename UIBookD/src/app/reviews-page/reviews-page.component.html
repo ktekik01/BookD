@@ -1,16 +1,34 @@
+<div>
+    <input type="text" [(ngModel)]="title" placeholder="Filter by Title" />
+    <input type="text" [(ngModel)]="user" placeholder="Filter by User Name" />
+    <input type="text" [(ngModel)]="book" placeholder="Filter by Book Title" />
+    <button (click)="getReviews()">Search</button>
+</div>
+
+<div>
+    <label>Sort By:</label>
+    <button (click)="onSortChange('reviewDateAsc')">Review Date Ascending</button>
+    <button (click)="onSortChange('reviewDateDesc')">Review Date Descending</button>
+    <button (click)="onSortChange('upvotesAsc')">Upvotes Ascending</button>
+    <button (click)="onSortChange('upvotesDesc')">Upvotes Descending</button>
+    <button (click)="onSortChange('downvotesAsc')">Downvotes Ascending</button>
+    <button (click)="onSortChange('downvotesDesc')">Downvotes Descending</button>
+</div>
+
 <div *ngIf="reviews$ | async as reviews; else noReviews">
     <ul>
-      <li *ngFor="let review of reviews">
-        <app-review-component [review]="review"></app-review-component>
-      </li>
+        <li *ngFor="let review of reviews">
+            <app-review-component [review]="review"></app-review-component>
+        </li>
     </ul>
-  </div>
-  
-  <ng-template #noReviews>
+</div>
+<ng-template #noReviews>
     <p>No reviews available.</p>
-  </ng-template>
-  
-  <button mat-raised-button color="primary" (click)="openAddReviewModal()">
-    Add Review
-  </button>
-  
+</ng-template>
+
+<button (click)="openAddReviewModal()">Add Review</button>
+
+<div>
+    <button [disabled]="page <= 1" (click)="onPageChange(page - 1)">Previous</button>
+    <button [disabled]="page * pageSize >= totalReviews" (click)="onPageChange(page + 1)">Next</button>
+</div>

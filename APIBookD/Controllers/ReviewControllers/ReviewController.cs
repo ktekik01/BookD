@@ -19,6 +19,8 @@ namespace APIBookD.Controllers.ReviewControllers
             _context = context;
         }
 
+
+        /*
         // get all reviews
         [HttpGet]
         public async Task<IActionResult> GetReviews()
@@ -43,7 +45,212 @@ namespace APIBookD.Controllers.ReviewControllers
             }
 
             return Ok(response);
+        } */
+
+
+        /*
+        [HttpGet]
+        public async Task<IActionResult> GetReviews(string? title, string? user, string? book, int page = 1, int pageSize = 10, string? sortBy = "reviewDate", bool SortDescending = false)
+        {
+
+
+                    var query = _context.Reviews
+            .Include(r => r.User) // Include related User
+            .Include(r => r.Book) // Include related Book
+            .AsQueryable();
+
+            if (!string.IsNullOrEmpty(title))
+            {
+                query = query.Where(b => b.Title.ToLower().Contains(title.ToLower()));
+            }
+
+            if (!string.IsNullOrEmpty(user))
+            {
+
+                // review does not contain user name and surname, contains the user id. to get the user name and surname
+                // from the user id, first get the user from the user id, then get the name and surname from the user.
+
+                query = query.Where(b => b.UserId.ToString().ToLower().Contains(user.ToLower()));
+            }
+
+            if (!string.IsNullOrEmpty(book))
+            {
+                // review does not contain book title, contains the book id. to get the book title
+                // from the book id, first get the book from the book id, then get the title from the book.
+
+                query = query.Where(b => b.BookId.ToString().ToLower().Contains(book.ToLower()));
+            }
+
+
+            if (SortDescending)
+            {
+                query = sortBy switch
+                {
+                    "reviewDate" => query.OrderByDescending(b => b.ReviewDate),
+                    "upvotes" => query.OrderByDescending(b => b.Upvotes.Count),
+                    "downvotes" => query.OrderByDescending(b => b.Downvotes.Count),
+                    _ => query.OrderByDescending(b => b.ReviewDate)
+                };
+            }
+            else
+            {
+                query = sortBy switch
+                {
+                    "reviewDate" => query.OrderBy(b => b.ReviewDate),
+                    "upvotes" => query.OrderBy(b => b.Upvotes.Count),
+                    "downvotes" => query.OrderBy(b => b.Downvotes.Count),
+                    _ => query.OrderBy(b => b.ReviewDate)
+                };
+            }
+
+            // pagination
+            var totalReviews = await query.CountAsync();
+            var reviews = await query.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
+
+            var response = new
+            {
+                TotalReviews = totalReviews,
+                Reviews = reviews
+            };
+
+            return Ok(response);
+        } */
+
+
+        /*
+        [HttpGet]
+        public async Task<IActionResult> GetReviews(string? title, string? user, string? book, int page = 1, int pageSize = 10, string? sortBy = "reviewDate", bool sortDescending = false)
+        {
+            var reviewsQuery = _context.Reviews.AsQueryable();
+
+            // Apply pagination
+            var reviews = await reviewsQuery.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
+
+            // Fetch related Book and User entities in a single query
+            var bookIds = reviews.Select(r => r.BookId).Distinct().ToList();
+            var userIds = reviews.Select(r => r.UserId).Distinct().ToList();
+
+            var books = await _context.Books.Where(b => bookIds.Contains(b.Id)).ToDictionaryAsync(b => b.Id, b => b.Title);
+            var users = await _context.Users.Where(u => userIds.Contains(u.Id)).ToDictionaryAsync(u => u.Id, u => u.Name + " " + u.Surname);
+
+            // Apply filtering
+            if (!string.IsNullOrEmpty(title))
+            {
+                reviews = reviews.Where(r => books.TryGetValue(r.BookId, out var bookTitle) && bookTitle.ToLower().Contains(title.ToLower())).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(user))
+            {
+                reviews = reviews.Where(r => users.TryGetValue(r.UserId, out var userName) && userName.ToLower().Contains(user.ToLower())).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(book))
+            {
+                reviews = reviews.Where(r => books.TryGetValue(r.BookId, out var bookTitle) && bookTitle.ToLower().Contains(book.ToLower())).ToList();
+            }
+
+            // Apply sorting
+            reviews = sortDescending
+                ? sortBy switch
+                {
+                    "reviewDate" => reviews.OrderByDescending(r => r.ReviewDate).ToList(),
+                    "upvotes" => reviews.OrderByDescending(r => r.Upvotes.Count).ToList(),
+                    "downvotes" => reviews.OrderByDescending(r => r.Downvotes.Count).ToList(),
+                    _ => reviews.OrderByDescending(r => r.ReviewDate).ToList(),
+                }
+                : sortBy switch
+                {
+                    "reviewDate" => reviews.OrderBy(r => r.ReviewDate).ToList(),
+                    "upvotes" => reviews.OrderBy(r => r.Upvotes.Count).ToList(),
+                    "downvotes" => reviews.OrderBy(r => r.Downvotes.Count).ToList(),
+                    _ => reviews.OrderBy(r => r.ReviewDate).ToList(),
+                };
+
+            // Prepare response
+            var totalReviews = await _context.Reviews.CountAsync();
+            var response = new
+            {
+                TotalReviews = totalReviews,
+                Reviews = reviews
+            };
+
+            return Ok(response);
         }
+        */
+
+
+        [HttpGet]
+        public async Task<IActionResult> GetReviews(string? title, string? user, string? book, int page = 1, int pageSize = 10, string? sortBy = "reviewDate", bool sortDescending = false)
+        {
+            var query = _context.Reviews.AsQueryable();
+
+            // Apply filtering
+            if (!string.IsNullOrEmpty(title))
+            {
+                // Filter by book title
+                var bookIds = await _context.Books
+                    .Where(b => b.Title.ToLower().Contains(title.ToLower()))
+                    .Select(b => b.Id)
+                    .ToListAsync();
+                query = query.Where(r => bookIds.Contains(r.BookId));
+            }
+
+            if (!string.IsNullOrEmpty(user))
+            {
+                // Filter by user name
+                var userIds = await _context.Users
+                    .Where(u => (u.Name + " " + u.Surname).ToLower().Contains(user.ToLower()))
+                    .Select(u => u.Id)
+                    .ToListAsync();
+                query = query.Where(r => userIds.Contains(r.UserId));
+            }
+
+            if (!string.IsNullOrEmpty(book))
+            {
+                // Filter by book title
+                var bookIds = await _context.Books
+                    .Where(b => b.Title.ToLower().Contains(book.ToLower()))
+                    .Select(b => b.Id)
+                    .ToListAsync();
+                query = query.Where(r => bookIds.Contains(r.BookId));
+            }
+
+            // Apply sorting
+            if (sortDescending)
+            {
+                query = sortBy switch
+                {
+                    "reviewDate" => query.OrderByDescending(r => r.ReviewDate),
+                    "upvotes" => query.OrderByDescending(r => r.Upvotes.Count),
+                    "downvotes" => query.OrderByDescending(r => r.Downvotes.Count),
+                    _ => query.OrderByDescending(r => r.ReviewDate)
+                };
+            }
+            else
+            {
+                query = sortBy switch
+                {
+                    "reviewDate" => query.OrderBy(r => r.ReviewDate),
+                    "upvotes" => query.OrderBy(r => r.Upvotes.Count),
+                    "downvotes" => query.OrderBy(r => r.Downvotes.Count),
+                    _ => query.OrderBy(r => r.ReviewDate)
+                };
+            }
+
+            // Pagination
+            var totalReviews = await query.CountAsync();
+            var reviews = await query.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
+
+            var response = new
+            {
+                TotalReviews = totalReviews,
+                Reviews = reviews
+            };
+
+            return Ok(response);
+        }
+
+
 
         // get all reviews of a user. From the bookIds of the review, get the book titles and authors.
 
@@ -139,6 +346,10 @@ namespace APIBookD.Controllers.ReviewControllers
                 return BadRequest("Invalid Book Id");
             }
         }
+
+
+
+
 
         // users adds a review with a title, review text, book title. while adding the review,
         // find the book id from the book title and add it to the Review object.

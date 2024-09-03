@@ -19,6 +19,82 @@ namespace APIBookD.Controllers.BookControllers
             _context = context;
         }
 
+
+        [HttpGet]
+        public async Task<IActionResult> GetBooks(string? title, string? author, string? publisher, string? genre, string? sortBy = "publicationDate", bool sortDescending = false, int page = 1, int pageSize = 10)
+        {
+            var query = _context.Books.AsQueryable();
+
+            if (!string.IsNullOrEmpty(title))
+            {
+                query = query.Where(b => b.Title.ToLower().Contains(title.ToLower()));
+            }
+
+            if (!string.IsNullOrEmpty(author))
+            {
+                query = query.Where(b => b.Author.ToLower().Contains(author.ToLower()));
+            }
+
+            if (!string.IsNullOrEmpty(publisher))
+            {
+                query = query.Where(b => b.Publisher.ToLower().Contains(publisher.ToLower()));
+            }
+
+            if (!string.IsNullOrEmpty(genre))
+            {
+                query = query.Where(b => b.Genre.ToLower().Contains(genre.ToLower()));
+            }
+
+            // Sorting, eight options: publication date ascending descending, average rating ascending descending, number of pages ascending descending, number of reviews ascending descending
+
+            if (sortBy == "publicationDateDesc")
+            {
+                query = sortDescending ? query.OrderByDescending(b => b.PublicationDate) : query.OrderBy(b => b.PublicationDate);
+            }
+            else if(sortBy == "publicationDateAsc") 
+            { 
+                query = sortDescending ? query.OrderBy(b => b.PublicationDate) : query.OrderByDescending(b => b.PublicationDate);
+            }
+            else if(sortBy == "averageRatingDesc") 
+            { 
+                query = sortDescending ? query.OrderByDescending(b => b.AverageRating) : query.OrderBy(b => b.AverageRating);
+            }
+            else if(sortBy == "averageRatingAsc") 
+            { 
+                query = sortDescending ? query.OrderBy(b => b.AverageRating) : query.OrderByDescending(b => b.AverageRating);
+            }
+            else if(sortBy == "numberOfPagesDesc") 
+            { 
+                query = sortDescending ? query.OrderByDescending(b => b.NumberOfPages) : query.OrderBy(b => b.NumberOfPages);
+            }
+            else if(sortBy == "numberOfPagesAsc") 
+            { 
+                query = sortDescending ? query.OrderBy(b => b.NumberOfPages) : query.OrderByDescending(b => b.NumberOfPages);
+            }
+            else if(sortBy == "numberOfReviewsDesc") 
+            { 
+                query = sortDescending ? query.OrderByDescending(b => _context.Reviews.Where(r => r.BookId == b.Id).Count()) : query.OrderBy(b => _context.Reviews.Where(r => r.BookId == b.Id).Count());
+            }
+            else if(sortBy == "numberOfReviewsAsc") 
+            { 
+                query = sortDescending ? query.OrderBy(b => _context.Reviews.Where(r => r.BookId == b.Id).Count()) : query.OrderByDescending(b => _context.Reviews.Where(r => r.BookId == b.Id).Count());
+            }
+
+            // Pagination
+            var totalBooks = await query.CountAsync();
+            var books = await query.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
+
+            var response = new
+            {
+                TotalBooks = totalBooks,
+                Books = books
+            };
+
+            return Ok(response);
+        }
+
+
+        /*
         // get all books
         [HttpGet]
         public async Task<IActionResult> GetBooks()
@@ -50,6 +126,8 @@ namespace APIBookD.Controllers.BookControllers
 
             return Ok(response);
         }
+
+        */
 
         // get book by id
         [HttpGet("{id}")]

@@ -3,6 +3,26 @@
   "WorkspaceRootPath": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{9F370690-875C-44BE-A549-1A5AE05BA7C4}|APIBookD.csproj|c:\\users\\kerem\\source\\repos\\github\\bookd\\apibookd\\controllers\\listcontrollers\\listcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9F370690-875C-44BE-A549-1A5AE05BA7C4}|APIBookD.csproj|solutionrelative:controllers\\listcontrollers\\listcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9F370690-875C-44BE-A549-1A5AE05BA7C4}|APIBookD.csproj|c:\\users\\kerem\\source\\repos\\github\\bookd\\apibookd\\controllers\\reviewcontrollers\\reviewcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9F370690-875C-44BE-A549-1A5AE05BA7C4}|APIBookD.csproj|solutionrelative:controllers\\reviewcontrollers\\reviewcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9F370690-875C-44BE-A549-1A5AE05BA7C4}|APIBookD.csproj|c:\\users\\kerem\\source\\repos\\github\\bookd\\apibookd\\controllers\\bookcontrollers\\bookcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9F370690-875C-44BE-A549-1A5AE05BA7C4}|APIBookD.csproj|solutionrelative:controllers\\bookcontrollers\\bookcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9F370690-875C-44BE-A549-1A5AE05BA7C4}|APIBookD.csproj|c:\\users\\kerem\\source\\repos\\github\\bookd\\apibookd\\models\\entities\\review\\reviewdtos\\reviewwithbookinfodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9F370690-875C-44BE-A549-1A5AE05BA7C4}|APIBookD.csproj|solutionrelative:models\\entities\\review\\reviewdtos\\reviewwithbookinfodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9F370690-875C-44BE-A549-1A5AE05BA7C4}|APIBookD.csproj|c:\\users\\kerem\\source\\repos\\github\\bookd\\apibookd\\models\\entities\\list\\list.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9F370690-875C-44BE-A549-1A5AE05BA7C4}|APIBookD.csproj|solutionrelative:models\\entities\\list\\list.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{9F370690-875C-44BE-A549-1A5AE05BA7C4}|APIBookD.csproj|c:\\users\\kerem\\source\\repos\\github\\bookd\\apibookd\\controllers\\chattingcontrollers\\chattingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9F370690-875C-44BE-A549-1A5AE05BA7C4}|APIBookD.csproj|solutionrelative:controllers\\chattingcontrollers\\chattingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -27,20 +47,8 @@
       "RelativeMoniker": "D:0:0:{9F370690-875C-44BE-A549-1A5AE05BA7C4}|APIBookD.csproj|solutionrelative:data\\bookddbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9F370690-875C-44BE-A549-1A5AE05BA7C4}|APIBookD.csproj|c:\\users\\kerem\\source\\repos\\github\\bookd\\apibookd\\controllers\\bookcontrollers\\bookcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9F370690-875C-44BE-A549-1A5AE05BA7C4}|APIBookD.csproj|solutionrelative:controllers\\bookcontrollers\\bookcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{9F370690-875C-44BE-A549-1A5AE05BA7C4}|APIBookD.csproj|c:\\users\\kerem\\source\\repos\\github\\bookd\\apibookd\\controllers\\usercontrollers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9F370690-875C-44BE-A549-1A5AE05BA7C4}|APIBookD.csproj|solutionrelative:controllers\\usercontrollers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9F370690-875C-44BE-A549-1A5AE05BA7C4}|APIBookD.csproj|c:\\users\\kerem\\source\\repos\\github\\bookd\\apibookd\\controllers\\listcontrollers\\listcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9F370690-875C-44BE-A549-1A5AE05BA7C4}|APIBookD.csproj|solutionrelative:controllers\\listcontrollers\\listcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9F370690-875C-44BE-A549-1A5AE05BA7C4}|APIBookD.csproj|c:\\users\\kerem\\source\\repos\\github\\bookd\\apibookd\\controllers\\reviewcontrollers\\reviewcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9F370690-875C-44BE-A549-1A5AE05BA7C4}|APIBookD.csproj|solutionrelative:controllers\\reviewcontrollers\\reviewcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9F370690-875C-44BE-A549-1A5AE05BA7C4}|APIBookD.csproj|c:\\users\\kerem\\source\\repos\\github\\bookd\\apibookd\\models\\entities\\book\\bookdtos\\bookdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -53,10 +61,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{9F370690-875C-44BE-A549-1A5AE05BA7C4}|APIBookD.csproj|c:\\users\\kerem\\source\\repos\\github\\bookd\\apibookd\\models\\entities\\book\\book.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9F370690-875C-44BE-A549-1A5AE05BA7C4}|APIBookD.csproj|solutionrelative:models\\entities\\book\\book.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9F370690-875C-44BE-A549-1A5AE05BA7C4}|APIBookD.csproj|c:\\users\\kerem\\source\\repos\\github\\bookd\\apibookd\\models\\entities\\review\\reviewdtos\\reviewwithbookinfodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9F370690-875C-44BE-A549-1A5AE05BA7C4}|APIBookD.csproj|solutionrelative:models\\entities\\review\\reviewdtos\\reviewwithbookinfodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9F370690-875C-44BE-A549-1A5AE05BA7C4}|APIBookD.csproj|c:\\users\\kerem\\source\\repos\\github\\bookd\\apibookd\\models\\entities\\review\\review.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -75,10 +79,6 @@
       "RelativeMoniker": "D:0:0:{9F370690-875C-44BE-A549-1A5AE05BA7C4}|APIBookD.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9F370690-875C-44BE-A549-1A5AE05BA7C4}|APIBookD.csproj|c:\\users\\kerem\\source\\repos\\github\\bookd\\apibookd\\models\\entities\\list\\list.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9F370690-875C-44BE-A549-1A5AE05BA7C4}|APIBookD.csproj|solutionrelative:models\\entities\\list\\list.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{9F370690-875C-44BE-A549-1A5AE05BA7C4}|APIBookD.csproj|c:\\users\\kerem\\source\\repos\\github\\bookd\\apibookd\\models\\entities\\list\\listbook.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9F370690-875C-44BE-A549-1A5AE05BA7C4}|APIBookD.csproj|solutionrelative:models\\entities\\list\\listbook.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
@@ -90,58 +90,136 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "BookDDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Data\\BookDDbContext.cs",
-              "RelativeDocumentMoniker": "Data\\BookDDbContext.cs",
-              "ToolTip": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Data\\BookDDbContext.cs",
-              "RelativeToolTip": "Data\\BookDDbContext.cs",
-              "ViewState": "AQIAAC0AAAAAAAAAAAAuwDEAAAA7AAAA",
+              "DocumentIndex": 1,
+              "Title": "ReviewController.cs",
+              "DocumentMoniker": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Controllers\\ReviewControllers\\ReviewController.cs",
+              "RelativeDocumentMoniker": "Controllers\\ReviewControllers\\ReviewController.cs",
+              "ToolTip": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Controllers\\ReviewControllers\\ReviewController.cs",
+              "RelativeToolTip": "Controllers\\ReviewControllers\\ReviewController.cs",
+              "ViewState": "AQIAANEAAAAAAAAAAAAswPsAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-02T12:50:02.952Z",
+              "WhenOpened": "2024-09-03T11:46:26.088Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Chat.cs",
-              "DocumentMoniker": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Models\\Entities\\Chatting\\Chat.cs",
-              "RelativeDocumentMoniker": "Models\\Entities\\Chatting\\Chat.cs",
-              "ToolTip": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Models\\Entities\\Chatting\\Chat.cs",
-              "RelativeToolTip": "Models\\Entities\\Chatting\\Chat.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAVAAAA",
+              "DocumentIndex": 2,
+              "Title": "BookController.cs",
+              "DocumentMoniker": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Controllers\\BookControllers\\BookController.cs",
+              "RelativeDocumentMoniker": "Controllers\\BookControllers\\BookController.cs",
+              "ToolTip": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Controllers\\BookControllers\\BookController.cs",
+              "RelativeToolTip": "Controllers\\BookControllers\\BookController.cs",
+              "ViewState": "AQIAAEsAAAAAAAAAAAAUwBoAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-02T08:22:57.964Z",
+              "WhenOpened": "2024-08-21T12:23:34.964Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAvAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-28T08:28:00.824Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Message.cs",
+              "DocumentMoniker": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Models\\Entities\\Chatting\\Message.cs",
+              "RelativeDocumentMoniker": "Models\\Entities\\Chatting\\Message.cs",
+              "ToolTip": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Models\\Entities\\Chatting\\Message.cs",
+              "RelativeToolTip": "Models\\Entities\\Chatting\\Message.cs",
+              "ViewState": "AQIAAAIAAAAAAAAAAAAxwBgAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-02T08:22:44.213Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "UserController.cs",
+              "DocumentMoniker": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Controllers\\UserControllers\\UserController.cs",
+              "RelativeDocumentMoniker": "Controllers\\UserControllers\\UserController.cs",
+              "ToolTip": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Controllers\\UserControllers\\UserController.cs",
+              "RelativeToolTip": "Controllers\\UserControllers\\UserController.cs",
+              "ViewState": "AQIAAFIAAAAAAAAAAIBJwHAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-28T06:11:54.908Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Book.cs",
+              "DocumentMoniker": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Models\\Entities\\Book\\Book.cs",
+              "RelativeDocumentMoniker": "Models\\Entities\\Book\\Book.cs",
+              "ToolTip": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Models\\Entities\\Book\\Book.cs",
+              "RelativeToolTip": "Models\\Entities\\Book\\Book.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACYAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-23T09:14:23.528Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "ChattingController.cs",
-              "DocumentMoniker": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Controllers\\ChattingControllers\\ChattingController.cs",
-              "RelativeDocumentMoniker": "Controllers\\ChattingControllers\\ChattingController.cs",
-              "ToolTip": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Controllers\\ChattingControllers\\ChattingController.cs",
-              "RelativeToolTip": "Controllers\\ChattingControllers\\ChattingController.cs",
-              "ViewState": "AQIAAIUAAAAAAAAAAAAvwJEAAAAfAAAA",
+              "Title": "ListController.cs",
+              "DocumentMoniker": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Controllers\\ListControllers\\ListController.cs",
+              "RelativeDocumentMoniker": "Controllers\\ListControllers\\ListController.cs",
+              "ToolTip": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Controllers\\ListControllers\\ListController.cs",
+              "RelativeToolTip": "Controllers\\ListControllers\\ListController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACoAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-02T07:20:23.41Z",
+              "WhenOpened": "2024-08-21T12:38:22.997Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "ChatHub.cs",
-              "DocumentMoniker": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Chatting\\ChatHub.cs",
-              "RelativeDocumentMoniker": "Chatting\\ChatHub.cs",
-              "ToolTip": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Chatting\\ChatHub.cs",
-              "RelativeToolTip": "Chatting\\ChatHub.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAAAAAA",
+              "DocumentIndex": 3,
+              "Title": "ReviewWithBookInfoDTO.cs",
+              "DocumentMoniker": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Models\\Entities\\Review\\ReviewDTOs\\ReviewWithBookInfoDTO.cs",
+              "RelativeDocumentMoniker": "Models\\Entities\\Review\\ReviewDTOs\\ReviewWithBookInfoDTO.cs",
+              "ToolTip": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Models\\Entities\\Review\\ReviewDTOs\\ReviewWithBookInfoDTO.cs",
+              "RelativeToolTip": "Models\\Entities\\Review\\ReviewDTOs\\ReviewWithBookInfoDTO.cs",
+              "ViewState": "AQIAAAQAAAAAAAAAAAAzwAIAAAARAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-02T07:25:20.908Z",
+              "WhenOpened": "2024-08-28T11:36:44.241Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "Reviewer.cs",
+              "DocumentMoniker": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Models\\Entities\\User\\Reviewer.cs",
+              "RelativeDocumentMoniker": "Models\\Entities\\User\\Reviewer.cs",
+              "ToolTip": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Models\\Entities\\User\\Reviewer.cs",
+              "RelativeToolTip": "Models\\Entities\\User\\Reviewer.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-28T09:55:12.613Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "List.cs",
+              "DocumentMoniker": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Models\\Entities\\List\\List.cs",
+              "RelativeDocumentMoniker": "Models\\Entities\\List\\List.cs",
+              "ToolTip": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Models\\Entities\\List\\List.cs",
+              "RelativeToolTip": "Models\\Entities\\List\\List.cs",
+              "ViewState": "AQIAAAIAAAAAAAAAAAAxwBEAAAAUAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-26T12:43:41.281Z",
               "EditorCaption": ""
             },
             {
@@ -159,98 +237,59 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "List.cs",
-              "DocumentMoniker": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Models\\Entities\\List\\List.cs",
-              "RelativeDocumentMoniker": "Models\\Entities\\List\\List.cs",
-              "ToolTip": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Models\\Entities\\List\\List.cs",
-              "RelativeToolTip": "Models\\Entities\\List\\List.cs",
-              "ViewState": "AQIAAAIAAAAAAAAAAAAxwBEAAAAUAAAA",
+              "DocumentIndex": 5,
+              "Title": "ChattingController.cs",
+              "DocumentMoniker": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Controllers\\ChattingControllers\\ChattingController.cs",
+              "RelativeDocumentMoniker": "Controllers\\ChattingControllers\\ChattingController.cs",
+              "ToolTip": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Controllers\\ChattingControllers\\ChattingController.cs",
+              "RelativeToolTip": "Controllers\\ChattingControllers\\ChattingController.cs",
+              "ViewState": "AQIAAEkAAAAAAAAAAAAjwJEAAAAfAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-26T12:43:41.281Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "Reviewer.cs",
-              "DocumentMoniker": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Models\\Entities\\User\\Reviewer.cs",
-              "RelativeDocumentMoniker": "Models\\Entities\\User\\Reviewer.cs",
-              "ToolTip": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Models\\Entities\\User\\Reviewer.cs",
-              "RelativeToolTip": "Models\\Entities\\User\\Reviewer.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-28T09:55:12.613Z",
+              "WhenOpened": "2024-09-02T07:20:23.41Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 6,
-              "Title": "BookController.cs",
-              "DocumentMoniker": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Controllers\\BookControllers\\BookController.cs",
-              "RelativeDocumentMoniker": "Controllers\\BookControllers\\BookController.cs",
-              "ToolTip": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Controllers\\BookControllers\\BookController.cs",
-              "RelativeToolTip": "Controllers\\BookControllers\\BookController.cs",
-              "ViewState": "AQIAAB4AAAAAAAAAAAAYwCUAAAAtAAAA",
+              "Title": "ChatHub.cs",
+              "DocumentMoniker": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Chatting\\ChatHub.cs",
+              "RelativeDocumentMoniker": "Chatting\\ChatHub.cs",
+              "ToolTip": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Chatting\\ChatHub.cs",
+              "RelativeToolTip": "Chatting\\ChatHub.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-21T12:23:34.964Z",
+              "WhenOpened": "2024-09-02T07:25:20.908Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAvAAAA",
+              "DocumentIndex": 8,
+              "Title": "Chat.cs",
+              "DocumentMoniker": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Models\\Entities\\Chatting\\Chat.cs",
+              "RelativeDocumentMoniker": "Models\\Entities\\Chatting\\Chat.cs",
+              "ToolTip": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Models\\Entities\\Chatting\\Chat.cs",
+              "RelativeToolTip": "Models\\Entities\\Chatting\\Chat.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAVAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-28T08:28:00.824Z",
+              "WhenOpened": "2024-09-02T08:22:57.964Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Message.cs",
-              "DocumentMoniker": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Models\\Entities\\Chatting\\Message.cs",
-              "RelativeDocumentMoniker": "Models\\Entities\\Chatting\\Message.cs",
-              "ToolTip": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Models\\Entities\\Chatting\\Message.cs",
-              "RelativeToolTip": "Models\\Entities\\Chatting\\Message.cs",
-              "ViewState": "AQIAAAIAAAAAAAAAAAAxwBgAAAAAAAAA",
+              "DocumentIndex": 10,
+              "Title": "BookDDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Data\\BookDDbContext.cs",
+              "RelativeDocumentMoniker": "Data\\BookDDbContext.cs",
+              "ToolTip": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Data\\BookDDbContext.cs",
+              "RelativeToolTip": "Data\\BookDDbContext.cs",
+              "ViewState": "AQIAAC0AAAAAAAAAAAAuwDEAAAA7AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-02T08:22:44.213Z",
+              "WhenOpened": "2024-09-02T12:50:02.952Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "UserController.cs",
-              "DocumentMoniker": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Controllers\\UserControllers\\UserController.cs",
-              "RelativeDocumentMoniker": "Controllers\\UserControllers\\UserController.cs",
-              "ToolTip": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Controllers\\UserControllers\\UserController.cs",
-              "RelativeToolTip": "Controllers\\UserControllers\\UserController.cs",
-              "ViewState": "AQIAAFIAAAAAAAAAAIBJwHAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-28T06:11:54.908Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "Book.cs",
-              "DocumentMoniker": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Models\\Entities\\Book\\Book.cs",
-              "RelativeDocumentMoniker": "Models\\Entities\\Book\\Book.cs",
-              "ToolTip": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Models\\Entities\\Book\\Book.cs",
-              "RelativeToolTip": "Models\\Entities\\Book\\Book.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAACYAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-23T09:14:23.528Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 18,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\appsettings.json",
               "RelativeDocumentMoniker": "appsettings.json",
@@ -263,7 +302,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "User.cs",
               "DocumentMoniker": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Models\\Entities\\User\\User.cs",
               "RelativeDocumentMoniker": "Models\\Entities\\User\\User.cs",
@@ -276,33 +315,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "ListController.cs",
-              "DocumentMoniker": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Controllers\\ListControllers\\ListController.cs",
-              "RelativeDocumentMoniker": "Controllers\\ListControllers\\ListController.cs",
-              "ToolTip": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Controllers\\ListControllers\\ListController.cs",
-              "RelativeToolTip": "Controllers\\ListControllers\\ListController.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAFQAAAAhAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-21T12:38:22.997Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "ReviewController.cs",
-              "DocumentMoniker": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Controllers\\ReviewControllers\\ReviewController.cs",
-              "RelativeDocumentMoniker": "Controllers\\ReviewControllers\\ReviewController.cs",
-              "ToolTip": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Controllers\\ReviewControllers\\ReviewController.cs",
-              "RelativeToolTip": "Controllers\\ReviewControllers\\ReviewController.cs",
-              "ViewState": "AQIAAJgAAAAAAAAAAAAswJQAAAAJAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-29T09:32:43.323Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 13,
               "Title": "ReviewDTO.cs",
               "DocumentMoniker": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Models\\Entities\\Review\\ReviewDTOs\\ReviewDTO.cs",
               "RelativeDocumentMoniker": "Models\\Entities\\Review\\ReviewDTOs\\ReviewDTO.cs",
@@ -315,7 +328,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 12,
               "Title": "BookDTO.cs",
               "DocumentMoniker": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Models\\Entities\\Book\\BookDTOs\\BookDTO.cs",
               "RelativeDocumentMoniker": "Models\\Entities\\Book\\BookDTOs\\BookDTO.cs",
@@ -328,20 +341,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "ReviewWithBookInfoDTO.cs",
-              "DocumentMoniker": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Models\\Entities\\Review\\ReviewDTOs\\ReviewWithBookInfoDTO.cs",
-              "RelativeDocumentMoniker": "Models\\Entities\\Review\\ReviewDTOs\\ReviewWithBookInfoDTO.cs",
-              "ToolTip": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Models\\Entities\\Review\\ReviewDTOs\\ReviewWithBookInfoDTO.cs",
-              "RelativeToolTip": "Models\\Entities\\Review\\ReviewDTOs\\ReviewWithBookInfoDTO.cs",
-              "ViewState": "AQIAAAUAAAAAAAAAAAAxwA0AAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-28T11:36:44.241Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "Review.cs",
               "DocumentMoniker": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\Models\\Entities\\Review\\Review.cs",
               "RelativeDocumentMoniker": "Models\\Entities\\Review\\Review.cs",
