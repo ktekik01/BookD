@@ -8,6 +8,10 @@ using System.Threading.Tasks;
 
 public class ChatHub : Hub
 {
+
+
+
+
     private readonly IHttpClientFactory _httpClientFactory;
 
     public ChatHub(IHttpClientFactory httpClientFactory)

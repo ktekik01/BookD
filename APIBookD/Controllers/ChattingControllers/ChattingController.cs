@@ -115,7 +115,7 @@ namespace APIBookD.Controllers.ChattingControllers
                     Messages = new List<Guid>()
                 };
 
-                _context.Chats.Add(chat);
+                await _context.Chats.AddAsync(chat);
                 await _context.SaveChangesAsync();
             }
 
@@ -130,8 +130,11 @@ namespace APIBookD.Controllers.ChattingControllers
             };
 
             chat.Messages.Add(message.Id);
-            _context.Messages.Add(message);
+            await _context.Messages.AddAsync(message);
             await _context.SaveChangesAsync();
+
+            await _chatHubContext.Clients.All.SendAsync("ReceiveMessage", request.SenderId.ToString(), message.Content, request.ReceiverId.ToString());
+
 
             // Return the message object to be used by the SignalR hub
             return Ok(message);
