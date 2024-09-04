@@ -1,11 +1,22 @@
-<div *ngIf="lists$ | async as lists; else noLists">
+<div>
+    <input type="checkbox" [(ngModel)]="isWishlist" /> Wishlist
+    <input type="checkbox" [(ngModel)]="isReadingList" /> Reading List
+    <button (click)="getLists()">Search</button>
+  </div>
+  
+  <div *ngIf="lists$ | async as lists; else noLists">
     <ul>
       <li *ngFor="let list of lists">
-        <app-list-component [list]="list"></app-list-component>  <!-- Updated selector -->
+        <app-list-component [list]="list"></app-list-component>
       </li>
     </ul>
   </div>
   <ng-template #noLists>
     <p>No lists available.</p>
   </ng-template>
+  
+  <div>
+    <button (click)="goToPreviousPage()" [disabled]="pageNumber === 1">Previous</button>
+    <button (click)="goToNextPage()" [disabled]="pageNumber * pageSize >= totalRecords">Next</button>
+  </div>
   

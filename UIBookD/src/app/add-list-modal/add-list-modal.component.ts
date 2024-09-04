@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef} from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -16,7 +16,8 @@ import { MatOptionModule } from '@angular/material/core';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-MatOptionModule],
+MatOptionModule,
+MatSelectModule,],
   templateUrl: './add-list-modal.component.html',
   styleUrl: './add-list-modal.component.css'
 })

@@ -1,22 +1,32 @@
-<div class="reviews-container">
-    <h2>My Reviews</h2>
-    
-    <div *ngIf="reviews.length > 0; else noReviews">
-      <ul>
+<div>
+    <input type="text" [(ngModel)]="title" placeholder="Filter by Title" />
+    <input type="text" [(ngModel)]="book" placeholder="Filter by Book Title" />
+    <button (click)="getMyReviews()">Search</button>
+</div>
+
+<div>
+    <label>Sort By:</label>
+    <button (click)="onSortChange('reviewDateAsc')">Review Date Ascending</button>
+    <button (click)="onSortChange('reviewDateDesc')">Review Date Descending</button>
+    <button (click)="onSortChange('upvotesAsc')">Upvotes Ascending</button>
+    <button (click)="onSortChange('upvotesDesc')">Upvotes Descending</button>
+    <button (click)="onSortChange('downvotesAsc')">Downvotes Ascending</button>
+    <button (click)="onSortChange('downvotesDesc')">Downvotes Descending</button>
+</div>
+
+<div *ngIf="reviews$ | async as reviews; else noReviews">
+    <ul>
         <li *ngFor="let review of reviews">
-          <h3>{{ review.title }}</h3>
-          <p>{{review.bookTitle}}</p>
-          <p>{{review.bookAuthor}}</p>
-          <p>{{ review.reviewText }}</p>
-            <small>Date: {{ review.reviewDate }}</small>
-            <small>Upvotes: {{review.upvotes}}</small>
-            <small>Downvotes: {{review.downvotes}}</small>
+            <app-review-component [review]="review"></app-review-component>
         </li>
-      </ul>
-    </div>
-    
-    <ng-template #noReviews>
-      <p>No reviews available.</p>
-    </ng-template>
-  </div>
-  
+    </ul>
+</div>
+
+<ng-template #noReviews>
+    <p>No reviews available.</p>
+</ng-template>
+
+<div>
+    <button [disabled]="page <= 1" (click)="onPageChange(page - 1)">Previous</button>
+    <button [disabled]="page * pageSize >= totalReviews" (click)="onPageChange(page + 1)">Next</button>
+</div>

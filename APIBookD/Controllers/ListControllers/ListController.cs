@@ -18,46 +18,83 @@ namespace APIBookD.Controllers.ListControllers
             _context = context;
         }
 
+
+
         [HttpGet]
-        public IActionResult GetLists([FromQuery] string searchQuery = null, [FromQuery] string listType = null)
+        public IActionResult GetLists([FromQuery] string searchQuery = null, [FromQuery] string listType = null, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
         {
-            var query = _context.Lists.AsQueryable();
+            // Join Lists with Users based on UserId
+            var query = from list in _context.Lists
+                        join user in _context.Users on list.UserId equals user.Id
+                        select new
+                        {
+                            List = list,
+                            UserName = user.Name,
+                            UserSurname = user.Surname
+                        };
 
             // Filter by list type if provided
             if (!string.IsNullOrEmpty(listType))
             {
-                query = query.Where(l => l.Type == listType);
+                query = query.Where(l => l.List.Type == listType);
             }
 
             // Search by name and surname if provided
             if (!string.IsNullOrEmpty(searchQuery))
             {
-                query = query
-                    .Where(l => l.Name.Contains(searchQuery) || l.Description.Contains(searchQuery)); // Adjust based on fields
+                // Split the search query into individual terms
+                var searchTerms = searchQuery.Split(' ');
+
+                foreach (var term in searchTerms)
+                {
+                    query = query.Where(l => l.UserName.Contains(term) || l.UserSurname.Contains(term));
+                }
             }
 
-            var lists = query.ToList();
+            // Apply pagination
+            var totalRecords = query.Count();
+            var lists = query
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .Select(l => l.List)
+                .ToList();
 
-            return Ok(lists);
+            // Return paginated result
+            return Ok(new { TotalRecords = totalRecords, Lists = lists });
         }
 
 
 
 
-        // get all lists of a user
+
+
+
         [HttpGet("user/{id}")]
-        public IActionResult GetListsByUserId(string id)
+        public IActionResult GetListsByUserId(string id, [FromQuery] string listType = null, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
         {
             if (Guid.TryParse(id, out Guid userId))
             {
-                var lists = _context.Lists.Where(l => l.UserId == userId).ToList();
-                return Ok(lists);
+                var query = _context.Lists.Where(l => l.UserId == userId);
+
+                if (!string.IsNullOrEmpty(listType))
+                {
+                    query = query.Where(l => l.Type == listType);
+                }
+
+                var totalRecords = query.Count();
+                var lists = query
+                    .Skip((pageNumber - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToList();
+
+                return Ok(new { TotalRecords = totalRecords, Lists = lists });
             }
             else
             {
                 return BadRequest("Invalid User Id");
             }
         }
+
 
 
         [HttpGet("contents/{id}")]

@@ -1,42 +1,63 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { CommonModule } from '@angular/common'; // Import CommonModule
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { ReviewComponent } from '../review-component/review-component.component';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-my-reviews',
   standalone: true,
   templateUrl: './my-reviews.component.html',
   styleUrls: ['./my-reviews.component.css'],
-  imports: [CommonModule] // Add CommonModule here
+  imports: [CommonModule, ReviewComponent, FormsModule]
 })
 export class MyReviewsComponent implements OnInit {
-  reviews: any[] = [];  // Array to store the reviews
 
-  constructor(private http: HttpClient) {}
+    reviews$: Observable<any[]> = of([]);
+    totalReviews: number = 0;
+    page: number = 1;
+    pageSize: number = 10;
+    title: string = '';
+    book: string = '';
+    sortBy: string = 'reviewDate';
+    sortDescending: boolean = false;
 
-  ngOnInit(): void {
-    this.getMyReviews();
-  }
+    private apiUrl = 'https://localhost:7267/api/Review/user';
 
-  getMyReviews(): void {
-    const userId = localStorage.getItem('UserId'); // Retrieve userId from localStorage
-    
-    if (userId) {
-      // Log userId for debugging
-      console.log('Retrieved userId:', userId);
+    constructor(private http: HttpClient) {}
 
-      this.http.get<any[]>(`https://localhost:7267/api/Review/user/${userId}`)
-        .subscribe({
-          next: (data) => {
-            console.log('API call successful:', data); // Debug line
-            this.reviews = data;
-          },
-          error: (err) => {
-            console.error('Error fetching user reviews:', err); // Log detailed error
-          }
-        });
-    } else {
-      console.error('User ID is not found in local storage');
+    ngOnInit(): void {
+        this.getMyReviews();
     }
-  }
+
+    getMyReviews(): void {
+        const userId = localStorage.getItem('UserId');
+        
+        if (userId) {
+            let params = new HttpParams()
+                .set('title', this.title)
+                .set('book', this.book)
+                .set('page', this.page.toString())
+                .set('pageSize', this.pageSize.toString())
+                .set('sortBy', this.sortBy)
+                .set('SortDescending', this.sortDescending.toString());
+
+            this.http.get<any>(`${this.apiUrl}/${userId}`, { params }).subscribe(response => {
+                this.reviews$ = of(response.reviews);
+                this.totalReviews = response.totalReviews;
+            });
+        }
+    }
+
+    onPageChange(newPage: number): void {
+        this.page = newPage;
+        this.getMyReviews();
+    }
+
+    onSortChange(sortBy: string): void {
+        this.sortBy = sortBy;
+        this.sortDescending = sortBy.endsWith('Desc');
+        this.getMyReviews();
+    }
 }
