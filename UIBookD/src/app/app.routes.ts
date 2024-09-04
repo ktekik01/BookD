@@ -15,6 +15,7 @@ import { MyReviewsComponent } from './my-reviews/my-reviews.component';
 import { MyProfileComponent } from './my-profile/my-profile.component';
 import { ChattingPageComponent } from './chatting-page/chatting-page.component';
 import { ChatComponent } from './chat/chat.component';
+import { ReviewDetailComponent } from './review-detail/review-detail.component';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -32,5 +33,6 @@ export const routes: Routes = [
   { path: 'my-profile', component: MyProfileComponent },
   { path: 'chatting-page', component: ChattingPageComponent},
   { path: 'chatting-page/:id', component: ChatComponent},
+  { path: 'review-detail/:id', component: ReviewDetailComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
 ];

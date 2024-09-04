@@ -178,7 +178,6 @@ namespace APIBookD.Controllers.ReviewControllers
         }
         */
 
-
         [HttpGet]
         public async Task<IActionResult> GetReviews(string? title, string? user, string? book, int page = 1, int pageSize = 10, string? sortBy = "reviewDate", bool sortDescending = false)
         {
@@ -187,7 +186,6 @@ namespace APIBookD.Controllers.ReviewControllers
             // Apply filtering
             if (!string.IsNullOrEmpty(title))
             {
-                // Filter by book title
                 var bookIds = await _context.Books
                     .Where(b => b.Title.ToLower().Contains(title.ToLower()))
                     .Select(b => b.Id)
@@ -197,7 +195,6 @@ namespace APIBookD.Controllers.ReviewControllers
 
             if (!string.IsNullOrEmpty(user))
             {
-                // Filter by user name
                 var userIds = await _context.Users
                     .Where(u => (u.Name + " " + u.Surname).ToLower().Contains(user.ToLower()))
                     .Select(u => u.Id)
@@ -207,7 +204,6 @@ namespace APIBookD.Controllers.ReviewControllers
 
             if (!string.IsNullOrEmpty(book))
             {
-                // Filter by book title
                 var bookIds = await _context.Books
                     .Where(b => b.Title.ToLower().Contains(book.ToLower()))
                     .Select(b => b.Id)
@@ -241,14 +237,28 @@ namespace APIBookD.Controllers.ReviewControllers
             var totalReviews = await query.CountAsync();
             var reviews = await query.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
 
+            // Fetch book and user details
+            var reviewDetails = reviews.Select(r => new
+            {
+                r.Id,
+                r.Title,
+                r.ReviewText,
+                r.ReviewDate,
+                BookTitle = _context.Books.Where(b => b.Id == r.BookId).Select(b => b.Title).FirstOrDefault(),
+                UserName = _context.Users.Where(u => u.Id == r.UserId).Select(u => u.Name + " " + u.Surname).FirstOrDefault(),
+                r.Upvotes,
+                r.Downvotes
+            }).ToList();
+
             var response = new
             {
                 TotalReviews = totalReviews,
-                Reviews = reviews
+                Reviews = reviewDetails
             };
 
             return Ok(response);
         }
+
 
 
 
@@ -347,11 +357,38 @@ namespace APIBookD.Controllers.ReviewControllers
             }
         }*/
         // get review by id
+        /*
         [HttpGet("{id}")]
         public IActionResult GetReviewById(Guid id)
         {
             var review = _context.Reviews.Find(id);
             return Ok(review);
+        } */
+
+        // get review by id. also return the book title by using the book id in the review to reach the book table
+        // and get the user name and surname of the user using user id to reach User table.
+
+        [HttpGet("{id}")]
+        public IActionResult GetReviewById(string id)
+        {
+            if (Guid.TryParse(id, out Guid reviewId))
+            {
+                var review = _context.Reviews.Find(reviewId);
+                if (review != null)
+                {
+                    var bookTitle = _context.Books.Where(b => b.Id == review.BookId).Select(b => b.Title).FirstOrDefault();
+                    var userName = _context.Reviewers.Where(u => u.Id == review.UserId).Select(u => u.Name + " " + u.Surname).FirstOrDefault();
+                    return Ok(new { review, bookTitle, userName });
+                }
+                else
+                {
+                    return BadRequest("Review not found");
+                }
+            }
+            else
+            {
+                return BadRequest("Invalid Review Id");
+            }
         }
 
         // get all reviews of a book
@@ -430,7 +467,7 @@ namespace APIBookD.Controllers.ReviewControllers
             return Ok(review);
         }
 
-        
+
         /*
         [HttpPost]
 
@@ -470,12 +507,35 @@ namespace APIBookD.Controllers.ReviewControllers
             return Ok(review);
         } */
 
+        public class CommentDto
+        {
+            public Guid ReviewId { get; set; }
+            public Guid UserId { get; set; }
+            public string Content { get; set; }
+        }
+
+
         // add a comment to a review
         [HttpPost("comment")]
 
         public IActionResult AddCommentToReview(Guid reviewId, Guid userId, string Content)
         {
             // add the comment to the database
+
+            // check whether parameters are valid
+            var review = _context.Reviews.Find(reviewId);
+            if (review == null) {
+                return NotFound("Review not found");
+            }
+
+            var user = _context.Reviewers.Find(userId);
+            if (user == null) {
+                return NotFound("User not found");
+            }
+            if (review == null) {
+                return NotFound("Review not found");
+            }
+
 
             var comment = new Models.Entities.Review.CommentToReview
             {
@@ -492,89 +552,111 @@ namespace APIBookD.Controllers.ReviewControllers
             return Ok(comment);
         }
 
+        public class UpvoteRequestModel
+        {
+            public Guid ReviewId { get; set; }
+            public Guid UserId { get; set; }
+        }
+
 
         [HttpPost("upvote")]
-        public IActionResult UpvoteReview(Guid reviewId, Guid userId)
+        public IActionResult UpvoteReview([FromBody] UpvoteRequestModel model)
         {
-            var review = _context.Reviews.Find(reviewId);
+
+            var review = _context.Reviews.Find(model.ReviewId);
             if (review == null)
             {
-                return NotFound("Review not found");
+                return NotFound(new { message = "Review not found" });
             }
 
-            var reviewer = _context.Reviewers.Find(userId);
+            var reviewer = _context.Reviewers.Find(model.UserId);
             if (reviewer == null)
             {
-                return NotFound("Reviewer not found");
+                return NotFound(new { message = "Reviewer not found" });
             }
 
-            if (review.Upvotes.Contains(userId))
+            if (review.Upvotes.Contains(model.UserId))
             {
-                review.Upvotes.Remove(userId);
-                reviewer.UpvotedReviews.Remove(reviewId);
+                review.Upvotes.Remove(model.UserId);
+                reviewer.UpvotedReviews.Remove(model.ReviewId);
+                
 
-                var existingVote = _context.VoteReviews.FirstOrDefault(v => v.ReviewId == reviewId && v.UserId == userId);
+                var existingVote = _context.VoteReviews.FirstOrDefault(v => v.ReviewId == model.ReviewId && v.UserId == model.UserId);
                 if (existingVote != null)
                 {
                     _context.VoteReviews.Remove(existingVote);
                 }
 
                 _context.SaveChanges();
-                return Ok("Upvote removed");
+                return Ok(new { message = "Upvote removed" });
             }
             else
             {
-                if (review.Downvotes.Contains(userId))
+                if (review.Downvotes.Contains(model.UserId))
                 {
-                    review.Downvotes.Remove(userId);
-                    reviewer.DownvotedReviews.Remove(reviewId);
+                    review.Downvotes.Remove(model.UserId);
+                    reviewer.DownvotedReviews.Remove(model.ReviewId);
 
-                    var existingVote = _context.VoteReviews.FirstOrDefault(v => v.ReviewId == reviewId && v.UserId == userId);
+                    var existingVote = _context.VoteReviews.FirstOrDefault(v => v.ReviewId == model.ReviewId && v.UserId == model.UserId);
                     if (existingVote != null)
                     {
                         _context.VoteReviews.Remove(existingVote);
                     }
                 }
 
-                review.Upvotes.Add(userId);
-                reviewer.UpvotedReviews.Add(reviewId);
+                review.Upvotes.Add(model.UserId);
+                reviewer.UpvotedReviews.Add(model.ReviewId);
 
-                var newVote = new Models.Entities.Review.VoteReview
+                var newVote = new VoteReview
                 {
                     Id = Guid.NewGuid(),
-                    ReviewId = reviewId,
-                    UserId = userId,
+                    ReviewId = model.ReviewId,
+                    UserId = model.UserId,
                     Vote = true // means upvote
                 };
 
                 _context.VoteReviews.Add(newVote);
                 _context.SaveChanges();
-                return Ok("Upvote added");
+                return Ok(new { message = "Upvote added" });
             }
         }
 
 
-        [HttpPost("downvote")]
-        public IActionResult DownvoteReview(Guid reviewId, Guid userId)
+
+
+
+        public class DownvoteRequestModel
         {
-            var review = _context.Reviews.Find(reviewId);
+            public Guid ReviewId { get; set; }
+            public Guid UserId { get; set; }
+        }
+
+        [HttpPost("downvote")]
+        public IActionResult DownvoteReview([FromBody] DownvoteRequestModel model)
+        {
+            if (model.ReviewId == Guid.Empty || model.UserId == Guid.Empty)
+            {
+                return BadRequest("Invalid input data");
+            }
+
+            var review = _context.Reviews.Find(model.ReviewId);
             if (review == null)
             {
                 return NotFound("Review not found");
             }
 
-            var reviewer = _context.Reviewers.Find(userId);
+            var reviewer = _context.Reviewers.Find(model.UserId);
             if (reviewer == null)
             {
                 return NotFound("Reviewer not found");
             }
 
-            if (review.Downvotes.Contains(userId))
+            if (review.Downvotes.Contains(model.UserId))
             {
-                review.Downvotes.Remove(userId);
-                reviewer.DownvotedReviews.Remove(reviewId);
+                review.Downvotes.Remove(model.UserId);
+                reviewer.DownvotedReviews.Remove(model.ReviewId);
 
-                var existingVote = _context.VoteReviews.FirstOrDefault(v => v.ReviewId == reviewId && v.UserId == userId);
+                var existingVote = _context.VoteReviews.FirstOrDefault(v => v.ReviewId == model.ReviewId && v.UserId == model.UserId);
                 if (existingVote != null)
                 {
                     _context.VoteReviews.Remove(existingVote);
@@ -585,26 +667,26 @@ namespace APIBookD.Controllers.ReviewControllers
             }
             else
             {
-                if (review.Upvotes.Contains(userId))
+                if (review.Upvotes.Contains(model.UserId))
                 {
-                    review.Upvotes.Remove(userId);
-                    reviewer.UpvotedReviews.Remove(reviewId);
+                    review.Upvotes.Remove(model.UserId);
+                    reviewer.UpvotedReviews.Remove(model.ReviewId);
 
-                    var existingVote = _context.VoteReviews.FirstOrDefault(v => v.ReviewId == reviewId && v.UserId == userId);
+                    var existingVote = _context.VoteReviews.FirstOrDefault(v => v.ReviewId == model.ReviewId && v.UserId == model.UserId);
                     if (existingVote != null)
                     {
                         _context.VoteReviews.Remove(existingVote);
                     }
                 }
 
-                review.Downvotes.Add(userId);
-                reviewer.DownvotedReviews.Add(reviewId);
+                review.Downvotes.Add(model.UserId);
+                reviewer.DownvotedReviews.Add(model.ReviewId);
 
-                var newVote = new Models.Entities.Review.VoteReview
+                var newVote = new VoteReview
                 {
                     Id = Guid.NewGuid(),
-                    ReviewId = reviewId,
-                    UserId = userId,
+                    ReviewId = model.ReviewId,
+                    UserId = model.UserId,
                     Vote = false // means downvote
                 };
 
@@ -613,6 +695,7 @@ namespace APIBookD.Controllers.ReviewControllers
                 return Ok("Downvote added");
             }
         }
+
 
 
 

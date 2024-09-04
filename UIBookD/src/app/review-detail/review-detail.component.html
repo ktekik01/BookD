@@ -1,0 +1,33 @@
+<div *ngIf="reviewDetail$ | async as review">
+    <h2>{{ review.review.title }}</h2>
+    <p><strong>Book:</strong> {{ review.bookTitle }}</p>
+    <p><strong>Reviewed by:</strong> {{ review.userName }}</p>
+    <p><strong>Date:</strong> {{ review.review.reviewDate }}</p>
+    <p><strong>Review Text:</strong> {{ review.review.reviewText }}</p>
+    <p>
+      <strong>Upvotes:</strong> {{ upvoteCount }} 
+      <button (click)="upvote()" [disabled]="hasUpvoted">Upvote</button>
+    </p>
+    <p>
+      <strong>Downvotes:</strong> {{ downvoteCount }} 
+      <button (click)="downvote()" [disabled]="hasDownvoted">Downvote</button>
+    </p>
+  </div>
+  
+  <div *ngIf="comments$ | async as comments">
+    <h3>Comments:</h3>
+    <ul>
+      <li *ngFor="let comment of comments">
+        <p><strong>{{ comment.userId }}</strong> ({{ comment.commentDate | date:'short' }}):</p>
+        <p>{{ comment.content }}</p>
+      </li>
+    </ul>
+  </div>
+  
+  <div>
+    <h3>Add a Comment:</h3>
+    <input type="text" [(ngModel)]="newCommentText" placeholder="Enter your comment" />
+    <br />
+    <button (click)="addComment()">Submit Comment</button>
+  </div>
+  
