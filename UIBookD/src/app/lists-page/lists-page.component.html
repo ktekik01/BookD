@@ -15,6 +15,12 @@
   <ng-template #noLists>
     <p>No lists available.</p>
   </ng-template>
-  
+
   <button (click)="openAddListModal()">Add New List</button>
+  
+  <div>
+    <button (click)="goToPreviousPage()" [disabled]="pageNumber === 1">Previous</button>
+    <button (click)="goToNextPage()" [disabled]="pageNumber * pageSize >= totalRecords">Next</button>
+  </div>
+
   

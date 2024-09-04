@@ -252,44 +252,66 @@ namespace APIBookD.Controllers.ReviewControllers
 
 
 
-        // get all reviews of a user. From the bookIds of the review, get the book titles and authors.
-
         [HttpGet("user/{id}")]
-        public async Task<IActionResult> GetReviewsByUserId(string id)
+        public async Task<IActionResult> GetReviewsByUserId(string id, string? title, string? book, int page = 1, int pageSize = 10, string? sortBy = "reviewDate", bool sortDescending = false)
         {
             if (Guid.TryParse(id, out Guid userId))
             {
-                // Retrieve reviews for the user. While retrieving, the bookId is received.
-                // Also retrieve the book details.
+                var query = _context.Reviews.Where(r => r.UserId == userId).AsQueryable();
 
-                var reviews = await _context.Reviews.Where(r => r.UserId == userId).ToListAsync();
-                var response = new List<ReviewWithBookInfoDTO>();
-
-                foreach (var review in reviews)
-                    {
-                    var book = await _context.Books.FirstOrDefaultAsync(b => b.Id == review.BookId);
-                    response.Add(new ReviewWithBookInfoDTO
-                    {
-                        Id = review.Id,
-                        Title = review.Title,
-                        UserId = review.UserId,
-                        BookId = review.BookId,
-                        ReviewText = review.ReviewText,
-                        Upvotes = review.Upvotes,
-                        Downvotes = review.Downvotes,
-                        ReviewDate = review.ReviewDate,
-                        BookTitle = book.Title,
-                        BookAuthor = book.Author
-                    });
+                // Apply filtering
+                if (!string.IsNullOrEmpty(title))
+                {
+                    var bookIds = await _context.Books
+                        .Where(b => b.Title.ToLower().Contains(title.ToLower()))
+                        .Select(b => b.Id)
+                        .ToListAsync();
+                    query = query.Where(r => bookIds.Contains(r.BookId));
                 }
 
-                return Ok(response);
+                if (!string.IsNullOrEmpty(book))
+                {
+                    var bookIds = await _context.Books
+                        .Where(b => b.Title.ToLower().Contains(book.ToLower()))
+                        .Select(b => b.Id)
+                        .ToListAsync();
+                    query = query.Where(r => bookIds.Contains(r.BookId));
+                }
+
+                // Apply sorting
+                query = sortDescending
+                    ? sortBy switch
+                    {
+                        "reviewDate" => query.OrderByDescending(r => r.ReviewDate),
+                        "upvotes" => query.OrderByDescending(r => r.Upvotes.Count),
+                        "downvotes" => query.OrderByDescending(r => r.Downvotes.Count),
+                        _ => query.OrderByDescending(r => r.ReviewDate)
+                    }
+                    : sortBy switch
+                    {
+                        "reviewDate" => query.OrderBy(r => r.ReviewDate),
+                        "upvotes" => query.OrderBy(r => r.Upvotes.Count),
+                        "downvotes" => query.OrderBy(r => r.Downvotes.Count),
+                        _ => query.OrderBy(r => r.ReviewDate)
+                    };
+
+                // Pagination
+                var totalReviews = await query.CountAsync();
+                var reviews = await query.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
+
+                return Ok(new
+                {
+                    TotalReviews = totalReviews,
+                    Reviews = reviews
+                });
             }
             else
             {
                 return BadRequest("Invalid User Id");
             }
         }
+
+
 
 
         /*

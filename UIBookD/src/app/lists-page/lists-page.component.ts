@@ -15,10 +15,13 @@ import { ListComponentComponent } from '../list-component/list-component.compone
   imports: [FormsModule, CommonModule, ListComponentComponent],
 })
 export class ListsPageComponent implements OnInit {
-  lists$: Observable<any[]> = of([]);
-  searchQuery: string = '';
-  isWishlist: boolean = false;
-  isReadingList: boolean = false;
+    lists$: Observable<any[]> = of([]);
+    searchQuery: string = '';
+    isWishlist: boolean = false;
+    isReadingList: boolean = false;
+    pageNumber: number = 1;
+    pageSize: number = 10;
+    totalRecords: number = 0;
   private apiUrl = 'https://localhost:7267/api/List'; // Replace with your API URL
 
   constructor(private http: HttpClient, private dialog: MatDialog) { }
@@ -31,13 +34,16 @@ export class ListsPageComponent implements OnInit {
     let listType = '';
     if (this.isWishlist) listType = 'wishlist';
     if (this.isReadingList) listType = 'reading list';
-  
+
     let params = new HttpParams()
       .set('searchQuery', this.searchQuery)
-      .set('listType', listType);
-  
-    this.http.get<any[]>(this.apiUrl, { params }).subscribe(response => {
-      this.lists$ = of(response);
+      .set('listType', listType)
+      .set('pageNumber', this.pageNumber)
+      .set('pageSize', this.pageSize);
+
+    this.http.get<any>(this.apiUrl, { params }).subscribe(response => {
+      this.totalRecords = response.totalRecords;
+      this.lists$ = of(response.lists);
     });
   }
 
@@ -63,5 +69,17 @@ export class ListsPageComponent implements OnInit {
         }
       }
     });
+  }
+
+  goToNextPage(): void {
+    this.pageNumber++;
+    this.getLists();
+  }
+
+  goToPreviousPage(): void {
+    if (this.pageNumber > 1) {
+      this.pageNumber--;
+      this.getLists();
+    }
   }
 }
