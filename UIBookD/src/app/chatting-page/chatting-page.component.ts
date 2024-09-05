@@ -24,6 +24,7 @@ export class ChattingPageComponent implements OnInit {
   ngOnInit(): void {
     this.userId = localStorage.getItem('UserId') ?? '';
     console.log('asdasdUser ID:', this.userId);
+    console.log('user type:', localStorage.getItem('UserType'));
     this.loadChats();
   }
 

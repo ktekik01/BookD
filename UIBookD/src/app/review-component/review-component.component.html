@@ -1,5 +1,14 @@
 <div class="review">
-    <h3>{{ review.title }}</h3>
-    <p>{{ review.reviewText }}</p>
-    <small>Upvotes: {{ review.upvotes }} | Downvotes: {{ review.downvotes }}</small>
-  </div>
+    <h3>Title: {{ review.title }}</h3>
+    <p>Text: {{ review.reviewText }}</p>
+    <p>By: {{ review.userName }}</p>
+    <small>Upvotes: {{ upvoteCount }} | Downvotes: {{ downvoteCount }}</small>
+    
+    <button (click)="upvote()">Upvote</button>
+    <button (click)="downvote()">Downvote</button>
+    <input type="text" #commentText placeholder="Add a comment" />
+    <button (click)="comment(commentText.value)">Comment</button>
+
+    <!-- Add a button or link to navigate to the review-detail page -->
+    <button (click)="onClick()">View Details</button>
+</div>

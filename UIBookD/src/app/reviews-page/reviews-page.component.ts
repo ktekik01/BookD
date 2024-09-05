@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { ReviewComponent } from '../review-component/review-component.component';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-reviews-page',
@@ -26,10 +27,11 @@ export class ReviewsPageComponent implements OnInit {
     book: string = '';
     sortBy: string = 'reviewDate';
     sortDescending: boolean = false;
+    id: string = ''; // Ensure id is part of ReviewDetail
 
     private apiUrl = 'https://localhost:7267/api/Review'; // Replace with your API URL
 
-    constructor(private http: HttpClient, private dialog: MatDialog) { }
+    constructor(private http: HttpClient, private dialog: MatDialog, private router: Router) { }
 
     ngOnInit(): void {
         this.getReviews();
@@ -37,6 +39,7 @@ export class ReviewsPageComponent implements OnInit {
 
     getReviews(): void {
         let params = new HttpParams()
+            .set('id', this.id)
             .set('title', this.title)
             .set('user', this.user)
             .set('book', this.book)
@@ -87,4 +90,5 @@ export class ReviewsPageComponent implements OnInit {
         this.sortDescending = sortBy.endsWith('Desc'); // Determine sorting direction
         this.getReviews();
     }
+
 }

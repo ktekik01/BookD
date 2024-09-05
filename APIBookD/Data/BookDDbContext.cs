@@ -40,6 +40,8 @@ namespace APIBookD.Data
 
         public DbSet<APIBookD.Models.Entities.Review.VoteReview> VoteReviews { get; set; }
 
+        public DbSet<APIBookD.Models.Entities.Request.Request> Requests { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
