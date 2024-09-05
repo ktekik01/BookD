@@ -519,17 +519,17 @@ namespace APIBookD.Controllers.ReviewControllers
         // add a comment to a review
         [HttpPost("comment")]
 
-        public IActionResult AddCommentToReview(Guid reviewId, Guid userId, string Content)
+        public IActionResult AddCommentToReview(CommentDto commentDto)
         {
             // add the comment to the database
 
             // check whether parameters are valid
-            var review = _context.Reviews.Find(reviewId);
+            var review = _context.Reviews.Find(commentDto.ReviewId);
             if (review == null) {
                 return NotFound("Review not found");
             }
 
-            var user = _context.Reviewers.Find(userId);
+            var user = _context.Reviewers.Find(commentDto.UserId);
             if (user == null) {
                 return NotFound("User not found");
             }
@@ -541,9 +541,9 @@ namespace APIBookD.Controllers.ReviewControllers
             var comment = new Models.Entities.Review.CommentToReview
             {
                 Id = Guid.NewGuid(),
-                ReviewId = reviewId,
-                UserId = userId,
-                Content = Content,
+                ReviewId = commentDto.ReviewId,
+                UserId = commentDto.UserId,
+                Content = commentDto.Content,
                 CommentDate = DateTime.Now
             };
 
