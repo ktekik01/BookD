@@ -42,6 +42,10 @@ namespace APIBookD.Data
 
         public DbSet<APIBookD.Models.Entities.Request.Request> Requests { get; set; }
 
+        public DbSet<APIBookD.Models.Entities.AskToAi.Answer> Answers { get; set; }
+
+        public DbSet<APIBookD.Models.Entities.AskToAi.Question> Questions { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

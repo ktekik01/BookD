@@ -6,10 +6,25 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using APIBookD.Controllers.ChattingControllers;
+using GroqSharp;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var apiKey = builder.Configuration["ApiKey"];
+var apiModel = "llama-3.1-70b-versatile";
+
+
 // Add services to the container.
+
+
+// Register the GroqClient as a singleton using a factory method
+builder.Services.AddSingleton<IGroqClient>(sp =>
+    new GroqClient(apiKey, apiModel)
+        .SetTemperature(0.5)
+        .SetMaxTokens(512)
+        .SetTopP(1)
+        .SetStop("NONE")
+        .SetStructuredRetryPolicy(5));
 
 builder.Services.AddControllers();
 
