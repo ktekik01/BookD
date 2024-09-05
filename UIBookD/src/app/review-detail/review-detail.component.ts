@@ -255,7 +255,7 @@ interface ReviewDetail {
                 receiverId: receiverId
               };
         
-              console.log("aslkfdlfjsdşlfkjsdflşj");
+              console.log("aslkfdlfjsdşlfkjsdflşj")
               // Make the POST request to start the chat
               this.http.post<string>(this.chatApiUrl, chatRequest).pipe(
                 tap(response => {
