@@ -1,0 +1,21 @@
+<div class="ask-ai-container">
+    <h2>Ask a question to AI</h2>
+  
+    <!-- Input for the user's question -->
+    <textarea [(ngModel)]="userQuestion" placeholder="Type your question here..." rows="4" cols="50"></textarea>
+  
+    <!-- Button to send the question -->
+    <button (click)="askAI()" [disabled]="isLoading || !userQuestion">Ask AI</button>
+  
+    <!-- Loading indicator -->
+    <div *ngIf="isLoading" class="loading">
+      <p>Processing your question...</p>
+    </div>
+  
+    <!-- AI response section -->
+    <div *ngIf="aiResponse" class="ai-response">
+      <h3>AI's Response:</h3>
+      <p>{{ aiResponse }}</p>
+    </div>
+  </div>
+  

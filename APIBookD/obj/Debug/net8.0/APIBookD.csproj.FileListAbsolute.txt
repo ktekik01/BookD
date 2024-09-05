@@ -145,3 +145,4 @@ C:\Users\KEREM\source\repos\github\BookD\APIBookD\bin\Debug\net8.0\Microsoft.Ext
 C:\Users\KEREM\source\repos\github\BookD\APIBookD\bin\Debug\net8.0\Microsoft.AspNetCore.Connections.Abstractions.dll
 C:\Users\KEREM\source\repos\github\BookD\APIBookD\bin\Debug\net8.0\Microsoft.AspNetCore.SignalR.Common.dll
 C:\Users\KEREM\source\repos\github\BookD\APIBookD\bin\Debug\net8.0\Microsoft.Extensions.Features.dll
+C:\Users\KEREM\source\repos\github\BookD\APIBookD\bin\Debug\net8.0\GroqSharp.dll
