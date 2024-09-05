@@ -21,6 +21,9 @@ export class ReviewComponent {
   private upvoteApiUrl = `${this.apiUrl}/upvote`;
   private downvoteApiUrl = `${this.apiUrl}/downvote`;
 
+  
+
+
   upvoteCount: number = 0;
   downvoteCount: number = 0;
   hasUpvoted: boolean = false;
@@ -123,4 +126,5 @@ export class ReviewComponent {
         this.router.navigate(['/review-detail', this.review.id]);
         console.log('Review ID:', this.review.id); // Log the review ID
     }
+
 }

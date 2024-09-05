@@ -1,0 +1,12 @@
+<div class="support-form">
+    <h2>Submit a Support Request</h2>
+  
+    <label for="title">Title</label>
+    <input id="title" type="text" [(ngModel)]="title" placeholder="Enter your request title" />
+  
+    <label for="content">Content</label>
+    <textarea id="content" [(ngModel)]="content" placeholder="Describe your issue here"></textarea>
+  
+    <button (click)="addRequest()">Submit Request</button>
+  </div>
+  

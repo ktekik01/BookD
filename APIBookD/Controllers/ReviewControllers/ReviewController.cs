@@ -244,6 +244,7 @@ namespace APIBookD.Controllers.ReviewControllers
                 r.Title,
                 r.ReviewText,
                 r.ReviewDate,
+                r.UserId,
                 BookTitle = _context.Books.Where(b => b.Id == r.BookId).Select(b => b.Title).FirstOrDefault(),
                 UserName = _context.Users.Where(u => u.Id == r.UserId).Select(u => u.Name + " " + u.Surname).FirstOrDefault(),
                 r.Upvotes,

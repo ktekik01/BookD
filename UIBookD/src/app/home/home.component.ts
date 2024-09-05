@@ -34,7 +34,7 @@ export class HomeComponent {
     this.router.navigate(['/register']);
   }
 
-    navigateToDashboard() {
-        this.router.navigate(['/dashboard']);
-    }
+  navigateToLoginAdmin() {
+    this.router.navigate(['/login-admin']);
+  }
 }

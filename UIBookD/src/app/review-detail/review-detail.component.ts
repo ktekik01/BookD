@@ -41,7 +41,7 @@ interface ReviewDetail {
         id: string;
         title: string;
         reviewText: string;
-        userName: string;
+        userId: string;
         upvoteCount: number;
         downvoteCount: number;
         bookTitle: string;
@@ -76,6 +76,7 @@ interface ReviewDetail {
   
     private upvoteApiUrl = 'https://localhost:7267/api/Review/upvote';
     private downvoteApiUrl = 'https://localhost:7267/api/Review/downvote';
+    private chatApiUrl = 'https://localhost:7267/api/Chatting/StartChat';
   
     constructor(
       private route: ActivatedRoute,
@@ -94,6 +95,8 @@ interface ReviewDetail {
                 this.upvoteCount = response.review.upvotes ? response.review.upvotes.length : 0;
                 this.downvoteCount = response.review.downvotes ? response.review.downvotes.length : 0;
                 const userId = localStorage.getItem('UserId');
+                const reviewUserId = response.review.userId;
+                console.log('Review User ID:', reviewUserId);
                 this.hasUpvoted = response.review.upvotes?.includes(userId || '');
                 this.hasDownvoted = response.review.downvotes?.includes(userId || '');
               }),
@@ -231,4 +234,45 @@ interface ReviewDetail {
         ).subscribe();
       }
     }
+
+
+    toChat(): void {
+        this.reviewDetail$.subscribe(reviewDetail => {
+          if (reviewDetail && reviewDetail.review) {
+            const senderId = localStorage.getItem('UserId'); // Get the sender ID from localStorage
+            const receiverId = reviewDetail.review.userId; // Assuming the `userId` is part of the `review` object
+        
+            // Check if the user is trying to chat with themselves
+            if (!senderId || senderId === receiverId) {
+              console.error('Cannot chat with yourself');
+              return; // Stop further execution if the user is trying to chat with themselves
+            }
+        
+            // If the receiverId is available, proceed with the chat request
+            if (receiverId) {
+              const chatRequest = {
+                senderId: senderId,
+                receiverId: receiverId
+              };
+        
+              console.log("aslkfdlfjsdşlfkjsdflşj");
+              // Make the POST request to start the chat
+              this.http.post<string>(this.chatApiUrl, chatRequest).pipe(
+                tap(response => {
+                  console.log('Chat started successfully:', response);
+                  // Add any additional logic like redirecting to the chat page
+                }),
+                catchError(error => {
+                  console.error('Failed to start chat:', error);
+                  return of('Error occurred'); // Handle the error
+                })
+              ).subscribe();
+            } else {
+              console.error('Receiver ID is not available');
+            }
+          }
+        });
+      }
+      
+    
   }

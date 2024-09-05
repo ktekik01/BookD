@@ -1,0 +1,9 @@
+.error-popup {
+    background-color: #f44336; /* Red background for error */
+    color: white;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  

@@ -213,6 +213,37 @@ namespace APIBookD.Controllers.ChattingControllers
         }
 
 
+        // chat request body
+        public class ChatRequest
+        {
+            public Guid SenderId { get; set; }
+            public Guid ReceiverId { get; set; }
+        }
+
+
+        // start an empty chat. The chat will be created with the sender and receiver ids. The chat will have no messages.
+
+        [HttpPost("StartChat")]
+        public async Task<IActionResult> StartChat([FromBody] ChatRequest request)
+        {
+            var chat = _context.Chats.FirstOrDefault(c => c.UsersList.Contains(request.SenderId) && c.UsersList.Contains(request.ReceiverId));
+
+            if (chat == null)
+            {
+                chat = new Chat
+                {
+                    Id = Guid.NewGuid(),
+                    UsersList = new List<Guid> { request.SenderId, request.ReceiverId },
+                    Messages = new List<Guid>()
+                };
+
+                await _context.Chats.AddAsync(chat);
+                await _context.SaveChangesAsync();
+            }
+
+            return Ok(chat);
+        }
+
 
     }
 }

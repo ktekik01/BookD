@@ -81,6 +81,42 @@ namespace APIBookD.Controllers.UserControllers
         }
 
 
+        // admin login dto
+
+        public class AdminLoginDTO
+        {
+            // email
+            public string email { get; set; }
+
+            // password
+
+            public string password { get; set; }
+        }
+
+
+        // login admin
+        [HttpPost("admin/login")]
+        public async Task<IActionResult> AdminLogin([FromBody] AdminLoginDTO loginDTO)
+        {
+            // Output for debugging
+            Console.WriteLine("Admin login method is called.");
+
+            // Check if admin exists in the admin table
+            var admin = await _context.Admins
+            .FirstOrDefaultAsync(a => a.Email == loginDTO.email);
+
+            Console.WriteLine("Admin ID: " + admin?.Id); // Check if the ID is present
+            Console.WriteLine("User type " + admin?.UserType);
+
+            return Ok(
+                new
+                {
+                    UserId = admin.Id,
+                    UserType = admin.UserType,
+                });
+        }
+
+
 
         // login user
         [HttpPost("login")]
@@ -115,7 +151,8 @@ namespace APIBookD.Controllers.UserControllers
             return Ok(new
             {
                 Token = token,
-                UserId = reviewer.Id // Ensure Id is included in Reviewer entity
+                UserId = reviewer.Id, // Ensure Id is included in Reviewer entity
+                UserType = reviewer.UserType
             });
         }
 

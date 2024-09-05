@@ -1,0 +1,13 @@
+<div *ngIf="!isUnauthorized">
+    <h1>Admin Panel</h1>
+  
+    <div>
+      <!-- Loop through the requests and display them using AdminPanelComponent -->
+      <app-admin-panel-component
+        *ngFor="let request of requests"
+        [request]="request"
+        (startChatEvent)="startChat($event)">
+      </app-admin-panel-component>
+    </div>
+  </div>
+  

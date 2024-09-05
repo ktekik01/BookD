@@ -1,7 +1,7 @@
 <div *ngIf="reviewDetail$ | async as review">
     <h2>{{ review.review.title }}</h2>
     <p><strong>Book:</strong> {{ review.bookTitle }}</p>
-    <p><strong>Reviewed by:</strong> {{ review.userName }}</p>
+    <p><strong>Reviewed by:</strong> {{ review.userName }} <button (click)="toChat()"> Start Chat</button></p>
     <p><strong>Date:</strong> {{ review.review.reviewDate }}</p>
     <p><strong>Review Text:</strong> {{ review.review.reviewText }}</p>
     <p>
