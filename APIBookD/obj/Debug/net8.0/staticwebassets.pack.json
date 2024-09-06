@@ -1,0 +1,69 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\wwwroot\\uploads\\Q4.jpg",
+      "PackagePath": "staticwebassets\\uploads\\Q4.jpg"
+    },
+    {
+      "Id": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\wwwroot\\uploads\\profile-pictures\\21355fb8-7cb1-4bea-be07-e42b205b07b3_Q3 (1).jpg",
+      "PackagePath": "staticwebassets\\uploads\\profile-pictures\\21355fb8-7cb1-4bea-be07-e42b205b07b3_Q3 (1).jpg"
+    },
+    {
+      "Id": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\wwwroot\\uploads\\profile-pictures\\3f8f4f6d-efe5-4162-8652-452efc827e33_Ekran görüntüsü 2024-01-08 003730.png",
+      "PackagePath": "staticwebassets\\uploads\\profile-pictures\\3f8f4f6d-efe5-4162-8652-452efc827e33_Ekran görüntüsü 2024-01-08 003730.png"
+    },
+    {
+      "Id": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\wwwroot\\uploads\\profile-pictures\\479c1fe3-62eb-4336-94d8-d174ad78d4c6_Q3 (1).jpg",
+      "PackagePath": "staticwebassets\\uploads\\profile-pictures\\479c1fe3-62eb-4336-94d8-d174ad78d4c6_Q3 (1).jpg"
+    },
+    {
+      "Id": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\wwwroot\\uploads\\profile-pictures\\664bf85c-f662-439d-b7c0-1b88f43bab87_City Background 2D.jfif",
+      "PackagePath": "staticwebassets\\uploads\\profile-pictures\\664bf85c-f662-439d-b7c0-1b88f43bab87_City Background 2D.jfif"
+    },
+    {
+      "Id": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\wwwroot\\uploads\\profile-pictures\\69d844bc-7211-4a03-86e4-88cb4b55fe79_Q3 (1).jpg",
+      "PackagePath": "staticwebassets\\uploads\\profile-pictures\\69d844bc-7211-4a03-86e4-88cb4b55fe79_Q3 (1).jpg"
+    },
+    {
+      "Id": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\wwwroot\\uploads\\profile-pictures\\720e1c42-1734-43b0-ba35-2d901e65dc79_Q3 (1).jpg",
+      "PackagePath": "staticwebassets\\uploads\\profile-pictures\\720e1c42-1734-43b0-ba35-2d901e65dc79_Q3 (1).jpg"
+    },
+    {
+      "Id": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\wwwroot\\uploads\\profile-pictures\\964ec0a9-98f7-46e2-974e-5b8a1646dcbf_Q4.jpg",
+      "PackagePath": "staticwebassets\\uploads\\profile-pictures\\964ec0a9-98f7-46e2-974e-5b8a1646dcbf_Q4.jpg"
+    },
+    {
+      "Id": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\wwwroot\\uploads\\profile-pictures\\ae020e1f-0915-4fbc-844d-f06da19f04ed_Ekran görüntüsü 2024-05-19 115425.png",
+      "PackagePath": "staticwebassets\\uploads\\profile-pictures\\ae020e1f-0915-4fbc-844d-f06da19f04ed_Ekran görüntüsü 2024-05-19 115425.png"
+    },
+    {
+      "Id": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\wwwroot\\uploads\\profile-pictures\\c049273c-ea50-410d-b3ef-ff67dee44172_PipelineDatapath.png",
+      "PackagePath": "staticwebassets\\uploads\\profile-pictures\\c049273c-ea50-410d-b3ef-ff67dee44172_PipelineDatapath.png"
+    },
+    {
+      "Id": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\wwwroot\\uploads\\profile-pictures\\dfa0c9ee-2585-4239-a6de-2bcb222fdaf6_Q3 (1).jpg",
+      "PackagePath": "staticwebassets\\uploads\\profile-pictures\\dfa0c9ee-2585-4239-a6de-2bcb222fdaf6_Q3 (1).jpg"
+    },
+    {
+      "Id": "C:\\Users\\KEREM\\source\\repos\\github\\BookD\\APIBookD\\wwwroot\\uploads\\profile-pictures\\f0c94729-eb96-40af-a3f5-c280b2cb25be_IMG_4436-min.jpeg",
+      "PackagePath": "staticwebassets\\uploads\\profile-pictures\\f0c94729-eb96-40af-a3f5-c280b2cb25be_IMG_4436-min.jpeg"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.APIBookD.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.APIBookD.props",
+      "PackagePath": "build\\APIBookD.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.APIBookD.props",
+      "PackagePath": "buildMultiTargeting\\APIBookD.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.APIBookD.props",
+      "PackagePath": "buildTransitive\\APIBookD.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

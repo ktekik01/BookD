@@ -1,6 +1,14 @@
 <div class="register-container">
     <h1>Create an Account</h1>
   
+
+    <div class="form-group">
+        <app-upload (onUploadFinished)="onProfilePictureUploaded($event)"></app-upload>
+
+
+      </div>
+    
+
     <form (ngSubmit)="onRegister($event)" [formGroup]="registerForm" class="form">
 
         <div class="form-group">

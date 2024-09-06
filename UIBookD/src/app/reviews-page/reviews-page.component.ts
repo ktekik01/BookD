@@ -8,13 +8,15 @@ import { NgModule } from '@angular/core';
 import { ReviewComponent } from '../review-component/review-component.component';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { NotificationService } from '../notification.service';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-reviews-page',
   templateUrl: './reviews-page.component.html',
   styleUrls: ['./reviews-page.component.css'],
   standalone: true,
-  imports: [FormsModule, ReviewComponent, CommonModule],
+  imports: [FormsModule, ReviewComponent, CommonModule, MatSnackBarModule],
 })
 export class ReviewsPageComponent implements OnInit {
 
@@ -31,9 +33,12 @@ export class ReviewsPageComponent implements OnInit {
 
     private apiUrl = 'https://localhost:7267/api/Review'; // Replace with your API URL
 
-    constructor(private http: HttpClient, private dialog: MatDialog, private router: Router) { }
+    constructor(private http: HttpClient, private dialog: MatDialog, private router: Router, private notificationService: NotificationService) { }
 
     ngOnInit(): void {
+        console.log('Total Reviews:', this.totalReviews);
+        console.log('Reviews:', this.reviews$);
+
         this.getReviews();
     }
 
@@ -51,6 +56,12 @@ export class ReviewsPageComponent implements OnInit {
         this.http.get<any>(this.apiUrl, { params }).subscribe(response => {
             this.reviews$ = of(response.reviews);
             this.totalReviews = response.totalReviews;
+            this.notificationService.showSuccess('Reviews loaded successfully!');
+        }, error => {
+            this.notificationService.showError('Failed to load reviews.');
+        
+            
+            
         });
     }
 
@@ -70,6 +81,7 @@ export class ReviewsPageComponent implements OnInit {
     
                 this.http.post(this.apiUrl, reviewData).subscribe(
                     () => {
+                        this.notificationService.showSuccess('Review added successfully!');
                         this.getReviews();
                     },
                     (error) => {

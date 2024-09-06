@@ -1,5 +1,8 @@
 <div class="user">
-    <h3>{{ user.name }} {{user.surname}} <button (click)="toChat()">Start Chat</button></h3>
+    <h3>{{ user.name }} {{ user.surname }} <button (click)="toChat()">Start Chat</button></h3>
     <p>{{ user.email }}</p>
     <p>{{ user.userType }}</p>
-  </div>
+    <p>{{ user.biography }}</p>
+    <p>{{ user.dateOfBirth }}</p>
+    <img *ngIf="user.profilePicture" [src]="'https://localhost:7267/' + user.profilePicture" alt="{{ user.name }}'s Profile Picture" />
+</div>

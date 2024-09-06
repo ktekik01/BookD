@@ -179,9 +179,14 @@ namespace APIBookD.Controllers.ReviewControllers
         */
 
         [HttpGet]
-        public async Task<IActionResult> GetReviews(string? title, string? user, string? book, int page = 1, int pageSize = 10, string? sortBy = "reviewDate", bool sortDescending = false)
+        public async Task<IActionResult> GetReviews(string? title, string? user, string? book, string? sortBy = "reviewDate", bool sortDescending = false)
         {
+
+
             var query = _context.Reviews.AsQueryable();
+
+
+            Console.WriteLine(query.ToQueryString()); // Outputs the SQL query being executed
 
             // Apply filtering
             if (!string.IsNullOrEmpty(title))
@@ -233,9 +238,9 @@ namespace APIBookD.Controllers.ReviewControllers
                 };
             }
 
-            // Pagination
-            var totalReviews = await query.CountAsync();
-            var reviews = await query.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
+            var reviews = await query.ToListAsync(); // Get all reviews
+            var totalReviews = reviews.Count; // Total number of reviews
+
 
             // Fetch book and user details
             var reviewDetails = reviews.Select(r => new
@@ -250,6 +255,9 @@ namespace APIBookD.Controllers.ReviewControllers
                 r.Upvotes,
                 r.Downvotes
             }).ToList();
+
+
+
 
             var response = new
             {
