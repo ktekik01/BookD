@@ -47,9 +47,17 @@ namespace APIBookD.Controllers.UserControllers
         }
 
 
+        // get all reviewers
+        [HttpGet("reviewer")]
+        public IActionResult GetReviewers()
+        {
+            var reviewers = _context.Reviewers.ToList();
+            return Ok(reviewers);
+        }
+
 
         [HttpPost("reviewer")]
-        public async Task<IActionResult> AddReviewer([FromBody] ReviewerDTO _reviewer)
+        public async Task<IActionResult> AddReviewer([FromForm] ReviewerDTO _reviewer)
         {
             var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == _reviewer.Email);
             if (existingUser != null)

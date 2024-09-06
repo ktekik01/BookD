@@ -14,7 +14,7 @@ import { UserComponentComponent } from '../user-component/user-component.compone
 export class UsersPageComponent implements OnInit{
     users$: Observable<any[]> = of([]);
 
-    private apiUrl = 'https://localhost:7267/api/User';
+    private apiUrl = 'https://localhost:7267/api/User/reviewer';
 
     constructor(private http: HttpClient) { }
 
