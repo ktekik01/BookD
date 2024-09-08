@@ -324,12 +324,21 @@ namespace APIBookD.Controllers.BookControllers
 
 
 
+
+        public class RatingRequest
+        {
+            public Guid UserId { get; set; }
+            public float Rating { get; set; }
+        }
+
+
+
         // rate a book. If the book does not exist, return a message saying that the book does not exist.
         // if the user has already rated the book and tries to rate it again, change the rating to the new rating.
         // update the average rating of the book.
 
         [HttpPost("rate/{id}")]
-        public IActionResult RateBook(Guid id, Guid userId, float rating)
+        public IActionResult RateBook(Guid id, [FromBody] RatingRequest request)
         {
             using (var transaction = _context.Database.BeginTransaction())
             {
@@ -342,7 +351,9 @@ namespace APIBookD.Controllers.BookControllers
                         return BadRequest("The book does not exist.");
                     }
 
-                    var rate = _context.BookRates.FirstOrDefault(r => r.BookId == id && r.UserId == userId);
+                    Console.WriteLine($"Received rating: {request.Rating}, for user: {request.UserId}");
+
+                    var rate = _context.BookRates.FirstOrDefault(r => r.BookId == id && r.UserId == request.UserId);
 
                     if (rate == null)
                     {
@@ -350,24 +361,21 @@ namespace APIBookD.Controllers.BookControllers
                         {
                             Id = Guid.NewGuid(),
                             BookId = id,
-                            Rating = rating,
-                            UserId = userId
+                            Rating = request.Rating,
+                            UserId = request.UserId
                         };
 
                         _context.BookRates.Add(newRate);
                     }
                     else
                     {
-                        rate.Rating = rating;
+                        rate.Rating = request.Rating;
                     }
 
-                    // Save changes before recalculating to ensure data is up-to-date
                     _context.SaveChanges();
 
-                    // Re-fetch the data to get the most recent state
                     var rates = _context.BookRates.Where(b => b.BookId == id).ToList();
                     double sum = rates.Sum(r => r.Rating);
-
                     book.AverageRating = rates.Count == 0 ? 0 : sum / rates.Count;
 
                     _context.SaveChanges();
@@ -383,6 +391,7 @@ namespace APIBookD.Controllers.BookControllers
                 }
             }
         }
+
 
 
 
@@ -431,6 +440,36 @@ namespace APIBookD.Controllers.BookControllers
                 }
             }
         }
+
+
+        // get a users rating for a book. If the book does not exist, return a message saying that the book does not exist.
+        [HttpGet("rate/{id}/{userId}")]
+        public IActionResult GetRateByBookIdAndUserId(string id, string userId)
+        {
+            if (Guid.TryParse(id, out Guid bookId) && Guid.TryParse(userId, out Guid userIdGuid))
+            {
+                var book = _context.Books.FirstOrDefault(b => b.Id == bookId);
+
+                if (book == null)
+                {
+                    return BadRequest("The book does not exist.");
+                }
+
+                var rate = _context.BookRates.FirstOrDefault(r => r.BookId == bookId && r.UserId == userIdGuid);
+
+                if (rate == null)
+                {
+                    
+                }
+
+                return Ok(rate);
+            }
+            else
+            {
+                return BadRequest("Invalid Book Id or User Id");
+            }
+        }
+
 
 
 

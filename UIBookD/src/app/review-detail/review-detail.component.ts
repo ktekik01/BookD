@@ -242,13 +242,11 @@ interface ReviewDetail {
             const senderId = localStorage.getItem('UserId'); // Get the sender ID from localStorage
             const receiverId = reviewDetail.review.userId; // Assuming the `userId` is part of the `review` object
         
-            // Check if the user is trying to chat with themselves
             if (!senderId || senderId === receiverId) {
               console.error('Cannot chat with yourself');
-              return; // Stop further execution if the user is trying to chat with themselves
+              return; 
             }
-        
-            // If the receiverId is available, proceed with the chat request
+
             if (receiverId) {
               const chatRequest = {
                 senderId: senderId,
@@ -256,11 +254,10 @@ interface ReviewDetail {
               };
         
               console.log("aslkfdlfjsdşlfkjsdflşj")
-              // Make the POST request to start the chat
+
               this.http.post<string>(this.chatApiUrl, chatRequest).pipe(
                 tap(response => {
                   console.log('Chat started successfully:', response);
-                  // Add any additional logic like redirecting to the chat page
                 }),
                 catchError(error => {
                   console.error('Failed to start chat:', error);
