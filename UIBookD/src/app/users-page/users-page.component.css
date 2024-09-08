@@ -1,0 +1,18 @@
+/* Styles for user-page */
+.user-page-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f0f0f0;
+  }
+  
+  .user-page-container ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 0;
+  }
+  
+  .user-page-container li {
+    margin-bottom: 20px;
+  }
+  

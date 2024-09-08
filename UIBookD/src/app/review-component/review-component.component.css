@@ -1,0 +1,57 @@
+.review {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 10px 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+}
+
+.review h3 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.review h3 button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.review h3 button:hover {
+    background-color: #0056b3;
+}
+
+.review p {
+    font-size: 16px;
+    color: #555;
+    margin: 5px 0;
+}
+
+.review small {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.review small button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.review small button:hover {
+    background-color: #218838;
+}

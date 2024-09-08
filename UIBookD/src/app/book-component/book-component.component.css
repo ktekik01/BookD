@@ -1,0 +1,39 @@
+.book {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 10px 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+}
+
+.book h3 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.book p {
+    font-size: 16px;
+    margin: 5px 0;
+    color: #555;
+}
+
+.book select {
+    padding: 5px;
+    margin-right: 10px;
+}
+
+.book button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.book button:hover {
+    background-color: #218838;
+}
