@@ -7,3 +7,24 @@
     margin-bottom: 20px;
   }
   
+  /* Container for the admin panel */
+div {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Title of the admin panel */
+  h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  /* Style for the request list container */
+  div > div {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  

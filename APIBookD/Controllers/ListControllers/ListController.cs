@@ -56,10 +56,15 @@ namespace APIBookD.Controllers.ListControllers
             var lists = query
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
-                .Select(l => l.List)
+                .Select(l => new
+                {
+                    List = l.List,
+                    UserName = l.UserName,
+                    UserSurname = l.UserSurname
+                })
                 .ToList();
 
-            // Return paginated result
+            // Return paginated result including user names
             return Ok(new { TotalRecords = totalRecords, Lists = lists });
         }
 
@@ -74,20 +79,41 @@ namespace APIBookD.Controllers.ListControllers
         {
             if (Guid.TryParse(id, out Guid userId))
             {
-                var query = _context.Lists.Where(l => l.UserId == userId);
+                // Join Lists with Users to get the user's name and surname
+                var query = from list in _context.Lists
+                            join user in _context.Users on list.UserId equals user.Id
+                            where list.UserId == userId
+                            select new
+                            {
+                                List = list,
+                                UserName = user.Name,
+                                UserSurname = user.Surname
+                            };
 
+                // Filter by list type if provided
                 if (!string.IsNullOrEmpty(listType))
                 {
-                    query = query.Where(l => l.Type == listType);
+                    query = query.Where(l => l.List.Type == listType);
                 }
 
+                // Apply pagination
                 var totalRecords = query.Count();
-                var lists = query
+                var paginatedLists = query
                     .Skip((pageNumber - 1) * pageSize)
                     .Take(pageSize)
                     .ToList();
 
-                return Ok(new { TotalRecords = totalRecords, Lists = lists });
+                // Return the result with lists and user details
+                return Ok(new
+                {
+                    TotalRecords = totalRecords,
+                    Lists = paginatedLists.Select(l => new
+                    {
+                        l.List,
+                        l.UserName,
+                        l.UserSurname
+                    })
+                });
             }
             else
             {

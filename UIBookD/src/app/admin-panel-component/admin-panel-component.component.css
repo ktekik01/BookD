@@ -1,0 +1,59 @@
+/* Container for each request box */
+.request-box {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+  }
+  
+  /* Title of the request */
+  .request-box h2 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  /* Content of the request */
+  .request-box p {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 10px;
+  }
+  
+  /* Date of the request */
+  .request-box small {
+    font-size: 0.875rem;
+    color: #999;
+  }
+  
+  /* Buttons inside the request box */
+  .request-box button {
+    font-size: 1rem;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-right: 10px;
+  }
+  
+  /* Specific styles for each button */
+  .request-box button:first-of-type {
+    background-color: #007bff; /* Blue */
+  }
+  
+  .request-box button:first-of-type:hover {
+    background-color: #0056b3; /* Darker Blue */
+  }
+  
+  .request-box button:last-of-type {
+    background-color: #28a745; /* Green */
+  }
+  
+  .request-box button:last-of-type:hover {
+    background-color: #218838; /* Darker Green */
+  }
+  

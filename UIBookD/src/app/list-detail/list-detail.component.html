@@ -1,6 +1,6 @@
 <div *ngIf="listDetail$ | async as listDetail; else noDetail">
-    <h2>{{ listDetail.name }}</h2>
-    <p>{{ listDetail.description }}</p>
+    <h2>List name: {{ listDetail.name }}</h2>
+    <p><strong>Description: </strong> {{ listDetail.description }}</p>
     <p><strong>Type:</strong> {{ listDetail.type }}</p>
     <p><strong>Owner:</strong> {{ listDetail.ownerName }}</p>
   

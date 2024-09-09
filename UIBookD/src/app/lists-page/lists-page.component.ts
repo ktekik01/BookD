@@ -44,6 +44,7 @@ export class ListsPageComponent implements OnInit {
     this.http.get<any>(this.apiUrl, { params }).subscribe(response => {
       this.totalRecords = response.totalRecords;
       this.lists$ = of(response.lists);
+      console.log(response);
     });
   }
 

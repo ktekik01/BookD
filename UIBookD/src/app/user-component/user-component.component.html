@@ -4,5 +4,5 @@
     <p>{{ user.userType }}</p>
     <p>{{ user.biography }}</p>
     <p>{{ user.dateOfBirth }}</p>
-    <img *ngIf="user.profilePicture" [src]="'https://localhost:7267/' + user.profilePicture" alt="{{ user.name }}'s Profile Picture" />
+    <img *ngIf="user.profilePicture" [src]="'https://localhost:7267' + user.profilePicture" alt="{{ user.name }}'s Profile Picture" />
 </div>

@@ -90,16 +90,18 @@ var app = builder.Build();
 
 app.UseCors("AllowSpecificOrigin");
 
-app.UseRouting();
+
 
 app.UseStaticFiles();
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(
-        Path.Combine(Directory.GetCurrentDirectory(), @"Resources")),
-    RequestPath = new PathString("/Resources")
+        Path.Combine(Directory.GetCurrentDirectory(), @"uploads")),
+    RequestPath = new PathString("/uploads")
 });
 
+
+app.UseRouting();
 
 app.UseAuthorization();
 
