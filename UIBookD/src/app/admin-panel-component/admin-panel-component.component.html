@@ -3,7 +3,7 @@
     <p>{{ request.content }}</p>
     <small>Request Date: {{ request.requestDate }}</small>
     
-    <!-- Button to start chat -->
+    <!-- Buttons to start chat and mark as completed -->
     <button (click)="startChat()">Start Chat</button>
-  </div>
-  
+    <button (click)="markAsCompleted()">Mark as Completed</button>
+</div>

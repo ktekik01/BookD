@@ -69,6 +69,8 @@ export class ChatComponent implements OnChanges {
         
               // Load messages using the chatId from the input chat object
               this.chatService.loadMessages(chatId);
+
+              
         
               // Set up the receiverId and senderId
               this.userId = localStorage.getItem('UserId') ?? '';

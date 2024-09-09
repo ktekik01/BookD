@@ -1,0 +1,48 @@
+<div class="profile-container">
+    <h1>My Profile</h1>
+    
+    <form [formGroup]="userForm" (ngSubmit)="updateProfile()">
+      <div>
+        <label for="name">Name:</label>
+        <input id="name" formControlName="name" type="text" />
+      </div>
+  
+      <div>
+        <label for="surname">Surname:</label>
+        <input id="surname" formControlName="surname" type="text" />
+      </div>
+  
+      <div>
+        <label for="email">Email:</label>
+        <input id="email" formControlName="email" type="email" />
+      </div>
+  
+      <div>
+        <label for="password">Password:</label>
+        <input id="password" formControlName="password" type="password" />
+      </div>
+  
+      <div>
+        <label for="profilePicture">Profile Picture URL:</label>
+        <input id="profilePicture" formControlName="profilePicture" type="text" />
+      </div>
+  
+      <div>
+        <label for="biography">Biography:</label>
+        <textarea id="biography" formControlName="biography"></textarea>
+      </div>
+  
+      <div>
+        <label for="dateOfBirth">Date of Birth:</label>
+        <input id="dateOfBirth" formControlName="dateOfBirth" type="date" />
+      </div>
+  
+      <button type="submit" [disabled]="isUpdating">Update Profile</button>
+      <button type="button" (click)="deleteAccount()" [disabled]="isDeleting">Delete Account</button>
+    </form>
+  
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+  </div>
+  

@@ -18,7 +18,7 @@ namespace APIBookD.Controllers.CustomerSupportControllers
             _context = context;
         }
 
-        // a method to get all requests
+
         [HttpGet("GetRequests")]
         public IActionResult GetRequests()
         {
@@ -26,7 +26,6 @@ namespace APIBookD.Controllers.CustomerSupportControllers
             return Ok(requests);
         }
 
-        // a method to get a request by id
         [HttpGet("GetRequest/{id}")]
         public IActionResult GetRequest(string id)
         {
@@ -62,6 +61,31 @@ namespace APIBookD.Controllers.CustomerSupportControllers
 
             // Save the request to the database
             _context.Requests.Add(request);
+            _context.SaveChanges();
+
+            return Ok();
+        }
+
+
+        public class ChangeStatusRequest
+        {
+            public Guid Id { get; set; }
+        }
+
+
+
+        [HttpPost("Status")]
+        public IActionResult ChangeStatus([FromBody] ChangeStatusRequest request)
+        {
+            // Find the request by its ID
+            var existingRequest = _context.Requests.Find(request.Id);
+            if (existingRequest == null)
+            {
+                return NotFound();
+            }
+
+            // Update the status
+            existingRequest.Status = "Completed. ";
             _context.SaveChanges();
 
             return Ok();

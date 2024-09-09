@@ -16,6 +16,7 @@ export class AdminPanelComponent implements OnInit {
   requests: any[] = []; // Array to hold the requests
 
   private requestUrl = 'https://localhost:7267/api/CustomerSupport/GetRequests';
+  private markAsCompletedUrl = 'https://localhost:7267/api/CustomerSupport/Status';
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -67,4 +68,30 @@ export class AdminPanelComponent implements OnInit {
       }
     );
   }
+
+
+  
+
+  // Mark the request as completed
+markAsCompleted(request: any) {
+    const userId = localStorage.getItem('UserId');
+    if (!userId || !request.userId) {
+      console.error('User ID not found.');
+      return;
+    }
+  
+    // Debugging to ensure the function is called
+    console.log('Marking request as completed:', request);
+  
+    // Send the request ID to mark as completed
+    this.http.post(this.markAsCompletedUrl, { Id: request.id }).subscribe(
+      (response: any) => {
+        console.log('Request marked as completed:', response);
+      },
+      (error) => {
+        console.error('Error marking request as completed:', error);
+      }
+    );
+  }
+  
 }

@@ -1,5 +1,7 @@
 <div class="list" (click)="onClick()"> <!-- Bind click event -->
-    <h3>{{ list.name }}</h3>
-    <p>{{ list.description }}</p>
-    <p>{{ list.type }}</p>
+    <h3>{{ list.list.name }}</h3>
+    <p>{{ list.list.description }}</p>
+    <p>{{ list.list.type }}</p>
+    <p>{{ list.userName}} {{list.userSurname}}</p>
+
   </div>

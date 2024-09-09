@@ -19,8 +19,8 @@
   <button (click)="openAddListModal()">Add New List</button>
   
   <div>
-    <button (click)="goToPreviousPage()" [disabled]="pageNumber === 1">Previous</button>
-    <button (click)="goToNextPage()" [disabled]="pageNumber * pageSize >= totalRecords">Next</button>
+    <button (click)="goToPreviousPage()" [disabled]="pageNumber === 1" class="previous-next-btn">Previous</button>
+  <button (click)="goToNextPage()" [disabled]="pageNumber * pageSize >= totalRecords" class="previous-next-btn">Next</button>
   </div>
 
   

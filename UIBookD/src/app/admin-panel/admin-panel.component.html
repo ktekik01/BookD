@@ -6,7 +6,8 @@
       <app-admin-panel-component
         *ngFor="let request of requests"
         [request]="request"
-        (startChatEvent)="startChat($event)">
+        (startChatEvent)="startChat($event)"
+        (markAsCompletedEvent)="markAsCompleted($event)">
       </app-admin-panel-component>
     </div>
   </div>

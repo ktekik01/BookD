@@ -15,8 +15,10 @@ export class ListComponentComponent {
 
     constructor(private router: Router) { }
 
+
     onClick(): void {
-        this.router.navigate(['/list-detail', this.list.id]); // Pass list ID to the new page
+        this.router.navigate(['/list-detail', this.list.list.id]); // Pass list ID to the new page
       }
+
 
 }

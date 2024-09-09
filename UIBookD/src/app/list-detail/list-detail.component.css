@@ -1,0 +1,42 @@
+/* Style for list of books */
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+/* Closer placement of delete button */
+ul li button {
+    margin-left: 10px; /* Adjust spacing between book title and button */
+}
+
+/* Green buttons */
+button {
+    background-color: #28a745; /* Green background */
+    color: white; /* White text */
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+button:hover {
+    background-color: #218838; /* Darker green on hover */
+}
+
+button[disabled] {
+    background-color: #ccc; /* Gray background for disabled buttons */
+    cursor: not-allowed;
+}
+
+/* Smaller previous and next buttons */
+.pagination-button {
+    font-size: 12px;
+    padding: 5px 10px;
+}
